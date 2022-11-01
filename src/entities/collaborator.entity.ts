@@ -12,17 +12,13 @@ export class Collaborator {
   @Column()
   name: string;
 
-  
+  @Column({ default: true })
+  isActive: boolean;
 
-  @Column()
-  isActive:boolean
-  
-  
-  @Column({length:14})
-  @Exclude()
+  @Column({ length: 14 })
   cpf: string;
 
-  @Column({length:11})
+  @Column({ length: 11 })
   telephone: string;
 
   @Column()

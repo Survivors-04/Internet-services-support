@@ -4,7 +4,7 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  OneToMany
+  OneToMany,
 } from "typeorm";
 import { Exclude } from "class-transformer";
 import { v4 as uuid } from "uuid";
@@ -19,8 +19,7 @@ export class Client {
   @Column({ length: 120 })
   name: string;
 
-  @Column({length:14})
-  @Exclude()
+  @Column({ length: 14 })
   cpf: string;
 
   @Column()
@@ -30,7 +29,6 @@ export class Client {
   email: string;
 
   @Column({ length: 120 })
-  @Exclude()
   password: string;
 
   @Column({ default: true })
