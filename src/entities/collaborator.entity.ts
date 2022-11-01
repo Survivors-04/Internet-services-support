@@ -13,6 +13,9 @@ export class Collaborator {
   name: string;
 
   @Column()
+  isActive:boolean
+  
+  @Column()
   @Exclude()
   cpf: number;
 
