@@ -2,9 +2,11 @@ import { hash } from "bcrypt";
 import { AppDataSource } from "../../data-source";
 import { Collaborator } from "../../entities/collaborator.entity";
 import { AppError } from "../../errors/appError";
-import { ICollaborator } from "../../interfaces/collaborator";
+import { IColaboratorRequest } from "../../interfaces/collaborator";
 
-const createColaboratorService = async (data: ICollaborator) => {
+const createColaboratorService = async (
+  data: IColaboratorRequest
+): Promise<Collaborator> => {
   const { email, cpf, password } = data;
   const colaboratorsRepo = AppDataSource.getRepository(Collaborator);
   const colaborator = await colaboratorsRepo.findOneBy(
