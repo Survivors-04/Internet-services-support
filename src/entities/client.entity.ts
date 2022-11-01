@@ -22,9 +22,9 @@ export class Client {
   @Column({ length: 120 })
   name: string;
 
-  @Column({ length: 120 })
+  @Column()
   @Exclude()
-  cpf: string;
+  cpf: number;
 
   @Column()
   telephone: number;
