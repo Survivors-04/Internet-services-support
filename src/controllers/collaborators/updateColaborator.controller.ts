@@ -1,13 +1,11 @@
-import { Request, Response} from 'express';
-import { updateColaboratorService } from '../../services/colaboratorsServices/updateColaborator.service';
+import { Request, Response } from "express";
+import { updateColaboratorService } from "../../services/colaborator/updateColaborator.service";
 
-const updateCollaboratorController = async (req:Request, res: Response) => {
-
+const updateCollaboratorController = async (req: Request, res: Response) => {
   const data = req.body;
-  const {id} = req.params;
+  const { id } = req.params;
   const updatedData = updateColaboratorService(data, id);
   return res.status(200).json(updatedData);
-
-}; 
+};
 
 export default updateCollaboratorController;

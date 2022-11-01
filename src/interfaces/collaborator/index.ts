@@ -5,19 +5,19 @@ export interface IColaboratorResponse{
   id: string;
   name: string;
   email: string;
-  cpf: number;
-  telephone: number;
+  cpf: string;
+  telephone: string;
   team: Team;
   attendance: Attendance[];
 }
 export interface ICollaboratorUpdateRequest{
   name: string
   email: string
-  telephone: number
+  telephone: string
 } 
 
 export interface IColaboratorRequest extends ICollaboratorUpdateRequest{
-  cpf:number
+  cpf:string
   email: string
   password: string
   isActive: boolean

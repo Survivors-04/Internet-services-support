@@ -9,12 +9,8 @@ const app = express();
 app.use(express.json());
 
 app.use("/clients", clientRoutes);
-
-app.use(handleErrorMiddleware);
 app.use("/collaborators", collaboratorRouter);
+app.use(handleErrorMiddleware);
 
-app.listen(3000, () => {
-  console.log("Server is running");
-});
 
 export default app;
