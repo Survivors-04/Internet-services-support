@@ -2,7 +2,7 @@ import { hash } from "bcrypt";
 import { AppDataSource } from "../../data-source";
 import { Collaborator } from "../../entities/collaborator.entity";
 import { AppError } from "../../errors/appError";
-import { IColaboratorRequest, IColaboratorResponse } from "../../interfaces/colaboratorsInterfaces";
+import { IColaboratorRequest, IColaboratorResponse } from "../../interfaces/collaborator";
 
 const createColaboratorService = async (data:IColaboratorRequest):Promise<IColaboratorResponse> =>{
 

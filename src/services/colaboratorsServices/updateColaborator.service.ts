@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source";
 import { Collaborator } from "../../entities/collaborator.entity";
 import { AppError } from "../../errors/appError";
-import { IColaboratorResponse, ICollaboratorUpdateRequest } from "../../interfaces/colaboratorsInterfaces";
+import { IColaboratorResponse, ICollaboratorUpdateRequest } from "../../interfaces/collaborator";
 
 const updateColaboratorService = async ( data:ICollaboratorUpdateRequest, id:string ):Promise<IColaboratorResponse> =>{
 
