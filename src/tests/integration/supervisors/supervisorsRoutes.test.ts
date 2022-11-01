@@ -2,7 +2,12 @@ import { DataSource } from "typeorm";
 import { AppDataSource } from "../../../data-source";
 import request from "supertest";
 import app from "../../../app";
-import { mockedSupervisor } from "../../mocks";
+import {
+  mockedManager,
+  mockedManagerLogin,
+  mockedSupervisor,
+  mockedSupervisorLogin,
+} from "../../mocks";
 
 describe("/supervisors", () => {
   let connection: DataSource;
@@ -19,11 +24,11 @@ describe("/supervisors", () => {
     await connection.destroy();
   });
 
-  test("POST /supervisors - Should insert the information of new user in the database", async () => {
+  test("POST /supervisors - Must be able to create a supervisor", async () => {
     const { body, status } = await request(app)
       .post("/supervisors")
       .send(mockedSupervisor);
-    
+
     expect(body).toHaveProperty("id");
     expect(body).toHaveProperty("name");
     expect(body).toHaveProperty("email");
@@ -48,6 +53,40 @@ describe("/supervisors", () => {
     expect(status).toBe(400);
   });
 
-  test('')
+  test("POST /supervisors - Should not be able to create a supervisor without manager permission", async () => {
+    const supervisorLogin = await request(app)
+      .post("/login")
+      .send(mockedSupervisorLogin);
+    const { body, status } = await request(app)
+      .get("/supervisors")
+      .set("Authorization", `Bearer ${supervisorLogin}`);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
+  });
+
+  test("GET /supevisors - Must be able to list supervisors", async () => {
+    await request(app).post("/supervisors").send(mockedManager);
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const { body } = await request(app)
+      .get("/supervisors")
+      .set("Authorization", `Bearer ${managerLogin.body.token}`);
+
+    expect(body).toHaveLength(2);
+  });
+
+  test("GET /supervisors - should not be able to list supervisors without manger permission", async () => {
+    const supervisorLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const { body, status } = await request(app)
+      .get("/supervisors")
+      .set("Authorization", `Bearer ${supervisorLogin.body.token}`);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
+  });
 
 });
