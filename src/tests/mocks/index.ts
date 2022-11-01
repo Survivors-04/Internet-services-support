@@ -8,3 +8,10 @@ export const mockedSupervisor: ISupervisorsRequest = {
     telephone: 13984512783,
     is_manager: false
 }
+
+export const mockedAttendance = {
+  collaborator_id: "",
+  client_id: "",
+  service_id: "",
+};
+
