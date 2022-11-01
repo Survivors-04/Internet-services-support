@@ -13,8 +13,4 @@ app.use("/clients", clientRoutes);
 app.use(handleErrorMiddleware);
 app.use("/collaborators", collaboratorRouter);
 
-app.listen(3000, () => {
-  console.log("Server is running");
-});
-
 export default app;
