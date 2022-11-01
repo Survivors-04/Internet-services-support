@@ -23,6 +23,9 @@ export class Supervisor {
   @Column()
   is_manager: boolean;
 
+  @Column()
+  isActive:boolean
+
   @Column({ length: 120 })
   @Exclude()
   password: string;
