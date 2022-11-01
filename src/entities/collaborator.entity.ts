@@ -10,26 +10,30 @@ export class Collaborator {
   id: string;
 
   @Column()
-  name:string
-
-  @Column({type:"integer"})
-  cpf:number
-
-  @Column({type:"integer"})
-  telephone:number
+  name: string;
 
   @Column()
-  email:string
+  isActive:boolean
+  
+  @Column()
+  @Exclude()
+  cpf: number;
+
+  @Column()
+  telephone: number;
+
+  @Column()
+  email: string;
 
   @Column()
   @Exclude()
-  password:string
+  password: string;
 
   @OneToMany((type) => Attendance, (attendance) => attendance.collaborator)
   attendance: Attendance[];
 
-  @ManyToOne(type=>Team)
-  team:Team
+  @ManyToOne((type) => Team)
+  team: Team;
 
   constructor() {
     if (!this.id) {
