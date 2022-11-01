@@ -10,12 +10,12 @@ export class Supervisor {
   @Column()
   name: string;
 
-  @Column()
+  @Column({length:14})
   @Exclude()
-  cpf: number;
+  cpf: string;
 
-  @Column()
-  telephone: number;
+  @Column({length:11})
+  telephone: string;
 
   @Column({ length: 100 })
   email: string;

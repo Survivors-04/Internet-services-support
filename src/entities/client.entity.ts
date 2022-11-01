@@ -8,7 +8,6 @@ import {
 } from "typeorm";
 import { Exclude } from "class-transformer";
 import { v4 as uuid } from "uuid";
-import { Internet_plan } from "./internet_plan.entity";
 import { Attendance } from "./attendance.entity";
 import { Client_plan } from "./client_plan.entity";
 
@@ -20,12 +19,12 @@ export class Client {
   @Column({ length: 120 })
   name: string;
 
-  @Column()
+  @Column({length:14})
   @Exclude()
-  cpf: number;
+  cpf: string;
 
-  @Column()
-  telephone: number;
+  @Column({length:11})
+  telephone: string;
 
   @Column({ length: 100 })
   email: string;

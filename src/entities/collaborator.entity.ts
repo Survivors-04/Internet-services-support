@@ -12,12 +12,12 @@ export class Collaborator {
   @Column()
   name: string;
 
-  @Column()
+  @Column({length:14})
   @Exclude()
-  cpf: number;
+  cpf: string;
 
-  @Column()
-  telephone: number;
+  @Column({length:11})
+  telephone: string;
 
   @Column()
   email: string;
