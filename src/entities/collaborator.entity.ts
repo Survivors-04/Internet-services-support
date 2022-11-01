@@ -12,6 +12,12 @@ export class Collaborator {
   @Column()
   name: string;
 
+  
+
+  @Column()
+  isActive:boolean
+  
+  
   @Column({length:14})
   @Exclude()
   cpf: string;

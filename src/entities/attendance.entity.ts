@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryColumn,CreateDateColumn, ManyToOne, OneToOne, JoinColumn } from "typeorm";
+import {
+  Entity,
+  Column,
+  PrimaryColumn,
+  CreateDateColumn,
+  ManyToOne,
+  OneToOne,
+  JoinColumn,
+} from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Client } from "./client.entity";
 import { Collaborator } from "./collaborator.entity";
@@ -10,21 +18,20 @@ export class Attendance {
   id: string;
 
   @CreateDateColumn()
-  date:Date
+  date: Date;
 
-  @Column({default:true})
-  isActive:boolean
+  @Column({ default: true })
+  isActive: boolean;
 
   @OneToOne(() => Services)
   @JoinColumn()
   address: Services;
 
-  @ManyToOne(type=>Client)
-  client:Client
+  @ManyToOne((type) => Client, (client) => client.attendance, { eager: true })
+  client: Client;
 
-  @ManyToOne(type=>Collaborator)
-  collaborator:Collaborator
-
+  @ManyToOne((type) => Collaborator)
+  collaborator: Collaborator;
 
   constructor() {
     if (!this.id) {

@@ -1,7 +1,7 @@
 import {
   Entity,
   Column,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany
@@ -13,7 +13,7 @@ import { Client_plan } from "./client_plan.entity";
 
 @Entity("Client")
 export class Client {
-  @PrimaryColumn("uuid")
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column({ length: 120 })
@@ -23,7 +23,7 @@ export class Client {
   @Exclude()
   cpf: string;
 
-  @Column({length:11})
+  @Column()
   telephone: string;
 
   @Column({ length: 100 })
