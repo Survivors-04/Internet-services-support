@@ -4,9 +4,7 @@ import {
   PrimaryColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
-  OneToMany,
+  OneToMany
 } from "typeorm";
 import { Exclude } from "class-transformer";
 import { v4 as uuid } from "uuid";
