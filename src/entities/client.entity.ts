@@ -32,7 +32,7 @@ export class Client {
   password: string;
 
   @Column({ default: true })
-  isActive: boolean;
+  is_active: boolean;
 
   @CreateDateColumn()
   created_date: Date;

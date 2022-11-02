@@ -24,7 +24,7 @@ export class Supervisor {
   is_manager: boolean;
 
   @Column()
-  isActive:boolean
+  is_active:boolean
 
   @Column({ length: 120 })
   @Exclude()
