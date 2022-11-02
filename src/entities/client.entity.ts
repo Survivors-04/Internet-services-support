@@ -1,39 +1,34 @@
 import {
   Entity,
   Column,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToMany,
-  JoinTable,
   OneToMany,
 } from "typeorm";
 import { Exclude } from "class-transformer";
 import { v4 as uuid } from "uuid";
-import { Internet_plan } from "./internet_plan.entity";
 import { Attendance } from "./attendance.entity";
 import { Client_plan } from "./client_plan.entity";
 
 @Entity("Client")
 export class Client {
-  @PrimaryColumn("uuid")
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column({ length: 120 })
   name: string;
 
-  @Column({ length: 120 })
-  @Exclude()
+  @Column({ length: 14 })
   cpf: string;
 
   @Column()
-  telephone: number;
+  telephone: string;
 
   @Column({ length: 100 })
   email: string;
 
   @Column({ length: 120 })
-  @Exclude()
   password: string;
 
   @Column({ default: true })

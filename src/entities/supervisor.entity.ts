@@ -10,18 +10,21 @@ export class Supervisor {
   @Column()
   name: string;
 
-  @Column({ length: 120 })
+  @Column({length:14})
   @Exclude()
   cpf: string;
 
-  @Column()
-  telephone: number;
+  @Column({length:11})
+  telephone: string;
 
   @Column({ length: 100 })
   email: string;
 
   @Column()
   is_manager: boolean;
+
+  @Column()
+  isActive:boolean
 
   @Column({ length: 120 })
   @Exclude()

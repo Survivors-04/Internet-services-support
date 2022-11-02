@@ -19,6 +19,7 @@ export interface IColaboratorRequest extends ICollaboratorUpdateRequest {
   password: string;
   isActive: boolean;
 }
+
 export interface ICollaborator {
   name: string;
   cpf: string;
@@ -27,3 +28,4 @@ export interface ICollaborator {
   password: string;
   is_Active: true;
 }
+
