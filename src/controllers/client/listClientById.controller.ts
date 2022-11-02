@@ -1,4 +1,4 @@
-import listClientByIdService from "../../services/client/listClientById.service";
+import {listClientByIdService} from "../../services/client/listClientById.service";
 import { Request, Response } from "express";
 import { instanceToPlain } from "class-transformer";
 
