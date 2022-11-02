@@ -3,7 +3,7 @@ import { Collaborator } from "../../entities/collaborator.entity";
 import { AppError } from "../../errors/appError";
 
 
-const deleteCollaboratorService = async (id:string) => {
+export const deleteCollaboratorService = async (id:string) => {
   const collaboratorsRepo = AppDataSource.getRepository(Collaborator);
   const collaboratorToBeDeleted = await collaboratorsRepo.findOneBy({ id:id });
 
@@ -13,4 +13,3 @@ const deleteCollaboratorService = async (id:string) => {
 
 };
 
-export { deleteCollaboratorService }; 

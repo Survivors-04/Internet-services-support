@@ -12,6 +12,24 @@ export interface ISupervisorsLogin {
   password: string;
 }
 
+export interface ICreateSupervisorRequest {
+  name: string;
+  cpf: string;
+  telephone: string;
+  email: string;
+  isManager: boolean;
+  password: string;
+}
+
+export interface IUpdateSupervisorRequest {
+  id: string;
+  telephone: string;
+  email: string;
+  is_Manager: boolean;
+  password: string;
+  is_active: boolean;
+}
+
 export interface IManager {}
 
 export interface IManagerLogin {}

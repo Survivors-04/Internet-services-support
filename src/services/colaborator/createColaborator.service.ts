@@ -4,7 +4,7 @@ import { Collaborator } from "../../entities/collaborator.entity";
 import { AppError } from "../../errors/appError";
 import { IColaboratorRequest } from "../../interfaces/collaborator";
 
-const createColaboratorService = async (
+export const createColaboratorService = async (
   data: IColaboratorRequest
 ): Promise<Collaborator> => {
   const { email, cpf, password } = data;
@@ -26,4 +26,4 @@ const createColaboratorService = async (
   return newColaborator;
 };
 
-export { createColaboratorService };
+

@@ -1,19 +1,13 @@
 import { AppDataSource } from "../../data-source"
 import { AppError } from "../../errors/appError"
 import { Supervisor } from "../../entities/supervisor.entity"
+import { ICreateSupervisorRequest } from "../../interfaces/supervisors"
 
 // importar entidade Sueprvisors
 
-export interface ICreateSupervisorRequest {
-    name: string,
-    cpf: string,
-    telephone: number,
-    email: string,
-    isManager: boolean,
-    password: string
-}
 
-const createSupervisorService = async ({name, cpf, telephone, email, isManager, password}: ICreateSupervisorRequest)=>{
+
+export const createSupervisorService = async ({name, cpf, telephone, email, isManager, password}: ICreateSupervisorRequest)=>{
 
     const supervisorsRepository = AppDataSource.getRepository(Supervisor)
 
@@ -40,5 +34,3 @@ const createSupervisorService = async ({name, cpf, telephone, email, isManager, 
     return newSupervisor
 
 }
-
-export default createSupervisorService
