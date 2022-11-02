@@ -1,10 +1,8 @@
-
+import { ISupervisorsLogin, ISupervisorsRequest } from "../../interfaces/supervisors";
 import { ICollaborator } from "../../interfaces/collaborator";
 import { IInternetPlan } from "../../interfaces/internetPlan";
-import { ISupervisorsRequest } from "../../interfaces/supervisors";
 
 export const mockedSupervisor: ISupervisorsRequest = {
-<<<<<<< HEAD
   name: "Teste",
   email: "teste@mail.com",
   password: "Teste123",
@@ -27,13 +25,24 @@ export const mockedCollaborator:ICollaborator = {
   password: "Teste123",
   is_Active: true
 };
-=======
-    name: "Teste",
+
+export const mockedSupervisorLogin: ISupervisorsLogin = {
     email: "teste@mail.com",
-    password: "Teste123",
+    password: "Teste132",
+}
+
+export const mockedManager: ISupervisorsRequest = {
+    name: "Manager",
+    email: "manager@mail.com",
+    password: "Manager123",
     cpf: 12345678901,
     telephone: 13984512783,
-    is_manager: false
+    is_manager: true,
+}   
+
+export const mockedManagerLogin: ISupervisorsLogin = {
+    email: "manager@mail.com",
+    password: "Manager123"
 }
 
 export const mockedAttendance = {
@@ -41,5 +50,3 @@ export const mockedAttendance = {
   client_id: "",
   service_id: "",
 };
-
->>>>>>> 57a2f427dd32b0e04cb022f279134b3b70fb2797
