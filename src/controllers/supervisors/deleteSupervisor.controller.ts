@@ -1,4 +1,4 @@
-import {deleteSupervisorService} from "../../services/supervisors/deleteSupervisor.services"
+import {deleteSupervisorService} from "../../services/supervisors/deleteSupervisor.service"
 import { Request, Response } from "express"
 
 

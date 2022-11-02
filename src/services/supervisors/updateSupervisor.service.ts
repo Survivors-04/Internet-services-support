@@ -1,17 +1,11 @@
 import { AppDataSource } from "../../data-source";
 import { Supervisor } from "../../entities/supervisor.entity";
 import { AppError } from "../../errors/appError";
+import { IUpdateSupervisorRequest } from "../../interfaces/supervisors";
 
-interface IUpdateSupervisorRequest {
-  id: string;
-  telephone: string;
-  email: string;
-  is_Manager: boolean;
-  password: string;
-  is_active: boolean;
-}
 
-const updateSupervisorService = async ({
+
+export const updateSupervisorService = async ({
   id,
   telephone,
   email,
@@ -43,4 +37,4 @@ const updateSupervisorService = async ({
   return userUpdated;
 };
 
-export default updateSupervisorService;
+

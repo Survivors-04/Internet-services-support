@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AppError } from "../../errors/appError";
-import { updateSupervisorService } from "../../services/supervisors/updateSupervisor.services";
+import { updateSupervisorService } from "../../services/supervisors/updateSupervisor.service";
 
 const updateSupervisorController = (req: Request, res: Response) => {
   try {
