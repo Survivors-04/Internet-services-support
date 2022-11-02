@@ -12,3 +12,4 @@ export const deleteCollaboratorService = async (id:string) => {
   await collaboratorsRepo.update( id ,{ is_active: false } );
 
 };
+

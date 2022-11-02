@@ -3,7 +3,7 @@ import { Collaborator } from "../../entities/collaborator.entity";
 import { AppError } from "../../errors/appError";
 import { IColaboratorRequest } from "../../interfaces/collaborator";
 
-export const updateColaboratorService = async (
+const updateColaboratorService = async (
   data: IColaboratorRequest,
   id: string
 ): Promise<Collaborator> => {

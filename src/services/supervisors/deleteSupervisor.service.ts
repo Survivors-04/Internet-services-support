@@ -4,7 +4,7 @@ import { AppError } from "../../errors/appError"
 
 
 
-const deleteSupervisorService = async (id:string)=>{
+export const deleteSupervisorService = async (id:string)=>{
 
     const supervisorsRepository = AppDataSource.getRepository(Supervisor)
 
@@ -29,5 +29,3 @@ const deleteSupervisorService = async (id:string)=>{
 
 
 }
-
-export default deleteSupervisorService

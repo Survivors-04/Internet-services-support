@@ -5,7 +5,7 @@ import { AppError } from "../../errors/appError";
 import { hash } from "bcrypt";
 
 export const updateClientService = async (
-  { telephone, email, password, isActive }: IClientUpdate,
+  { telephone, email, password }: IClientUpdate,
   id: string
 ) => {
   const clientRepository = AppDataSource.getRepository(Client);
@@ -30,3 +30,4 @@ export const updateClientService = async (
 
   return client!;
 };
+

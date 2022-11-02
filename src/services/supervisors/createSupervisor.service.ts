@@ -7,7 +7,7 @@ import { ICreateSupervisorRequest } from "../../interfaces/supervisors"
 
 
 
-const createSupervisorService = async ({name, cpf, telephone, email, isManager, password}: ICreateSupervisorRequest)=>{
+export const createSupervisorService = async ({name, cpf, telephone, email, isManager, password}: ICreateSupervisorRequest)=>{
 
     const supervisorsRepository = AppDataSource.getRepository(Supervisor)
 
@@ -34,5 +34,3 @@ const createSupervisorService = async ({name, cpf, telephone, email, isManager, 
     return newSupervisor
 
 }
-
-export default createSupervisorService

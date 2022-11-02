@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { AppError } from "../../errors/appError";
 import handleErrorMiddleware from "../../middlewares/HandleError.middleware";
-import createSupervisorService from "../../services/supervisors/createSupervisor.service";
+import {createSupervisorService} from "../../services/supervisors/createSupervisorService.services";
+
 import { instanceToPlain } from "class-transformer";
 
 const createSupervisorsController = async (req: Request, res: Response)=>{

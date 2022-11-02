@@ -25,3 +25,4 @@ export const createColaboratorService = async (
 
   return newColaborator;
 };
+
