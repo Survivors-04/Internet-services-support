@@ -3,10 +3,10 @@ import { Collaborator } from "../../entities/collaborator.entity";
 import { AppError } from "../../errors/appError";
 import { IColaboratorRequest } from "../../interfaces/collaborator";
 
-const updateColaboratorService = async (
+export const updateColaboratorService = async (
   data: IColaboratorRequest,
   id: string
-) => {
+):Promise<Collaborator> => {
   const collaboratorsRepo = AppDataSource.getRepository(Collaborator);
   const collaborator = await collaboratorsRepo.findOneBy({ id: id });
 
@@ -24,7 +24,5 @@ const updateColaboratorService = async (
 
   const updatedData = await collaboratorsRepo.findOneBy({ id });
 
-  return updatedData as IColaboratorRequest;
+  return updatedData!;
 };
-
-export { updateColaboratorService };

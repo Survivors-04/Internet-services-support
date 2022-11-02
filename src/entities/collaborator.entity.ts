@@ -13,7 +13,7 @@ export class Collaborator {
   name: string;
 
   @Column({ default: true })
-  isActive: boolean;
+  is_active: boolean;
 
   @Column({ length: 14 })
   cpf: string;
