@@ -26,6 +26,7 @@ export const mockedCollaborator:ICollaborator = {
   is_Active: true
 };
 
+
 export const mockedSupervisorLogin: ISupervisorsLogin = {
     email: "teste@mail.com",
     password: "Teste132",
@@ -45,8 +46,11 @@ export const mockedManagerLogin: ISupervisorsLogin = {
     password: "Manager123"
 }
 
+
 export const mockedAttendance = {
   collaborator_id: "",
   client_id: "",
   service_id: "",
 };
+
+
