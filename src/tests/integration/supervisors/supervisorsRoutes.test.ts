@@ -57,9 +57,11 @@ describe("/supervisors", () => {
     const supervisorLogin = await request(app)
       .post("/login")
       .send(mockedSupervisorLogin);
+    const token = `Bearer ${supervisorLogin.body.token}`;
+
     const { body, status } = await request(app)
       .get("/supervisors")
-      .set("Authorization", `Bearer ${supervisorLogin}`);
+      .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -69,24 +71,84 @@ describe("/supervisors", () => {
     await request(app).post("/supervisors").send(mockedManager);
     const managerLogin = await request(app)
       .post("/login")
-      .send(mockedManagerLogin);
+      .send(mockedSupervisorLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
     const { body } = await request(app)
       .get("/supervisors")
-      .set("Authorization", `Bearer ${managerLogin.body.token}`);
+      .set("Authorization", token);
 
     expect(body).toHaveLength(2);
   });
 
-  test("GET /supervisors - should not be able to list supervisors without manger permission", async () => {
+  test("GET /supervisors - Should not be able to list supervisors without manager permission", async () => {
     const supervisorLogin = await request(app)
       .post("/login")
-      .send(mockedManagerLogin);
+      .send(mockedSupervisorLogin);
+    const token = `Bearer ${supervisorLogin.body.token}`;
+
     const { body, status } = await request(app)
       .get("/supervisors")
-      .set("Authorization", `Bearer ${supervisorLogin.body.token}`);
+      .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
   });
 
+  test("PATCH /supervisors/:id - Must be able to update supervisor", async () => {
+    const newValues = { name: "Joana Brito", email: "joanabrito@mail.com" };
+
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const updatedSupervisor = await request(app)
+      .get("/supervisors")
+      .set("Authorization", token);
+    const updatedSupervisorId = updatedSupervisor.body[0].id;
+
+    const { body, status } = await request(app)
+      .patch(`/supervisors/${updatedSupervisorId}`)
+      .set("Autorization", token)
+      .send(newValues);
+
+    expect(body[0].name).toEqual("Joana Brito");
+    expect(body[0]).not.toHaveProperty("password");
+    expect(status).toBe(200);
+  });
+
+  test("PATCH /supervisors/:id - Should not be able to update supervisor without manager permission", async () => {
+    const newValues = { name: "false" };
+
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const managerToken = `Bearer ${managerLogin.body.token}`;
+
+    const supervisorLogin = await request(app)
+      .post("/login")
+      .send(mockedSupervisorLogin);
+    const supervisorToken = supervisorLogin.body.token;
+
+    const updatedSupervisor = await request(app)
+      .get("/supervisors")
+      .set("Authorization", managerToken);
+    const supervisorId = updatedSupervisor.body[0].token;
+
+    const { body, status } = await request(app)
+      .patch(`/users/${supervisorId}`)
+      .send(newValues)
+      .set("Authorization", supervisorToken);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
+  });
+
+  test("PATCH /supervisors/:id - Should not be ablue to update supervisor with invalid id", async () => {
+    const newValues = { name: "bob" };
+
+    const managerLogin = await request(app).post('/login').send(mockedManagerLogin)
+    const token = `Bearer ${managerLogin}`
+  });
 });

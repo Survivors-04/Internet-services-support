@@ -12,10 +12,6 @@ export interface ISupervisorsLogin {
   password: string;
 }
 
-export interface IManager {
-    
-}
+export interface IManager {}
 
-export interface IManagerLogin {
-
-}
+export interface IManagerLogin {}
