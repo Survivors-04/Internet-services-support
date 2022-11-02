@@ -6,7 +6,7 @@ import { IColaboratorRequest } from "../../interfaces/collaborator";
 export const updateColaboratorService = async (
   data: IColaboratorRequest,
   id: string
-) => {
+):Promise<Collaborator> => {
   const collaboratorsRepo = AppDataSource.getRepository(Collaborator);
   const collaborator = await collaboratorsRepo.findOneBy({ id: id });
 
@@ -24,5 +24,5 @@ export const updateColaboratorService = async (
 
   const updatedData = await collaboratorsRepo.findOneBy({ id });
 
-  return updatedData as IColaboratorRequest;
+  return updatedData!;
 };
