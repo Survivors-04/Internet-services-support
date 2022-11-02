@@ -6,3 +6,12 @@ export interface ISupervisorsRequest {
     telephone: number;
     is_manager: boolean;
 }
+
+export interface ICreateSupervisorRequest {
+    name: string,
+    cpf: string,
+    telephone: string,
+    email: string,
+    isManager: boolean,
+    password: string
+}

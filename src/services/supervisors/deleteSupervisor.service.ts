@@ -16,13 +16,13 @@ const deleteSupervisorService = async (id:string)=>{
 
     if(!selectedSupervisor){
 
-        throw new AppError("Supervisor não encontrado", 400)
+        throw new AppError("Supervisor não encontrado")
         
     }
 
-    // selectedSupervisor.is_active = false
+     selectedSupervisor.is_active = false
 
-    // await AppDataSource.createQueryBuilder().delete().from(Supervisor).where("id = :id", { id: 1 }).execute()
+     await AppDataSource.createQueryBuilder().delete().from(Supervisor).where("id = :id", { id: 1 }).execute()
 
     return true
     // const userDeleted = allSupervisors.filter(supervisor=>supervisor.id === id)

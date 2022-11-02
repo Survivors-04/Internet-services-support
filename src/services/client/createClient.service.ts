@@ -4,7 +4,7 @@ import { IClientRequest } from "../../interfaces/clients";
 import { AppError } from "../../errors/appError";
 import { hash } from "bcrypt";
 
-const createClientService = async ({
+export const createClientService = async ({
   name,
   cpf,
   telephone,
@@ -39,5 +39,3 @@ const createClientService = async ({
 
   return client;
 };
-
-export default createClientService;

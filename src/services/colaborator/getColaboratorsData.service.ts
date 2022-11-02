@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Collaborator } from "../../entities/collaborator.entity";
 import { AppError } from "../../errors/appError";
 
-const getColaboratorsDataService = async ( id:string ):Promise<Collaborator | Collaborator[]> =>{
+export const getColaboratorsDataService = async ( id:string ):Promise<Collaborator | Collaborator[]> =>{
   
   const collaboratorsRepo = AppDataSource.getRepository(Collaborator);
 
@@ -19,4 +19,3 @@ const getColaboratorsDataService = async ( id:string ):Promise<Collaborator | Co
 
   return collaborators;
 }; 
-export { getColaboratorsDataService };
