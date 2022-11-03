@@ -19,12 +19,16 @@ export interface IColaboratorRequest extends ICollaboratorUpdateRequest {
   password: string;
   isActive: boolean;
 }
-export interface ICollaborator  {
-  
-  name: string,
-  cpf: string,
-  telephone: string,
-  email: string,
-  password: string,
-  is_active: true,
-};
+export interface ICollaborator {
+  name: string;
+  cpf: string;
+  telephone: string;
+  email: string;
+  password: string;
+  is_active: true;
+}
+
+export interface ICollaboratorLogin {
+  email: string;
+  password: string;
+}
