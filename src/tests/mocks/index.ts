@@ -1,6 +1,7 @@
 import {
   IColaboratorRequest,
   ICollaborator,
+  ITeams,
 } from "../../interfaces/collaborator";
 import {
   ISupervisorsLogin,
@@ -59,3 +60,8 @@ export const mockedAttendance = {
   client_id: "",
   service_id: "",
 };
+
+export const mockedTeams:ITeams = {
+  supervisor_id: "",
+  collaborator_id: "",
+}
