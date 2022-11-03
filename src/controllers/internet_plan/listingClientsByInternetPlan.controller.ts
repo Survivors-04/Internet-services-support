@@ -8,7 +8,7 @@ export const listingClientsByInternetPlanController = async (
   res: Response
 ) => {
   const id = req.params.id;
-  const clientsByInternetPlan: IClient[] =
+  const clientsByInternetPlan =
     await listingClientsByInternetPlanService(id);
 
   return res.status(200).json(clientsByInternetPlan);
