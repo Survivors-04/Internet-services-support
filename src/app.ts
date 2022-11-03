@@ -10,10 +10,9 @@ import supervisorsRoutes from "./routes/supervisors.routes";
 const app = express();
 app.use(express.json());
 
+app.use(handleErrorMiddleware);
 app.use("/clients", clientRoutes);
 app.use("/services", servicesRoutes);
-
-app.use(handleErrorMiddleware);
 app.use("/collaborators", collaboratorRouter);
 app.use("/supervisors", supervisorsRoutes);
 
