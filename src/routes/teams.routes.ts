@@ -2,6 +2,8 @@ import { Router } from "express";
 import { addCollaboratorInTeamController } from "../controllers/teams/addCollaboratorInTeam.controller";
 import { createTeamController } from "../controllers/teams/createTeam.controller";
 import { listingAllTeamsController } from "../controllers/teams/listingAllTeams.controller";
+import { listingTeamByIdController } from "../controllers/teams/listingTeamById.controller";
+import { listingTeamByIdSupervisorController } from "../controllers/teams/listingTeamsByIdSupervisor.controller";
 import { removeCollaboratorInTeamController } from "../controllers/teams/removeCollaboratorInTeam.controller";
 import {
   addCollaboratorInTeamSchema,
@@ -25,6 +27,9 @@ teamsRoutes.post(
   addCollaboratorInTeamController
 );
 teamsRoutes.get("", listingAllTeamsController);
+teamsRoutes.get("/:id", listingTeamByIdController);
+teamsRoutes.get("/supervisor/:id", listingTeamByIdSupervisorController);
+teamsRoutes.delete("/:id", listingTeamByIdSupervisorController);
 teamsRoutes.delete(
   "/:id/collaborator",
   validateAddCollaboratorInTeam(addCollaboratorInTeamSchema),
