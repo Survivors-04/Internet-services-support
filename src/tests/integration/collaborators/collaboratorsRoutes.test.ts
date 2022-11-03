@@ -137,7 +137,7 @@ describe("/collaborators", () => {
     const collaboratorId = updatedCollaborator.body[0].token;
 
     const { body, status } = await request(app)
-      .patch(`/users/${collaboratorId}`)
+      .patch(`/supervisors/${collaboratorId}`)
       .send(newValues)
       .set("Authorization", collaboratorToken);
 
@@ -278,7 +278,7 @@ describe("/collaborators", () => {
   });
 
   test("DELETE /collaborators/:id - Should not be able to delete user with is_active = false", async () => {
-    await request(app).post("/users").send(mockedSupervisor);
+    await request(app).post("/supervisors").send(mockedSupervisor);
 
     const supervisorLogin = await request(app)
       .post("/login")
@@ -298,8 +298,8 @@ describe("/collaborators", () => {
     expect(body).toHaveProperty("message");
   });
 
-  test("DELETE - Should not be able to delete user with invalid id", async () => {
-    await request(app).post("/users").send(mockedSupervisor);
+  test("DELETE /collaborators/:id - Should not be able to delete user with invalid id", async () => {
+    await request(app).post("/supervisors").send(mockedSupervisor);
 
     const supervisorLogin = await request(app)
       .post("/login")
@@ -307,7 +307,7 @@ describe("/collaborators", () => {
     const token = supervisorLogin.body.token;
 
     const response = await request(app)
-      .delete(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`)
+      .delete(`/collaborators/13970660-5dbe-423a-9a9d-5c23b37943cf`)
       .set("Authorization", token);
 
     expect(response.status).toBe(404);
