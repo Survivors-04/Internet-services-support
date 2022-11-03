@@ -4,7 +4,7 @@ import handleErrorMiddleware from "../../middlewares/HandleError.middleware";
 import { instanceToPlain } from "class-transformer";
 import { createSupervisorService } from "../../services/supervisors/createSupervisor.service";
 
-const createSupervisorsController = async (req: Request, res: Response) => {
+export const createSupervisorsController = async (req: Request, res: Response) => {
   const { name, cpf, telephone, email, is_manager, password, is_active } =
     req.body;
   try {
@@ -26,4 +26,4 @@ const createSupervisorsController = async (req: Request, res: Response) => {
   }
 };
 
-export default createSupervisorsController;
+

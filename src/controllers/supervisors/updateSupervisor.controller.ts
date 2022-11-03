@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { AppError } from "../../errors/appError";
 import { updateSupervisorService } from "../../services/supervisors/updateSupervisor.service";
 
-const updateSupervisorController = (req: Request, res: Response) => {
+export const updateSupervisorController = (req: Request, res: Response) => {
   try {
     const { id } = req.params;
 
@@ -24,4 +24,4 @@ const updateSupervisorController = (req: Request, res: Response) => {
   }
 };
 
-export default updateSupervisorController;
+
