@@ -277,7 +277,7 @@ describe("/supervisors", () => {
     expect(status).toBe(403);
   });
 
-  test("DELETE /supervisors/:id -  shouldn't be able to delete user with is_active = false", async () => {
+  test("DELETE /supervisors/:id - Should not be able to delete user with is_active = false", async () => {
     await request(app).post("/users").send(mockedManager);
 
     const managerLogin = await request(app)
@@ -298,7 +298,7 @@ describe("/supervisors", () => {
     expect(body).toHaveProperty("message");
   });
 
-  test("DELETE -  should not be able to delete user with invalid id", async () => {
+  test("DELETE - Should not be able to delete user with invalid id", async () => {
     await request(app).post("/users").send(mockedManager);
 
     const managerLogin = await request(app)
