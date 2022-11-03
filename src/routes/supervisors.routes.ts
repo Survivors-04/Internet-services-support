@@ -1,8 +1,8 @@
 import { Router } from "express";
-import createSupervisorsController from "../controllers/supervisors/createSupervisors.controller";
-import deleteSupervisorControler from "../controllers/supervisors/deleteSupervisor.controller";
-import listAllSupervisorsController from "../controllers/supervisors/listAllSupervisors.controller";
-import updateSupervisorController from "../controllers/supervisors/updateSupervisor.controller";
+import { createSupervisorsController } from "../controllers/supervisors/createSupervisors.controller";
+import { deleteSupervisorControler } from "../controllers/supervisors/deleteSupervisor.controller";
+import { listAllSupervisorsController } from "../controllers/supervisors/listAllSupervisors.controller";
+import { updateSupervisorController } from "../controllers/supervisors/updateSupervisor.controller";
 
 const supervisorsRoutes = Router();
 
