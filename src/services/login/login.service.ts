@@ -58,25 +58,10 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
     {
       role: role,
       is_active: user.is_active,
-      id: user.id,
     },
     process.env.SECRET_KEY as string,
-    { expiresIn: "24h" }
+    { expiresIn: "24h", subject: user.id }
   );
 
   return token;
 };
-
-// searchUserOnClient?
-
-// user = searchUserOnClient
-//     :
-// searchUserOnCollaborator?
-
-// user = searchUserOnCollaborator
-//     :
-// searchUserOnSupervisor?
-
-//  user = searchUserOnSupervisor
-//     :
-// throw new AppError("Usuário não encontrado")
