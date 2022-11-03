@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Client } from "../../entities/client.entity";
 import { AppError } from "../../errors/appError";
 
-const deleteClientService = async (id: string) => {
+ export const deleteClientService = async (id: string) => {
   const clientRepository = AppDataSource.getRepository(Client);
 
   const client = await clientRepository.findOneBy({
@@ -13,11 +13,11 @@ const deleteClientService = async (id: string) => {
     throw new AppError("Client not found", 404);
   }
 
-  if (!client?.isActive) {
+  if (!client?.is_active) {
     throw new AppError("This account are disabled", 400);
   }
 
-  client.isActive = false;
+  client.is_active = false;
   await clientRepository.save(client);
 
   const returningClient = await clientRepository.findOneBy({
@@ -27,4 +27,3 @@ const deleteClientService = async (id: string) => {
   return returningClient!;
 };
 
-export default deleteClientService;

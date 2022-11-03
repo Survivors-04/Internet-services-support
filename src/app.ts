@@ -5,6 +5,7 @@ import handleErrorMiddleware from "./middlewares/HandleError.middleware";
 import collaboratorRouter from "./routes/colaborator.routes";
 import clientRoutes from "./routes/client.routes";
 import servicesRoutes from "./routes/services.routes";
+import supervisorsRoutes from "./routes/supervisors.routes";
 
 const app = express();
 app.use(express.json());
@@ -14,5 +15,6 @@ app.use("/services", servicesRoutes);
 
 app.use(handleErrorMiddleware);
 app.use("/collaborators", collaboratorRouter);
+app.use("/supervisors", supervisorsRoutes);
 
 export default app;

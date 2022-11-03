@@ -21,7 +21,7 @@ export class Attendance {
   date: Date;
 
   @Column({ default: true })
-  isActive: boolean;
+  is_active: boolean;
 
   @OneToOne(() => Services)
   @JoinColumn()

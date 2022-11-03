@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source"
 import { Supervisor } from "../../entities/supervisor.entity"
 
 
-const listAllSupervisorsService = async ()=>{
+export const listAllSupervisorsService = async ()=>{
 
     const supervisorRepository = AppDataSource.getRepository(Supervisor)
 
@@ -11,5 +11,3 @@ const listAllSupervisorsService = async ()=>{
     return allSupervisors
 
 }
-
-export default listAllSupervisorsService
