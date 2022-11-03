@@ -1,12 +1,13 @@
 import {
   IColaboratorRequest,
   ICollaborator,
+  ITeams,
+  ICollaboratorLogin,
 } from "../../interfaces/collaborator";
 import {
   ISupervisorsLogin,
   ISupervisorsRequest,
 } from "../../interfaces/supervisors";
-import {} from "../../interfaces/collaborator";
 import { IInternetPlanRequest } from "../../interfaces/internetPlan";
 
 export const mockedSupervisor: ISupervisorsRequest = {
@@ -54,8 +55,18 @@ export const mockedCollaborator: ICollaborator = {
   is_active: true,
 };
 
+export const mockedCollaboratorLogin: ICollaboratorLogin = {
+  email: "teste@mail.com",
+  password: "Teste123",
+};
+
 export const mockedAttendance = {
   collaborator_id: "",
   client_id: "",
   service_id: "",
 };
+
+export const mockedTeams:ITeams = {
+  supervisor_id: "",
+  collaborator_id: "",
+}

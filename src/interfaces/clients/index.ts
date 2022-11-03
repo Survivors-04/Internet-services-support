@@ -21,5 +21,5 @@ export interface IClientUpdate {
   telephone?: string;
   email?: string;
   password?: string;
-  isActive?: boolean;
+  is_active?: boolean;
 }

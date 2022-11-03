@@ -25,7 +25,7 @@ describe("/plans", () => {
     await connection.destroy();
   });
 
-  test("POST /plans - Must be able to create a supervisor internet_plan", async () => {
+  test("POST /plans - Must be able to create a internet_plan", async () => {
     const { body, status } = await request(app)
       .post("/plans")
       .send(mockedInternetPlans);

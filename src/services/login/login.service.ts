@@ -3,9 +3,10 @@ import { Client } from "../../entities/client.entity";
 import { Collaborator } from "../../entities/collaborator.entity";
 import { Supervisor } from "../../entities/supervisor.entity";
 import { AppError } from "../../errors/appError";
-import bcrypt, { compare } from "bcrypt";
+
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { verify } from "crypto";
+import "dotenv/config";
 
 interface ILoginRequest {
   email: string;
@@ -42,55 +43,25 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
     user = searchUserOnSupervisor;
     role = 3;
   } else {
-    throw new AppError("Usuário não encontrado");
+    throw new AppError("Wrong email/password", 403);
   }
 
-  if(user.is_active === false){
-    throw new AppError("A conta está inativa")
+  if (user.is_active === false) {
+    throw new AppError("User not Active", 403);
   }
 
-  const verifyPassword = await compare(password, user.password);
-
-  if (!verifyPassword) {
-    throw new AppError("Incorrect email or password");
+  if (!bcrypt.compareSync(password, user.password)) {
+    throw new AppError("Wrong email/password", 403);
   }
 
   const token = jwt.sign(
-    { role: role},
-    String(process.env.SECRET_KEY),
+    {
+      role: role,
+      is_active: user.is_active,
+    },
+    process.env.SECRET_KEY as string,
     { expiresIn: "24h", subject: user.id }
   );
 
-  return token
-
+  return token;
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// searchUserOnClient?
-
-// user = searchUserOnClient
-//     :
-// searchUserOnCollaborator?
-
-// user = searchUserOnCollaborator
-//     :
-// searchUserOnSupervisor?
-
-//  user = searchUserOnSupervisor
-//     :
-// throw new AppError("Usuário não encontrado")
