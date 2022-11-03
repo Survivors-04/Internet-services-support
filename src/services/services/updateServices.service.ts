@@ -1,12 +1,12 @@
 import { AppDataSource } from "../../data-source";
 import { Services } from "../../entities/services.entity";
 import { AppError } from "../../errors/appError";
-import { IService, IUpdateService } from "../../interfaces/services";
+import { IUpdateService } from "../../interfaces/services";
 
 export const updateServicesService = async (
   id: string,
   data: IUpdateService
-): Promise<IService> => {
+): Promise<Services> => {
   const serviceRepository = AppDataSource.getRepository(Services);
   const service = await serviceRepository.findOne({
     where: { id },
