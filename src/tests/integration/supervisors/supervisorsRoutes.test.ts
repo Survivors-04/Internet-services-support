@@ -33,14 +33,14 @@ describe("/supervisors", () => {
     expect(body).toHaveProperty("name");
     expect(body).toHaveProperty("email");
     expect(body).toHaveProperty("is_manager");
-    expect(body).toHaveProperty("cpf");
     expect(body).toHaveProperty("telephone");
+    expect(body).not.toHaveProperty("cpf");
     expect(body).not.toHaveProperty("password");
     expect(body.name).toEqual("Teste");
     expect(body.email).toEqual("teste@mail.com");
-    expect(body.cpf).toEqual("12345678901");
-    expect(body.telephone).toEqual(13984512783);
+    expect(body.telephone).toEqual("13984512783");
     expect(body.is_manager).toEqual(false);
+    expect(body.is_active).toEqual(true)
     expect(status).toBe(201);
   });
 
@@ -148,7 +148,9 @@ describe("/supervisors", () => {
   test("PATCH /supervisors/:id - Should not be ablue to update supervisor with invalid id", async () => {
     const newValues = { name: "bob" };
 
-    const managerLogin = await request(app).post('/login').send(mockedManagerLogin)
-    const token = `Bearer ${managerLogin}`
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin}`;
   });
 });
