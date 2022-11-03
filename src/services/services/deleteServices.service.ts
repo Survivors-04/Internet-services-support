@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Services } from "../../entities/services.entity";
 import { AppError } from "../../errors/appError";
 
-export const deleteServicesService = async (id: string) => {
+export const deleteServicesService = async (id: string): Promise<string> => {
   const serviceRepository = AppDataSource.getRepository(Services);
   const service = await serviceRepository.findOne({ where: { id } });
 
