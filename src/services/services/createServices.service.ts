@@ -5,7 +5,7 @@ import { IService } from "../../interfaces/services";
 
 export const createServicesService = async (
   data: IService
-): Promise<IService> => {
+): Promise<Services> => {
   const serviceRepository = AppDataSource.getRepository(Services);
   const findedService = await serviceRepository.findOne({
     where: { name: data.name },

@@ -1,4 +1,8 @@
 import * as express from "express";
+import {
+  IInternetPlan,
+  IInternetPlanUpdate,
+} from "../../interfaces/internetPlan";
 import { IService, IUpdateService } from "../../interfaces/services";
 
 declare global {
@@ -6,6 +10,8 @@ declare global {
     interface Request {
       dataService: IService;
       dataUpdateService: IUpdateService;
+      dataInternetPlan: IInternetPlan;
+      dataUpdateInternetPlan: IInternetPlanUpdate;
     }
   }
 }

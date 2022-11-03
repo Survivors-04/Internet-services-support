@@ -1,10 +1,13 @@
-import { IColaboratorRequest,ICollaborator } from "../../interfaces/collaborator";
+import {
+  IColaboratorRequest,
+  ICollaborator,
+  ICollaboratorLogin,
+} from "../../interfaces/collaborator";
 import {
   ISupervisorsLogin,
   ISupervisorsRequest,
 } from "../../interfaces/supervisors";
-import {  } from "../../interfaces/collaborator";
-import { IInternetPlan } from "../../interfaces/internetPlan";
+import { IInternetPlanRequest } from "../../interfaces/internetPlan";
 
 export const mockedSupervisor: ISupervisorsRequest = {
   name: "Teste",
@@ -36,7 +39,7 @@ export const mockedManagerLogin: ISupervisorsLogin = {
   password: "Manager123",
 };
 
-export const mockedInternetPlans: IInternetPlan = {
+export const mockedInternetPlans: IInternetPlanRequest = {
   name: "Teste",
   description: "Teste123",
   price: 400.0,
@@ -49,6 +52,11 @@ export const mockedCollaborator: ICollaborator = {
   email: "teste@mail.com",
   password: "Teste123",
   is_active: true,
+};
+
+export const mockedCollaboratorLogin: ICollaboratorLogin = {
+  email: "teste@mail.com",
+  password: "Teste123",
 };
 
 export const mockedAttendance = {

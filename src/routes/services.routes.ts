@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { createServicesController } from "../controllers/services/createServices.controller";
+import { deleteServicesController } from "../controllers/services/deleteServices.controller";
 import { listingServicesController } from "../controllers/services/listingServices.controller";
 import { updateServicesController } from "../controllers/services/updateServices.controller";
 import {
@@ -24,6 +25,6 @@ servicesRoutes.patch(
   validateServiceUpdate(serviceUpdateSchema),
   updateServicesController
 );
-servicesRoutes.delete("/:id");
+servicesRoutes.delete("/:id", deleteServicesController);
 
 export default servicesRoutes;
