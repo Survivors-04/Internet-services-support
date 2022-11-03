@@ -10,6 +10,7 @@ import { Exclude } from "class-transformer";
 import { v4 as uuid } from "uuid";
 import { Attendance } from "./attendance.entity";
 import { Client_plan } from "./client_plan.entity";
+import { Internet_plan } from "./internet_plan.entity";
 
 @Entity("Client")
 export class Client {
@@ -40,7 +41,9 @@ export class Client {
   @UpdateDateColumn()
   updated_date: Date;
 
-  @OneToMany((type) => Client_plan, (client_plan) => client_plan.client)
+  @OneToMany((type) => Client_plan, (client_plan) => client_plan.client, {
+    eager: true,
+  })
   client_plan: Client_plan[];
 
   @OneToMany((type) => Attendance, (attendance) => attendance.client)

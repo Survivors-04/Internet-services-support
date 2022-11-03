@@ -1,6 +1,7 @@
 import {
   IColaboratorRequest,
   ICollaborator,
+  ITeams,
   ICollaboratorLogin,
 } from "../../interfaces/collaborator";
 import {
@@ -85,3 +86,8 @@ export const mockedClientLogin: IClientLogin = {
   email: "client@mail.com",
   password: "Client123",
 };
+
+export const mockedTeams:ITeams = {
+  supervisor_id: "",
+  collaborator_id: "",
+}
