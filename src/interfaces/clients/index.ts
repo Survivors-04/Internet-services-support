@@ -14,12 +14,12 @@ export interface IClient {
   telephone: string;
   createdAt: Date;
   updatedAt: Date;
-  isActive: boolean;
+  is_active: boolean;
 }
 
 export interface IClientUpdate {
   telephone?: string;
   email?: string;
   password?: string;
-  isActive?: boolean;
+  is_active?: boolean;
 }
