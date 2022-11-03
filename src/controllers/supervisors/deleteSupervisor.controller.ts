@@ -2,7 +2,7 @@ import {deleteSupervisorService} from "../../services/supervisors/deleteSupervis
 import { Request, Response } from "express"
 
 
-const deleteSupervisorControler = async (req: Request, res: Response)=>{
+export const deleteSupervisorControler = async (req: Request, res: Response)=>{
 
     const {id} = req.params
 
@@ -12,4 +12,4 @@ const deleteSupervisorControler = async (req: Request, res: Response)=>{
 
 }
 
-export default deleteSupervisorControler
+

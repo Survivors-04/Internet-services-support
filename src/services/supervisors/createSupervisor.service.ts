@@ -23,7 +23,7 @@ export const createSupervisorService = async ({
   );
 
   if (verifyIfAlreadyExists) {
-    throw new AppError("O email já está em uso", 400);
+    throw new AppError("O email já está em uso");
   }
 
   const newSupervisor = new Supervisor();

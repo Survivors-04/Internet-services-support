@@ -12,8 +12,8 @@ export interface IClient {
   cpf: string;
   email: string;
   telephone: string;
-  createdAt: Date;
-  updatedAt: Date;
+  created_date: Date;
+  updated_date: Date;
   is_active: boolean;
 }
 

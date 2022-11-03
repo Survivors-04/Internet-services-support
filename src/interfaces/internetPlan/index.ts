@@ -1,5 +1,18 @@
 export interface IInternetPlan {
-    name: string;
-    description:string;
-    price:number
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+}
+
+export interface IInternetPlanRequest {
+  name: string;
+  description: string;
+  price: number;
+}
+
+export interface IInternetPlanUpdate {
+  name?: string;
+  description?: string;
+  price?: number;
 }
