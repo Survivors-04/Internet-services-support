@@ -20,7 +20,7 @@ export const updateSupervisorService = async ({
   });
 
   if (!selectedSupervisor) {
-    throw new AppError("Usuário não encontrado", 400);
+    throw new AppError("Usuário não encontrado");
   }
 
   await supervisorsRepository.update(id, {
