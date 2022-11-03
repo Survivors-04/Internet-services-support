@@ -40,7 +40,7 @@ describe("/supervisors", () => {
     expect(body.email).toEqual("teste@mail.com");
     expect(body.telephone).toEqual("13984512783");
     expect(body.is_manager).toEqual(false);
-    expect(body.is_active).toEqual(true)
+    expect(body.is_active).toEqual(true);
     expect(status).toBe(201);
   });
 
@@ -152,5 +152,84 @@ describe("/supervisors", () => {
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin}`;
+
+    const updatedSupervisor = await request(app)
+      .get("/supervisors")
+      .set("Authorization", token);
+    const updatedSupervisorId = updatedSupervisor.body[0].id;
+
+    const { body, status } = await request(app)
+      .patch("/supervisors/13970660-5dbe-423a-9a9d-5c23b37943cf")
+      .set("Authorization", token)
+      .send(newValues);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(404);
+  });
+
+  test("PATCH /supervisors/:id - Should not be able to update is_manager field value", async () => {
+    const newValues = { is_manager: false };
+
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const updatedSupervisor = await request(app)
+      .get("/supervisors")
+      .set("Authorization", token);
+    const updatedSupervisorId = updatedSupervisor.body[0].id;
+
+    const response = await request(app)
+      .patch(`/supervisors/${updatedSupervisorId}`)
+      .set("Authorization", token)
+      .send(newValues);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(401);
+  });
+
+  test("PATCH /supervisors/:id - Should not be able to update is_active field value", async () => {
+    const newValues = { is_active: false };
+
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const updatedSupervisor = await request(app)
+      .get("/supervisors")
+      .set("Authorization", token);
+    const updatedSupervisorId = updatedSupervisor.body[0].id;
+
+    const response = await request(app)
+      .patch(`/supervisors/${updatedSupervisorId}`)
+      .set("Authorization", token)
+      .send(newValues);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(401);
+  });
+
+  test("PATCH /supervisors/:id - Should not be able to update id field value", async () => {
+    const newValues = { id: false };
+
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const updatedSupervisor = await request(app)
+      .get("/supervisors")
+      .set("Authorization", token);
+    const updatedSupervisorId = updatedSupervisor.body[0].id;
+
+    const response = await request(app)
+      .patch(`/supervisors/${updatedSupervisorId}`)
+      .set("Authorization", token)
+      .send(newValues);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(401);
   });
 });
