@@ -2,9 +2,10 @@ export interface ISupervisorsRequest {
   name: string;
   email: string;
   password: string;
-  cpf: number;
-  telephone: number;
+  cpf: string;
+  telephone: string;
   is_manager: boolean;
+  is_active: boolean;
 }
 
 export interface ISupervisorsLogin {
