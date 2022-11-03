@@ -29,12 +29,6 @@ export const createClientPlanService = async (
     throw new AppError("Internet plan not found", 404);
   }
 
-  if (internetPlan) {
-    throw new AppError("The customer already has this plan", 400);
-  }
-
-  console.log(internetPlan);
-
   await clientPlanRepository.save({
     id: uuid(),
     client,
