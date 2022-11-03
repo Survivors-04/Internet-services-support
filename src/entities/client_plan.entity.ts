@@ -12,7 +12,7 @@ export class Client_plan {
   @ManyToOne((type) => Client)
   client: Client;
 
-  @ManyToOne((type) => Internet_plan)
+  @ManyToOne((type) => Internet_plan, { eager: true })
   internet_plan: Internet_plan;
 
   constructor() {

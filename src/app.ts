@@ -16,9 +16,9 @@ app.use("/clients", clientRoutes);
 app.use("/services", servicesRoutes);
 app.use("/plans", internetPlanRoutes);
 
-app.use(handleErrorMiddleware);
 app.use("/collaborators", collaboratorRouter);
 app.use("/supervisors", supervisorsRoutes);
 app.use("/login", loginRoutes)
+app.use(handleErrorMiddleware);
 
 export default app;

@@ -3,6 +3,7 @@ import { Client } from "../../entities/client.entity";
 import { Internet_plan } from "../../entities/internet_plan.entity";
 import { Client_plan } from "../../entities/client_plan.entity";
 import { AppError } from "../../errors/appError";
+import { v4 as uuid } from "uuid";
 
 export const createClientPlanService = async (
   internet_plan_id: string,
@@ -16,15 +17,26 @@ export const createClientPlanService = async (
     id: clientId,
   });
 
+  if (!client) {
+    throw new AppError("Client not found", 404);
+  }
+
   const internetPlan = await internetPlanRepository.findOneBy({
     id: internet_plan_id,
   });
 
-  if (!internetPlan || !client) {
-    throw new AppError("Client or internet plan not found", 404);
+  if (!internetPlan) {
+    throw new AppError("Internet plan not found", 404);
   }
 
+  if (internetPlan) {
+    throw new AppError("The customer already has this plan", 400);
+  }
+
+  console.log(internetPlan);
+
   await clientPlanRepository.save({
+    id: uuid(),
     client,
     internet_plan: internetPlan,
   });
