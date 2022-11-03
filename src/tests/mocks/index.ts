@@ -1,8 +1,9 @@
+import { IColaboratorRequest,ICollaborator } from "../../interfaces/collaborator";
 import {
   ISupervisorsLogin,
   ISupervisorsRequest,
 } from "../../interfaces/supervisors";
-import { ICollaborator } from "../../interfaces/collaborator";
+import {  } from "../../interfaces/collaborator";
 import { IInternetPlan } from "../../interfaces/internetPlan";
 
 export const mockedSupervisor: ISupervisorsRequest = {
