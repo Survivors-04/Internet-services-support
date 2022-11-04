@@ -2,10 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Collaborator } from "../../entities/collaborator.entity";
 import { Team } from "../../entities/team.entity";
 import { AppError } from "../../errors/appError";
-import {
-  IAddCollaboratorInTeam,
-  ITeamValidateYup,
-} from "../../interfaces/teams";
+import { IAddCollaboratorInTeam } from "../../interfaces/teams";
 
 export const addCollaboratorInTeamService = async (
   id: string,
