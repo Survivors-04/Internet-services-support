@@ -6,7 +6,7 @@ import deleteClientPlanController from "../controllers/client/deleteClientPlan.c
 import listClientByIdController from "../controllers/client/listClientById.controller";
 import listClientController from "../controllers/client/listClients.controller";
 import updateClientController from "../controllers/client/updateClient.controller";
-import tokenAuthMiddleware from "../middlewares/TokenAuth.middleware";
+import tokenAuthMiddleware from "../middlewares/tokenAuth.middleware";
 import {
   clientCreateSchema,
   validateClientCreate,
