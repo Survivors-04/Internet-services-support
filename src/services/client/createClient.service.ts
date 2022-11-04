@@ -25,14 +25,12 @@ export const createClientService = async ({
     throw new AppError("Password is missing", 400);
   }
 
-  const hashedPassword = await hash(password, 10);
-
   const client = clientRepository.create({
     name,
     cpf,
     telephone,
     email,
-    password: hashedPassword,
+    password: password,
   });
 
   await clientRepository.save(client);
