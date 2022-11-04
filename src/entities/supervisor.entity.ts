@@ -23,7 +23,7 @@ export class Supervisor {
   @Column()
   is_manager: boolean;
 
-  @Column()
+  @Column({default:true})
   is_active:boolean
 
   @Column({ length: 120 })
