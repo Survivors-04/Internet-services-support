@@ -18,6 +18,8 @@ export const updateSupervisorService = async ({
     id,
   });
 
+  console.log(selectedSupervisor)
+
   if (!selectedSupervisor) {
     throw new AppError("Usuário não encontrado");
   }
@@ -29,6 +31,7 @@ export const updateSupervisorService = async ({
     password: password ? password : selectedSupervisor.password,
   });
 
+  console.log(selectedSupervisor)
   const userUpdated = await supervisorsRepository.findOneBy({
     id,
   });

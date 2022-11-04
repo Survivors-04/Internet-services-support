@@ -5,8 +5,9 @@ import { instanceToPlain } from "class-transformer";
 import { createSupervisorService } from "../../services/supervisors/createSupervisor.service";
 
 export const createSupervisorsController = async (req: Request, res: Response) => {
-  const { name, cpf, telephone, email, is_manager, password, is_active } =
+  const { name, cpf, telephone, email, is_manager, password} =
     req.body;
+    console.log(req.body)
     const newSupervisor = await createSupervisorService({
       name,
       cpf,
