@@ -5,16 +5,9 @@ import handleErrorMiddleware from "../../middlewares/HandleError.middleware";
 
 export const listAllSupervisorsController = (req: Request, res:Response)=>{
 
+    const allSupervisors = listAllSupervisorsService()
 
-    try {
-        const allSupervisors = listAllSupervisorsService()
-    
-        return res.status(200).json(allSupervisors)
-        
-    } catch (error) {
-        if(error instanceof AppError){
-            // handleErrorMiddleware("Erro", res)
-        }
-    }
+    return res.status(200).json(allSupervisors)
+
 }
 

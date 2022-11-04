@@ -10,7 +10,6 @@ export const createSupervisorsController = async (
 ) => {
   const { name, cpf, telephone, email, is_manager, password, is_active } =
     req.body;
-
   const newSupervisor = await createSupervisorService({
     name,
     cpf,
@@ -18,7 +17,6 @@ export const createSupervisorsController = async (
     email,
     is_manager,
     password,
-    is_active,
   });
 
   return res.status(200).json(instanceToPlain(newSupervisor));

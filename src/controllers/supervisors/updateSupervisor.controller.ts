@@ -3,25 +3,20 @@ import { AppError } from "../../errors/appError";
 import { updateSupervisorService } from "../../services/supervisors/updateSupervisor.service";
 
 export const updateSupervisorController = (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
+  const { id } = req.params;
 
-    const { telephone, email, is_Manager, password, is_active } = req.body;
+  const { telephone, email, is_Manager, password} = req.body;
 
-    const userUpdated = updateSupervisorService({
-      id,
-      telephone,
-      email,
-      is_Manager,
-      password,
-      is_active,
-    });
+  const userUpdated = updateSupervisorService({
+    id,
+    telephone,
+    email,
+    is_Manager,
+    password,
+  });
 
-    return res.status(200).json(userUpdated);
-  } catch (error) {
-    if (error instanceof AppError) {
-    }
-  }
+  return res.status(200).json(userUpdated);
+
 };
 
 
