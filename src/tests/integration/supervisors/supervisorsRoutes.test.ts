@@ -234,8 +234,8 @@ describe("/supervisors", () => {
   });
 
   test("DELETE /supervisors/:id - Should not be able to delete a supervisor without manager permission", async () => {
+    
     await request(app).post("/supervisors").send(mockedSupervisor);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
