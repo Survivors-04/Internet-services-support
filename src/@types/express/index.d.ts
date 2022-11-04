@@ -1,4 +1,5 @@
 import * as express from "express";
+import { IAttendanceRequest } from "../../interfaces/attendances";
 import { IClient } from "../../interfaces/clients";
 import {
   IInternetPlan,
@@ -19,6 +20,7 @@ declare global {
       dataAddCollaboratorInTeam: IAddCollaboratorInTeam;
       dataSupervisors: ISupervisor;
       dataClient: IClient;
+      dataAttendance: IAttendanceRequest;
       user: {
         role: number;
         is_active: boolean;
