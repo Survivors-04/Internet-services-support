@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { Client } from "../../entities/client.entity";
-import { IClient } from "../../interfaces/clients";
 import { listingClientsByInternetPlanService } from "../../services/internet_plan/listingClientsByInternetPlan.service";
 
 export const listingClientsByInternetPlanController = async (
@@ -8,7 +7,7 @@ export const listingClientsByInternetPlanController = async (
   res: Response
 ) => {
   const id = req.params.id;
-  const clientsByInternetPlan =
+  const clientsByInternetPlan: Client[] =
     await listingClientsByInternetPlanService(id);
 
   return res.status(200).json(clientsByInternetPlan);
