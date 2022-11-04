@@ -1,8 +1,8 @@
-import { Exclude } from "class-transformer";
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne } from "typeorm";
 import { v4 as uuid } from "uuid";
 import { Attendance } from "./attendance.entity";
 import { Team } from "./team.entity";
+import { Exclude } from "class-transformer";
 
 @Entity("collaborator")
 export class Collaborator {
