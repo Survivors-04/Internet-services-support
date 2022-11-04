@@ -9,13 +9,18 @@ export const deleteClientPlanService = async (
   clientId: string
 ): Promise<void> => {
   const clientPlanRepository = AppDataSource.getRepository(Client_plan);
-  const internetPlanRepository = AppDataSource.getRepository(Internet_plan);
+  const clientRepository = AppDataSource.getRepository(Client);
 
   const clientPlan = await clientPlanRepository.findOneBy({
     id: internet_plan_id,
   });
 
-  if (!clientPlan) throw new AppError("internet plan not found", 404);
+  const client = await clientRepository.findOneBy({
+    id: clientId,
+  });
 
+  if (!clientPlan || !client) {
+    throw new AppError("Client or internet plan not found", 404);
+  }
   await clientPlanRepository.delete(clientPlan);
 };

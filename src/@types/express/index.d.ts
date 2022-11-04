@@ -1,4 +1,5 @@
 import * as express from "express";
+import { IClient } from "../../interfaces/clients";
 import {
   IInternetPlan,
   IInternetPlanUpdate,
@@ -17,6 +18,7 @@ declare global {
       dataTeam: ITeamValidateYup;
       dataAddCollaboratorInTeam: IAddCollaboratorInTeam;
       dataSupervisors: ISupervisor;
+      dataClient: IClient;
     }
   }
 }

@@ -11,8 +11,7 @@ export const createSupervisorService = async ({
   telephone,
   email,
   is_manager,
-  password,
-  is_active,
+  password
 }: ISupervisorsRequest) => {
   const supervisorsRepository = AppDataSource.getRepository(Supervisor);
 
@@ -34,7 +33,6 @@ export const createSupervisorService = async ({
   newSupervisor.email = email;
   newSupervisor.is_manager = is_manager;
   newSupervisor.password = password;
-  newSupervisor.is_active = is_active;
 
   supervisorsRepository.create(newSupervisor);
   await supervisorsRepository.save(newSupervisor);
