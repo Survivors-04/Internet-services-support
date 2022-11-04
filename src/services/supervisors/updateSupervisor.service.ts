@@ -11,7 +11,6 @@ export const updateSupervisorService = async ({
   email,
   is_Manager,
   password,
-  is_active,
 }: IUpdateSupervisorRequest) => {
   const supervisorsRepository = AppDataSource.getRepository(Supervisor);
 
