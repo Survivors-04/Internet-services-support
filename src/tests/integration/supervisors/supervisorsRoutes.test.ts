@@ -137,7 +137,7 @@ describe("/supervisors", () => {
     const supervisorId = updatedSupervisor.body[0].token;
 
     const { body, status } = await request(app)
-      .patch(`/users/${supervisorId}`)
+      .patch(`/supervisors/${supervisorId}`)
       .send(newValues)
       .set("Authorization", supervisorToken);
 
@@ -212,7 +212,7 @@ describe("/supervisors", () => {
   });
 
   test("PATCH /supervisors/:id - Should not be able to update id field value", async () => {
-    const newValues = { id: false };
+    const newValues = { id: '13970660-5dbe-423a-9a9d-5c23b37943cf' };
 
     const managerLogin = await request(app)
       .post("/login")
@@ -277,8 +277,8 @@ describe("/supervisors", () => {
     expect(status).toBe(403);
   });
 
-  test("DELETE /supervisors/:id - Should not be able to delete user with is_active = false", async () => {
-    await request(app).post("/users").send(mockedManager);
+  test("DELETE /supervisors/:id - Should not be able to delete supervisor with is_active = false", async () => {
+    await request(app).post("/supervisors").send(mockedManager);
 
     const managerLogin = await request(app)
       .post("/login")
@@ -298,8 +298,8 @@ describe("/supervisors", () => {
     expect(body).toHaveProperty("message");
   });
 
-  test("DELETE - Should not be able to delete user with invalid id", async () => {
-    await request(app).post("/users").send(mockedManager);
+  test("DELETE /supervisors/:id - Should not be able to delete supervisor with invalid id", async () => {
+    await request(app).post("/supervisors").send(mockedManager);
 
     const managerLogin = await request(app)
       .post("/login")
@@ -307,7 +307,7 @@ describe("/supervisors", () => {
     const token = managerLogin.body.token;
 
     const response = await request(app)
-      .delete(`/users/13970660-5dbe-423a-9a9d-5c23b37943cf`)
+      .delete(`/supervisors/13970660-5dbe-423a-9a9d-5c23b37943cf`)
       .set("Authorization", token);
 
     expect(response.status).toBe(404);

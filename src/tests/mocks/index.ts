@@ -9,6 +9,8 @@ import {
   ISupervisorsRequest,
 } from "../../interfaces/supervisors";
 import { IInternetPlanRequest } from "../../interfaces/internetPlan";
+import { IServiceRequest } from "../../interfaces/services";
+import { IClientLogin, IClientRequest } from "../../interfaces/clients";
 
 export const mockedSupervisor: ISupervisorsRequest = {
   name: "Teste",
@@ -64,6 +66,25 @@ export const mockedAttendance = {
   collaborator_id: "",
   client_id: "",
   service_id: "",
+};
+
+export const mockedService: IServiceRequest = {
+  name: "Test",
+  description: "Description",
+};
+
+export const mockedClient: IClientRequest = {
+  name: "Client",
+  cpf: "12345678901",
+  telephone: "13984512783",
+  email: "client@mail.com",
+  password: "Client123",
+  is_active: true,
+};
+
+export const mockedClientLogin: IClientLogin = {
+  email: "client@mail.com",
+  password: "Client123",
 };
 
 export const mockedTeams:ITeams = {
