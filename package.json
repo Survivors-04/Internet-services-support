@@ -12,7 +12,7 @@
     "testServices": "yarn test src/tests/integration/services/servicesRoutes.test.ts",
     "testSupervisors": "yarn test src/tests/integration/supervisors/supervisorsRoutes.test.ts",
     "build": "tsc",
-    "start": "node dist/server.js"
+    "start": "node dist/src/server.js"
   },
   "engines": {
     "node": "16.x"
