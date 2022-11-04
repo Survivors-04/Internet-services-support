@@ -25,7 +25,7 @@ const AppDataSource = new DataSource(
             : ["src/entities/*.ts"],
         migrations:
           process.env.NODE_ENV === "production"
-            ? ["dist/migrations/*.js"]
+            ? ["dist/src/migrations/*.js"]
             : ["src/migrations/*.ts"],
       }
 );
