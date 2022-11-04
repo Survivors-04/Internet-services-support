@@ -168,6 +168,7 @@ describe("/supervisors", () => {
   });
 
   test("PATCH /supervisors/:id - Should not be able to update is_manager field value", async () => {
+    await request(app).post('/supervisors').send(mockedManager)
     const newValues = { is_manager: false };
 
     const managerLogin = await request(app)
