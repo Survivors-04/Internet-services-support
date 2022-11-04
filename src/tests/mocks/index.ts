@@ -23,7 +23,7 @@ export const mockedSupervisor: ISupervisorsRequest = {
 
 export const mockedSupervisorLogin: ISupervisorsLogin = {
   email: "teste@mail.com",
-  password: "Teste132",
+  password: "Teste123",
 };
 
 export const mockedManager: ISupervisorsRequest = {
