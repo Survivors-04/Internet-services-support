@@ -17,6 +17,10 @@ declare global {
       dataTeam: ITeamValidateYup;
       dataAddCollaboratorInTeam: IAddCollaboratorInTeam;
       dataClient: IClient;
+      user: {
+        role: number;
+        is_active: boolean;
+      };
     }
   }
 }
