@@ -19,6 +19,10 @@ declare global {
       dataAddCollaboratorInTeam: IAddCollaboratorInTeam;
       dataSupervisors: ISupervisor;
       dataClient: IClient;
+      user: {
+        role: number;
+        is_active: boolean;
+      };
     }
   }
 }
