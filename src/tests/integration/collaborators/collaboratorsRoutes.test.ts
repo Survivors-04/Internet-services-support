@@ -78,7 +78,7 @@ describe("/collaborators", () => {
       .get("/collaborators")
       .set("Authorization", token);
 
-    expect(body).toHaveLength(2);
+    expect(body).toHaveLength(1);
   });
 
   test("GET /collaborators - Should not be able to list collaborators without supervisor permission", async () => {
@@ -119,17 +119,22 @@ describe("/collaborators", () => {
   });
 
   test("PATCH /collaborators/:id - Should not be able to update collaborator without supervisor permission", async () => {
+    await request(app).post('/supevisors').send(mockedSupervisor)
+    // await request(app).post('/collabo')
     const newValues = { name: "false" };
 
     const supervisorLogin = await request(app)
       .post("/login")
       .send(mockedSupervisorLogin);
     const supervisorToken = `Bearer ${supervisorLogin.body.token}`;
+    console.log(supervisorLogin)
+    console.log(supervisorToken)
 
     const collaboratorLogin = await request(app)
       .post("/login")
       .send(mockedCollaboratorLogin);
     const collaboratorToken = collaboratorLogin.body.token;
+    console.log(collaboratorToken)
 
     const updatedCollaborator = await request(app)
       .get("/collaborators")
