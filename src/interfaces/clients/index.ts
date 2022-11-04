@@ -13,6 +13,7 @@ export interface IClient {
   cpf: string;
   email: string;
   telephone: string;
+  password: string;
   created_date: Date;
   updated_date: Date;
   is_active: boolean;
