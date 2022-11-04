@@ -21,6 +21,10 @@ declare global {
       dataSupervisors: ISupervisor;
       dataClient: IClient;
       dataAttendance: IAttendanceRequest;
+      user: {
+        role: number;
+        is_active: boolean;
+      };
     }
   }
 }
