@@ -6,5 +6,6 @@ const createCollaboratorController = async (req: Request, res: Response) => {
   const data: IColaboratorRequest = req.body;
   const newColaborator = await createColaboratorService(data);
   return res.status(201).json(newColaborator);
+
 };
 export default createCollaboratorController;

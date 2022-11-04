@@ -1,6 +1,7 @@
 import { Attendance } from "../../entities/attendance.entity";
 import { Supervisor } from "../../entities/supervisor.entity";
 import { Team } from "../../entities/team.entity";
+
 export interface IColaboratorResponse {
   id: string;
   name: string;
