@@ -5,7 +5,6 @@ export interface ISupervisorsRequest {
   cpf: string;
   telephone: string;
   is_manager: boolean;
-  is_active: boolean;
 }
 
 export interface ISupervisorsLogin {
@@ -28,7 +27,6 @@ export interface IUpdateSupervisorRequest {
   email: string;
   is_Manager: boolean;
   password: string;
-  is_active: boolean;
 }
 
 export interface ISupervisor {

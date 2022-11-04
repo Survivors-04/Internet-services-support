@@ -7,6 +7,7 @@ import { IColaboratorRequest } from "../../interfaces/collaborator";
 export const createColaboratorService = async (
   data: IColaboratorRequest
 ): Promise<Collaborator> => {
+
   const { email, cpf, password } = data;
   const colaboratorsRepo = AppDataSource.getRepository(Collaborator);
   const colaborator = await colaboratorsRepo.findOneBy(

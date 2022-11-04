@@ -7,6 +7,7 @@ export const updateColaboratorService = async (
   data: IColaboratorRequest,
   id: string
 ): Promise<Collaborator> => {
+
   const collaboratorsRepo = AppDataSource.getRepository(Collaborator);
   const collaborator = await collaboratorsRepo.findOneBy({ id: id });
 
@@ -26,4 +27,3 @@ export const updateColaboratorService = async (
 
   return updatedData!;
 };
-

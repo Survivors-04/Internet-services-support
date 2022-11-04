@@ -7,23 +7,17 @@ import { createSupervisorService } from "../../services/supervisors/createSuperv
 export const createSupervisorsController = async (req: Request, res: Response) => {
   const { name, cpf, telephone, email, is_manager, password, is_active } =
     req.body;
-  try {
     const newSupervisor = await createSupervisorService({
       name,
       cpf,
       telephone,
       email,
       is_manager,
-      password,
-      is_active,
+      password
     });
 
     return res.status(200).json(instanceToPlain(newSupervisor));
-  } catch (error) {
-    if (error instanceof AppError) {
-      // handleErrorMiddleware(error, res)
-    }
-  }
+
 };
 
 
