@@ -30,6 +30,7 @@ export class Client {
   email: string;
 
   @Column({ length: 120 })
+  @Exclude()
   password: string;
 
   @Column({ default: true })

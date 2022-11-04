@@ -3,9 +3,9 @@ import { Request, Response } from "express";
 
 const createClientPlanController = async (req: Request, res: Response) => {
   const clientId = req.params.id;
-  const id = req.body.id;
+  const internet_plan_id = req.body.id;
 
-  await createClientPlanService(id, clientId);
+  await createClientPlanService(internet_plan_id, clientId);
   return res.status(201).json({
     message: "Plan added to the client",
   });
