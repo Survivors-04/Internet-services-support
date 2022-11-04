@@ -1,9 +1,9 @@
-import listAllSupervisorsService from "../../services/supervisors/listAllSupervisors.services";
+import {listAllSupervisorsService} from "../../services/supervisors/listAllSupervisors.service";
 import { Request, Response } from "express";
 import { AppError } from "../../errors/appError";
 import handleErrorMiddleware from "../../middlewares/HandleError.middleware";
 
-const listAllSupervisorsController = (req: Request, res:Response)=>{
+export const listAllSupervisorsController = (req: Request, res:Response)=>{
 
 
     try {
@@ -18,4 +18,3 @@ const listAllSupervisorsController = (req: Request, res:Response)=>{
     }
 }
 
-export default listAllSupervisorsController

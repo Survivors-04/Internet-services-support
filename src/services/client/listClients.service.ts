@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source";
 import { Client } from "../../entities/client.entity";
 
-const listClientService = async () => {
+export const listClientService = async () => {
   const clientRepository = AppDataSource.getRepository(Client);
 
   const clients = await clientRepository.find();
@@ -9,4 +9,4 @@ const listClientService = async () => {
   return clients;
 };
 
-export default listClientService;
+

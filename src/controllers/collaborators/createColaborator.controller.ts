@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, Response } from "express";
 import { IColaboratorRequest } from "../../interfaces/collaborator";
 import { createColaboratorService } from "../../services/colaborator/createColaborator.service";
 

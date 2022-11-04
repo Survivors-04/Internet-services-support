@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { IClient } from "../../interfaces/clients";
-import createClientService from "../../services/client/createClient.service";
+import {createClientService} from "../../services/client/createClient.service";
 import { instanceToPlain } from "class-transformer";
 
 const createClientController = async (req: Request, res: Response) => {

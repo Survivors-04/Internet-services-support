@@ -12,17 +12,13 @@ export class Collaborator {
   @Column()
   name: string;
 
-  
+  @Column({ default: true })
+  is_active: boolean;
 
-  @Column()
-  isActive:boolean
-  
-  
-  @Column({length:14})
-  @Exclude()
+  @Column({ length: 14 })
   cpf: string;
 
-  @Column({length:11})
+  @Column({ length: 11 })
   telephone: string;
 
   @Column()
@@ -35,7 +31,7 @@ export class Collaborator {
   @OneToMany((type) => Attendance, (attendance) => attendance.collaborator)
   attendance: Attendance[];
 
-  @ManyToOne((type) => Team)
+  @ManyToOne((type) => Team, { nullable: true })
   team: Team;
 
   constructor() {

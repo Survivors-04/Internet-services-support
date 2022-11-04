@@ -12,14 +12,14 @@ export interface IClient {
   cpf: string;
   email: string;
   telephone: string;
-  createdAt: Date;
-  updatedAt: Date;
-  isActive: boolean;
+  created_date: Date;
+  updated_date: Date;
+  is_active: boolean;
 }
 
 export interface IClientUpdate {
   telephone?: string;
   email?: string;
   password?: string;
-  isActive?: boolean;
+  is_active?: boolean;
 }

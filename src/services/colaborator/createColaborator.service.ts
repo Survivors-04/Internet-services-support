@@ -4,7 +4,10 @@ import { Collaborator } from "../../entities/collaborator.entity";
 import { AppError } from "../../errors/appError";
 import { IColaboratorRequest } from "../../interfaces/collaborator";
 
-const createColaboratorService = async (data: IColaboratorRequest) => {
+export const createColaboratorService = async (
+  data: IColaboratorRequest
+): Promise<Collaborator> => {
+
   const { email, cpf, password } = data;
   const colaboratorsRepo = AppDataSource.getRepository(Collaborator);
   const colaborator = await colaboratorsRepo.findOneBy(
@@ -12,7 +15,7 @@ const createColaboratorService = async (data: IColaboratorRequest) => {
   );
 
   if (colaborator) {
-    throw new AppError("CPF or Email already registered!", 400);
+    throw new AppError("CPF or Email already registered!");
   }
 
   data.password = await hash(password, 10);
@@ -23,5 +26,3 @@ const createColaboratorService = async (data: IColaboratorRequest) => {
 
   return newColaborator;
 };
-
-export { createColaboratorService };
