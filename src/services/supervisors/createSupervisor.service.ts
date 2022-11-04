@@ -2,6 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import { Supervisor } from "../../entities/supervisor.entity";
 import { ISupervisorsRequest } from "../../interfaces/supervisors";
+import { hash } from "bcrypt";
 
 // importar entidade Sueprvisors
 
@@ -25,6 +26,8 @@ export const createSupervisorService = async ({
     throw new AppError("O email já está em uso");
   }
 
+  const hashedPassword = await hash(password, 10)
+
   const newSupervisor = new Supervisor();
 
   newSupervisor.name = name;
@@ -32,7 +35,7 @@ export const createSupervisorService = async ({
   newSupervisor.telephone = telephone;
   newSupervisor.email = email;
   newSupervisor.is_manager = is_manager;
-  newSupervisor.password = password;
+  newSupervisor.password = hashedPassword;
 
   supervisorsRepository.create(newSupervisor);
   await supervisorsRepository.save(newSupervisor);
