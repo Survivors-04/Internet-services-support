@@ -4,6 +4,7 @@ export interface IClientRequest {
   telephone: string;
   email: string;
   password?: string;
+  is_active?: boolean;
 }
 
 export interface IClient {
@@ -22,4 +23,9 @@ export interface IClientUpdate {
   email?: string;
   password?: string;
   is_active?: boolean;
+}
+
+export interface IClientLogin {
+  email: string;
+  password: string;
 }
