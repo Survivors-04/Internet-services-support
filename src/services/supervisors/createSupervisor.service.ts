@@ -2,6 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { AppError } from "../../errors/appError";
 import { Supervisor } from "../../entities/supervisor.entity";
 import { ISupervisorsRequest } from "../../interfaces/supervisors";
+import { hash } from "bcrypt";
 
 // importar entidade Sueprvisors
 

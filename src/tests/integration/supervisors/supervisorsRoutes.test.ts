@@ -283,11 +283,14 @@ describe("/supervisors", () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
+    console.log(managerLogin.body.token)
+    // console.log(managerLogin)
     const token = `Bearer ${managerLogin.body.token}`;
 
     const deletedSupervisor = await request(app)
       .get("/supervisors")
       .set("Authorization", token);
+    // console.log(deletedSupervisor.body[0])
     const deletedSupervisorId = deletedSupervisor.body[0].id;
 
     const { body, status } = await request(app)

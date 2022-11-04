@@ -39,9 +39,12 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
   } else if (searchUserOnCollaborator) {
     user = searchUserOnCollaborator;
     role = 2;
-  } else if (searchUserOnSupervisor) {
+  } else if (searchUserOnSupervisor?.is_manager === false) {
     user = searchUserOnSupervisor;
     role = 3;
+  } else if (searchUserOnSupervisor?.is_manager === true) {
+    user = searchUserOnSupervisor;
+    role = 4;
   } else {
     throw new AppError("Wrong email/password", 403);
   }
