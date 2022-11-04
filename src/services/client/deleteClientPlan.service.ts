@@ -7,7 +7,7 @@ import { AppError } from "../../errors/appError";
 export const deleteClientPlanService = async (
   internet_plan_id: string,
   clientId: string
-) => {
+): Promise<void> => {
   const clientPlanRepository = AppDataSource.getRepository(Client_plan);
   const clientRepository = AppDataSource.getRepository(Client);
 
