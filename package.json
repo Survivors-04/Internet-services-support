@@ -8,7 +8,9 @@
   "scripts": {
     "dev": "ts-node-dev src/server.ts",
     "typeorm": "typeorm-ts-node-commonjs",
-    "test": "NODE_ENV=test jest --verbose"
+    "test": "NODE_ENV=test jest --verbose",
+    "testServices": "yarn test src/tests/integration/services/servicesRoutes.test.ts",
+    "testSupervisors": "yarn test src/tests/integration/supervisors/supervisorsRoutes.test.ts"
   },
   "dependencies": {
     "@types/bcrypt": "^5.0.0",

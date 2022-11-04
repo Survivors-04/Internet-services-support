@@ -19,7 +19,6 @@ export const mockedSupervisor: ISupervisorsRequest = {
   cpf: "12345678901",
   telephone: "13984512783",
   is_manager: false,
-  is_active: true,
 };
 
 export const mockedSupervisorLogin: ISupervisorsLogin = {
@@ -34,7 +33,6 @@ export const mockedManager: ISupervisorsRequest = {
   cpf: "12345678901",
   telephone: "13984512783",
   is_manager: true,
-  is_active: true,
 };
 
 export const mockedManagerLogin: ISupervisorsLogin = {

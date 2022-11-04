@@ -46,3 +46,8 @@ export interface ICollaboratorLogin {
   email: string;
   password: string;
 }
+
+export interface ITeams {
+  supervisor_id: string,
+  collaborator_id: string,
+}
