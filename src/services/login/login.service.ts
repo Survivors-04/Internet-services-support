@@ -33,10 +33,6 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
   let user;
   let role;
 
-  console.log(searchUserOnClient)
-  console.log(searchUserOnCollaborator)
-  console.log(searchUserOnSupervisor)
-
   if (searchUserOnClient) {
     user = searchUserOnClient;
     role = 1;
