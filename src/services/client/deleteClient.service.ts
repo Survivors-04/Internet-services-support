@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { Client } from "../../entities/client.entity";
 import { AppError } from "../../errors/appError";
 
- export const deleteClientService = async (id: string) => {
+export const deleteClientService = async (id: string): Promise<Client> => {
   const clientRepository = AppDataSource.getRepository(Client);
 
   const client = await clientRepository.findOneBy({
@@ -26,4 +26,3 @@ import { AppError } from "../../errors/appError";
 
   return returningClient!;
 };
-

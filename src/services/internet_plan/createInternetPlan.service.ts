@@ -5,7 +5,7 @@ import { IInternetPlan } from "../../interfaces/internetPlan";
 
 export const createInternetPlanService = async (
   data: IInternetPlan
-): Promise<IInternetPlan> => {
+): Promise<Internet_plan> => {
   const internetPlanRepository = AppDataSource.getRepository(Internet_plan);
   const findedInternetPlan = await internetPlanRepository.findOne({
     where: {

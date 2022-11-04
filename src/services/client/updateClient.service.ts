@@ -7,7 +7,7 @@ import { hash } from "bcrypt";
 export const updateClientService = async (
   { telephone, email, password }: IClientUpdate,
   id: string
-) => {
+): Promise<Client> => {
   const clientRepository = AppDataSource.getRepository(Client);
 
   const findClient = await clientRepository.findOneBy({
@@ -30,4 +30,3 @@ export const updateClientService = async (
 
   return client!;
 };
-

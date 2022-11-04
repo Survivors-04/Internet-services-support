@@ -1,15 +1,12 @@
 import { AppDataSource } from "../../data-source";
 import { Internet_plan } from "../../entities/internet_plan.entity";
 import { AppError } from "../../errors/appError";
-import {
-  IInternetPlan,
-  IInternetPlanUpdate,
-} from "../../interfaces/internetPlan";
+import { IInternetPlanUpdate } from "../../interfaces/internetPlan";
 
 export const updateInternetPlanService = async (
   id: string,
   data: IInternetPlanUpdate
-): Promise<IInternetPlan> => {
+): Promise<Internet_plan> => {
   const internetPlanRepository = AppDataSource.getRepository(Internet_plan);
 
   const internetPlan = await internetPlanRepository.findOneBy({ id });

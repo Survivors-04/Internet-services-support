@@ -10,6 +10,17 @@ export interface IColaboratorResponse {
   team: Team;
   attendance: Attendance[];
 }
+
+export interface ICollaboratorFullData {
+  id: string;
+  name: string;
+  email: string;
+  cpf: string;
+  telephone: string;
+  is_active: boolean;
+  attendance: Attendance[];
+  team: Team;
+}
 export interface ICollaboratorUpdateRequest {
   name: string;
   email: string;
@@ -19,12 +30,6 @@ export interface IColaboratorRequest extends ICollaboratorUpdateRequest {
   cpf: string;
   password: string;
   isActive: boolean;
-}
-
-
-export interface ITeams{
-  supervisor_id:string,
-  collaborator_id:string
 }
 
 export interface ICollaborator {
