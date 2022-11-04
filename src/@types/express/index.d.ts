@@ -4,6 +4,7 @@ import {
   IInternetPlanUpdate,
 } from "../../interfaces/internetPlan";
 import { IService, IUpdateService } from "../../interfaces/services";
+import { ISupervisor } from "../../interfaces/supervisors";
 import { ITeamValidateYup } from "../../interfaces/teams";
 
 declare global {
@@ -15,6 +16,7 @@ declare global {
       dataUpdateInternetPlan: IInternetPlanUpdate;
       dataTeam: ITeamValidateYup;
       dataAddCollaboratorInTeam: IAddCollaboratorInTeam;
+      dataSupervisors: ISupervisor;
     }
   }
 }

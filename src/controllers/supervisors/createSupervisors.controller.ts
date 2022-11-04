@@ -4,9 +4,12 @@ import handleErrorMiddleware from "../../middlewares/HandleError.middleware";
 import { instanceToPlain } from "class-transformer";
 import { createSupervisorService } from "../../services/supervisors/createSupervisor.service";
 
-export const createSupervisorsController = async (req: Request, res: Response) => {
+export const createSupervisorsController = async (
+  req: Request,
+  res: Response
+) => {
   const { name, cpf, telephone, email, is_manager, password, is_active } =
-    req.body;
+    req.dataSupervisors;
   try {
     const newSupervisor = await createSupervisorService({
       name,
@@ -25,5 +28,3 @@ export const createSupervisorsController = async (req: Request, res: Response) =
     }
   }
 };
-
-
