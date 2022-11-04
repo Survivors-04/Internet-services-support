@@ -1,10 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Internet_plan } from "../../entities/internet_plan.entity";
 import { AppError } from "../../errors/appError";
-import {
-  IInternetPlan,
-  IInternetPlanUpdate,
-} from "../../interfaces/internetPlan";
 
 export const deleteInternetPlanService = async (
   id: string

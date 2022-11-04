@@ -5,7 +5,7 @@ import { AppError } from "../../errors/appError";
 
 export const listingTeamByIdSupervisorService = async (
   id: string
-): Promise<Team | Team[]> => {
+): Promise<Team[]> => {
   const teamRepository = AppDataSource.getRepository(Team);
   const supervisorsRepository = AppDataSource.getRepository(Supervisor);
 

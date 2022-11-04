@@ -6,7 +6,7 @@ export const removeCollaboratorInTeamController = async (
   req: Request,
   res: Response
 ) => {
-  const id = req.params.id;
+  const id: string = req.params.id;
   const dataCollaborator: IAddCollaboratorInTeam =
     req.dataAddCollaboratorInTeam;
   const teamMessage: string = await removeCollaboratorInTeamService(

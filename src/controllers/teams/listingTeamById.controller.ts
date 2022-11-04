@@ -6,7 +6,7 @@ export const listingTeamByIdController = async (
   req: Request,
   res: Response
 ) => {
-  const id = req.params.id;
+  const id: string = req.params.id;
   const team: Team = await listingTeamByIdService(id);
 
   return res.status(200).json(team);

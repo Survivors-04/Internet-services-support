@@ -9,6 +9,7 @@ export const createTeamService = async (
 ): Promise<Team> => {
   const teamRepository = AppDataSource.getRepository(Team);
   const supervisorsRepository = AppDataSource.getRepository(Supervisor);
+
   const supervisor = await supervisorsRepository.findOneBy({
     id: data.supervisorId,
   });
