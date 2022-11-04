@@ -39,7 +39,10 @@ describe("/services", () => {
   });
 
   test("POST /services - Should not be able to create a service without collaborator permission", async () => {
-    const clientLogin = await request(app).post("/login").send(mockedClient);
+    await request(app).post("/clients").send(mockedClient);
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
     const token = `Bearer ${clientLogin.body.token}`;
 
     const { body, status } = await request(app)
