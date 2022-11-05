@@ -96,6 +96,8 @@ describe("/supervisors", () => {
   });
 
   test("PATCH /supervisors/:id - Must be able to update a supervisor", async () => {
+    await request(app).post("/supervisors").send(mockedManager);
+
     const newValues = { name: "Joana Brito", email: "joanabrito@mail.com" };
 
     const managerLogin = await request(app)
@@ -119,22 +121,27 @@ describe("/supervisors", () => {
   });
 
   test("PATCH /supervisors/:id - Should not be able to update supervisor without manager permission", async () => {
+    await request(app).post("/supervisors").send(mockedManager);
+    await request(app).post('/supervisors').send(mockedSupervisor)
+
     const newValues = { name: "false" };
 
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const managerToken = `Bearer ${managerLogin.body.token}`;
+    console.log(managerToken)
 
     const supervisorLogin = await request(app)
       .post("/login")
       .send(mockedSupervisorLogin);
-    const supervisorToken = supervisorLogin.body.token;
+    const supervisorToken = `Bearer ${supervisorLogin.body.token}`;
+    console.log(supervisorToken)
 
     const updatedSupervisor = await request(app)
       .get("/supervisors")
       .set("Authorization", managerToken);
-    const supervisorId = updatedSupervisor.body[0].token;
+    const supervisorId = updatedSupervisor.body[0].id;
 
     const { body, status } = await request(app)
       .patch(`/supervisors/${supervisorId}`)
@@ -168,7 +175,6 @@ describe("/supervisors", () => {
   });
 
   test("PATCH /supervisors/:id - Should not be able to update is_manager field value", async () => {
-    await request(app).post('/supervisors').send(mockedManager)
     const newValues = { is_manager: false };
 
     const managerLogin = await request(app)
@@ -235,7 +241,6 @@ describe("/supervisors", () => {
   });
 
   test("DELETE /supervisors/:id - Should not be able to delete a supervisor without manager permission", async () => {
-    
     await request(app).post("/supervisors").send(mockedSupervisor);
     const managerLogin = await request(app)
       .post("/login")

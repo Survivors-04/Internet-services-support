@@ -25,7 +25,7 @@ export interface IUpdateSupervisorRequest {
   id: string;
   telephone: string;
   email: string;
-  is_Manager: boolean;
+  is_manager: boolean;
   password: string;
 }
 
