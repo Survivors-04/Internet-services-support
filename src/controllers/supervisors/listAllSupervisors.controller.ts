@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 import { AppError } from "../../errors/appError";
 import handleErrorMiddleware from "../../middlewares/HandleError.middleware";
 
-export const listAllSupervisorsController =async  (req: Request, res:Response)=>{
 
+export const listAllSupervisorsController = async (req: Request, res:Response)=>{
 
         const allSupervisors = await listAllSupervisorsService()
     
