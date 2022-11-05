@@ -7,6 +7,8 @@ import {
   mockedSupervisorLogin,
   mockedCollaborator,
   mockedCollaboratorLogin,
+  mockedManager,
+  mockedManagerLogin,
 } from "../../mocks";
 
 describe("/collaborators", () => {
@@ -119,27 +121,32 @@ describe("/collaborators", () => {
   });
 
   test("PATCH /collaborators/:id - Should not be able to update collaborator without supervisor permission", async () => {
-    await request(app).post('/supevisors').send(mockedSupervisor)
-    
+    await request(app).post("/supervisors").send(mockedManager);
+
     const newValues = { name: "false" };
 
-    const supervisorLogin = await request(app)
+    const managerLogin = await request(app)
       .post("/login")
-      .send(mockedSupervisorLogin);
-    const supervisorToken = `Bearer ${supervisorLogin.body.token}`;
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    await request(app)
+      .post("/collaborators")
+      .send(mockedCollaborator)
+      .set("Authorization", token);
 
     const collaboratorLogin = await request(app)
       .post("/login")
       .send(mockedCollaboratorLogin);
-    const collaboratorToken = collaboratorLogin.body.token;
+    const collaboratorToken = `Bearer ${collaboratorLogin.body.token}`;
 
     const updatedCollaborator = await request(app)
       .get("/collaborators")
-      .set("Authorization", supervisorToken);
-    const collaboratorId = updatedCollaborator.body[0].token;
+      .set("Authorization", token);
+    const collaboratorId = updatedCollaborator.body[0].id;
 
     const { body, status } = await request(app)
-      .patch(`/supervisors/${collaboratorId}`)
+      .patch(`/collaborators/${collaboratorId}`)
       .send(newValues)
       .set("Authorization", collaboratorToken);
 
@@ -255,25 +262,36 @@ describe("/collaborators", () => {
       .get("/collaborators")
       .set("Authorization", token);
 
-    expect(status).toBe(204);
     expect(body[0].is_active).toBe(false);
+    expect(status).toBe(204);
   });
 
   test("DELETE /collaborators/:id - Should not be able to delete a collaborator without supervisor permission", async () => {
-    const supervisorLogin = await request(app)
+    await request(app).post("/supervisors").send(mockedManager);
+
+    const managerLogin = await request(app)
       .post("/login")
-      .send(mockedSupervisorLogin);
-    const token = `Bearer ${supervisorLogin.body.token}`;
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    await request(app)
+      .post("/collaborators")
+      .send(mockedCollaborator)
+      .set("Authorization", token);
+
+    const collaboratorLogin = await request(app)
+      .post("/login")
+      .send(mockedCollaboratorLogin);
+    const collaboratorToken = `Bearer ${collaboratorLogin.body.token}`;
 
     const deletedCollaborator = await request(app)
       .get("/collaborators")
       .set("Authorization", token);
     const deletedCollaboratorId = deletedCollaborator.body[0].id;
-    const deletedCollaboratorToken = deletedCollaborator.body.token;
 
     const { body, status } = await request(app)
       .delete(`/collaborators/${deletedCollaboratorId}`)
-      .set("Autorization", deletedCollaboratorToken);
+      .set("Autorization", collaboratorToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -296,8 +314,8 @@ describe("/collaborators", () => {
       .delete(`/collaborators/${deletedCollaboratorId}`)
       .set("Authorization", token);
 
-    expect(status).toBe(400);
     expect(body).toHaveProperty("message");
+    expect(status).toBe(400);
   });
 
   test("DELETE /collaborators/:id - Should not be able to delete user with invalid id", async () => {
@@ -312,7 +330,7 @@ describe("/collaborators", () => {
       .delete(`/collaborators/13970660-5dbe-423a-9a9d-5c23b37943cf`)
       .set("Authorization", token);
 
-    expect(response.status).toBe(404);
     expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(404);
   });
 });

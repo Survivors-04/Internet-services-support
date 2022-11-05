@@ -14,16 +14,16 @@ import { IClientLogin, IClientRequest } from "../../interfaces/clients";
 
 export const mockedSupervisor: ISupervisorsRequest = {
   name: "Teste",
-  email: "teste@mail.com",
-  password: "Teste123",
+  email: "supervisor@mail.com",
+  password: "supervisor123",
   cpf: "12345678901",
   telephone: "13984512783",
   is_manager: false,
 };
 
 export const mockedSupervisorLogin: ISupervisorsLogin = {
-  email: "teste@mail.com",
-  password: "Teste123",
+  email: "supervisor@mail.com",
+  password: "supervisor123",
 };
 
 export const mockedManager: ISupervisorsRequest = {
@@ -50,13 +50,13 @@ export const mockedCollaborator: ICollaborator = {
   name: "Teste",
   cpf: "12345678901",
   telephone: "13984512783",
-  email: "teste@mail.com",
+  email: "collaborator@mail.com",
   password: "Teste123",
   is_active: true,
 };
 
 export const mockedCollaboratorLogin: ICollaboratorLogin = {
-  email: "teste@mail.com",
+  email: "collaborator@mail.com",
   password: "Teste123",
 };
 
