@@ -4,6 +4,7 @@ import request from "supertest";
 import app from "../../../app";
 import {
   mockedAttendance,
+  mockedClient,
   mockedCollaborator,
   mockedInternetPlans,
   mockedManager,
@@ -11,6 +12,7 @@ import {
   mockedSupervisor,
   mockedSupervisorLogin,
 } from "../../mocks";
+import { stat } from "fs";
 
 describe("/plans", () => {
   let connection: DataSource;
@@ -79,11 +81,83 @@ describe("/plans", () => {
 
     const { body, status } = await request(app).get("/plans");
 
+    expect(body).toHaveLength(1);
     expect(status).toBe(200);
-    expect(body).toHaveProperty("map");
   });
 
-  test("PATCH /plans/:id -  Must be able to update supervisor", async () => {
+  test("GET /plans/:id/clients - Must be able to list all Clients by Internet Plan", async () => {
+    await request(app).post("/supervisors").send(mockedSupervisor);
+
+    const supervisorLogin = await request(app)
+      .post("/login")
+      .send(mockedSupervisorLogin);
+    const token = `Bearer ${supervisorLogin.body.token}`;
+
+    await request(app).post("/plans").send(mockedInternetPlans);
+
+    const plan = await request(app).get("/plans").set("Authorization", token);
+    const planId = plan.body[0].id;
+
+    await request(app)
+      .post("/clients")
+      .send(mockedClient)
+      .set("Authorization", token);
+
+    const client = await request(app)
+      .get("/clients")
+      .set("Authorization", token);
+    const clientId = client.body[0].id;
+
+    await request(app)
+      .post(`/clients/${clientId}/plans`)
+      .send({ planId })
+      .set("Authorization", token);
+
+    const { body, status } = await request(app)
+      .get(`/plans/${planId}/clients`)
+      .set("Authorization", token);
+
+    expect(body).toHaveLength(1);
+    expect(status).toBe(200);
+  });
+
+  test("GET /plans/:id/clients - Should not be able to list all Clients by Internet Plan without collaborators permission", async () => {
+    await request(app).post("/supervisors").send(mockedSupervisor);
+
+    const supervisorLogin = await request(app)
+      .post("/login")
+      .send(mockedSupervisorLogin);
+    const token = `Bearer ${supervisorLogin.body.token}`;
+
+    await request(app).post("/plans").send(mockedInternetPlans);
+
+    const plan = await request(app).get("/plans").set("Authorization", token);
+    const planId = plan.body[0].id;
+
+    await request(app)
+      .post("/clients")
+      .send(mockedClient)
+      .set("Authorization", token);
+
+    const client = await request(app)
+      .get("/clients")
+      .set("Authorization", token);
+    const clientId = client.body[0].id;
+
+    await request(app)
+      .post(`/clients/${clientId}/plans`)
+      .send({ planId })
+      .set("Authorization", token);
+
+    const { body, status } = await request(app)
+      .get(`/plans/${planId}/clients`)
+      .set("Authorization", "token");
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
+  });
+
+  test("PATCH /plans/:id -  Must be able to update internet plan", async () => {
     const newValues = {
       name: "planoTeste",
       description: "PlanoTesteDescription",
@@ -132,9 +206,21 @@ describe("/plans", () => {
   });
 
   test("PATCH /plans/:id - Should not be ablue to update internet_Plans with invalid id", async () => {
-    const { body, status } = await request(app).get(
-      "/plans/b855d86b-d4c9-41cd-ab98-d7fa734c6ce4"
-    );
+    await request(app).post("/supervisors").send(mockedManager);
+    const newValues = { name: "false" };
+
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = managerLogin.body.token;
+
+    const updatedPlans = await request(app).get("/plans");
+    const plansTobeUpdateId = updatedPlans.body[0].id;
+
+    const { body, status } = await request(app)
+      .patch("/plans/b855d86b-d4c9-41cd-ab98-d7fa734c6ce4")
+      .send(newValues)
+      .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(404);
@@ -148,7 +234,9 @@ describe("/plans", () => {
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
-    const deletedPlan = await request(app).get("/plans");
+    const deletedPlan = await request(app)
+      .get("/plans")
+      .set("Authorization", token);
     const deletedPlanId = deletedPlan.body[0].id;
 
     const { body, status } = await request(app)
@@ -160,20 +248,23 @@ describe("/plans", () => {
   });
 
   test("DELETE /plans/:id - Should not be able to delete internet_plan without manager permission", async () => {
+    await request(app).post("/supervisors").send(mockedManager);
+    await request(app).post("/supervisors").send(mockedSupervisor);
+
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
-    await request(app)
-      .post("/plans")
-      .send(mockedInternetPlans)
-      .set("Authorization", token);
-
     const supervisorLogin = await request(app)
       .post("/login")
       .send(mockedSupervisorLogin);
     const supervisorToken = supervisorLogin.body.token;
+
+    await request(app)
+      .post("/plans")
+      .send(mockedInternetPlans)
+      .set("Authorization", token);
 
     const deletedPlan = await request(app).get("/plans");
     const deletedPlanId = deletedPlan.body[0].id;
@@ -186,7 +277,7 @@ describe("/plans", () => {
     expect(status).toBe(403);
   });
 
-  test("DELETE /services/:id - Should not be able to delete internet_plan with invalid id", async () => {
+  test("DELETE /plan/:id - Should not be able to delete internet_plan with invalid id", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
