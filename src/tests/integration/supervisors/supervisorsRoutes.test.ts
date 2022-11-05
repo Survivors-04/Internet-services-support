@@ -130,13 +130,11 @@ describe("/supervisors", () => {
       .post("/login")
       .send(mockedManagerLogin);
     const managerToken = `Bearer ${managerLogin.body.token}`;
-    console.log(managerToken)
 
     const supervisorLogin = await request(app)
       .post("/login")
       .send(mockedSupervisorLogin);
     const supervisorToken = `Bearer ${supervisorLogin.body.token}`;
-    console.log(supervisorToken)
 
     const updatedSupervisor = await request(app)
       .get("/supervisors")

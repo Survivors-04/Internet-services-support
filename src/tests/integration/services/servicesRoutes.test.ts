@@ -8,6 +8,8 @@ import {
   mockedCollaborator,
   mockedCollaboratorLogin,
   mockedService,
+  mockedSupervisor,
+  mockedSupervisorLogin,
 } from "../../mocks";
 
 describe("/services", () => {
@@ -34,7 +36,7 @@ describe("/services", () => {
     expect(body).toHaveProperty("name");
     expect(body).toHaveProperty("description");
     expect(body.name).toEqual("Test");
-    expect(body.email).toEqual("Description");
+    expect(body.description).toEqual("Description");
     expect(status).toBe(201);
   });
 
@@ -81,7 +83,7 @@ describe("/services", () => {
     expect(status).toBe(403);
   });
 
-  test("PATCH /services/:id - Must be able to update a client", async () => {
+  test("PATCH /services/:id - Must be able to update a service", async () => {
     const newValues = {
       name: "Joana Brito",
       description: "joanabrito@mail.com",
@@ -203,10 +205,13 @@ describe("/services", () => {
   });
 
   test("DELETE /services/:id - Should not be able to delete a service without collaborator permission", async () => {
-    const collaboratorLogin = await request(app)
+    await request(app).post("/supervisors").send(mockedSupervisor);
+    await request(app).post("/services").send(mockedService);
+
+    const supervisorLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const token = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedSupervisorLogin);
+    const token = `Bearer ${supervisorLogin.body.token}`;
 
     const clientLogin = await request(app)
       .post("/login")
