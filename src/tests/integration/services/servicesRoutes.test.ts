@@ -101,11 +101,11 @@ describe("/services", () => {
 
     const { body, status } = await request(app)
       .patch(`/services/${updatedServiceId}`)
-      .set("Autorization", token)
+      .set("Authorization", token)
       .send(newValues);
 
-    expect(body[0].name).toEqual("Joana Brito");
-    expect(body[0].description).toEqual("joanabrito@mail.com");
+    expect(body.name).toEqual("Joana Brito");
+    expect(body.description).toEqual("joanabrito@mail.com");
     expect(status).toBe(200);
   });
 
@@ -120,7 +120,7 @@ describe("/services", () => {
     const clientLogin = await request(app)
       .post("/login")
       .send(mockedClientLogin);
-    const clientToken = clientLogin.body.token;
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const updatedService = await request(app)
       .get("/services")
@@ -129,8 +129,8 @@ describe("/services", () => {
 
     const { body, status } = await request(app)
       .patch(`/services/${serviceId}`)
+      .set("Authorization", clientToken)
       .send(newValues)
-      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);

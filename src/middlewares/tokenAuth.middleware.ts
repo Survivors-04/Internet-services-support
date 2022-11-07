@@ -29,6 +29,7 @@ const tokenAuthMiddleware = async (
       }
 
       req.user = {
+
         id: decoded.id,
         role: decoded.role,
         is_active: decoded.is_active,
