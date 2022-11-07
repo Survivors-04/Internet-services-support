@@ -30,3 +30,7 @@ export interface IClientLogin {
   email: string;
   password: string;
 }
+
+export interface IAddingOrRemovingPlanToClient {
+  internet_plan_id: string;
+}

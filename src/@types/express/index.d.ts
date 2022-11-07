@@ -1,6 +1,10 @@
 import * as express from "express";
 import { IAttendanceRequest } from "../../interfaces/attendances";
-import { IClient } from "../../interfaces/clients";
+import {
+  IAddingOrRemovingPlanToClient,
+  IClient,
+  IClientUpdate,
+} from "../../interfaces/clients";
 import {
   IColaboratorRequest,
   ICollaboratorUpdateYup,
@@ -27,11 +31,12 @@ declare global {
       dataAttendance: IAttendanceRequest;
       dataCollaborator: IColaboratorRequest;
       dataUpdateCollaborator: ICollaboratorUpdateYup;
+      dataAddOrRemovePlanInClient: IAddingOrRemovingPlanToClient;
+      dataClientUpdate: IClientUpdate;
       user: {
-        id:string;
+        id: string;
         role: number;
         is_active: boolean;
-
       };
     }
   }

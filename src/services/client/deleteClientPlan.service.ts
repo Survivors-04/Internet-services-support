@@ -3,9 +3,10 @@ import { Client } from "../../entities/client.entity";
 import { Client_plan } from "../../entities/client_plan.entity";
 import { Internet_plan } from "../../entities/internet_plan.entity";
 import { AppError } from "../../errors/appError";
+import { IAddingOrRemovingPlanToClient } from "../../interfaces/clients";
 
 export const deleteClientPlanService = async (
-  internet_plan_id: string,
+  { internet_plan_id }: IAddingOrRemovingPlanToClient,
   clientId: string
 ): Promise<void> => {
   const clientPlanRepository = AppDataSource.getRepository(Client_plan);
