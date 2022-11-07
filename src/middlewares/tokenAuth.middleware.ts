@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { decode } from "punycode";
 
 const tokenAuthMiddleware = async (
   req: Request,
@@ -17,21 +18,25 @@ const tokenAuthMiddleware = async (
 
   token = token.split(" ")[1];
 
-  jwt.verify(token as string, process.env.SECRET_KEY as string, (err:any, decoded: any) => {
-    if (err) {
-      return res.status(401).json({
-        message: "Invalid token",
-      });
+  jwt.verify(
+    token as string,
+    process.env.SECRET_KEY as string,
+    (err: any, decoded: any) => {
+      if (err) {
+        return res.status(401).json({
+          message: "Invalid token",
+        });
+      }
+
+      req.user = {
+        id: decoded.id,
+        role: decoded.role,
+        is_active: decoded.is_active,
+      };
+
+      return next();
     }
-
-    req.user = {
-      role: decoded.role,
-      is_active: decoded.is_active,
-     
-    };
-
-    return next();
-  });
+  );
 };
 
 export default tokenAuthMiddleware;

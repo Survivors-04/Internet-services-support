@@ -22,8 +22,11 @@ declare global {
       dataClient: IClient;
       dataAttendance: IAttendanceRequest;
       user: {
+        id:string;
         role: number;
         is_active: boolean;
+
+        
   
       };
     }
