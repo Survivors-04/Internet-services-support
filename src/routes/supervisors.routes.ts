@@ -3,20 +3,39 @@ import { createSupervisorsController } from "../controllers/supervisors/createSu
 import { deleteSupervisorControler } from "../controllers/supervisors/deleteSupervisor.controller";
 import { listAllSupervisorsController } from "../controllers/supervisors/listAllSupervisors.controller";
 import { updateSupervisorController } from "../controllers/supervisors/updateSupervisor.controller";
+import tokenAuthMiddleware from "../middlewares/tokenAuth.middleware";
 import {
   supervisorsCreateSchema,
   validateSupervisorsCreate,
 } from "../middlewares/validationsInfosYup/validateInfoSupervisors.middleware";
+import { verifyManager } from "../middlewares/verifyRoles/verifyManager.middleware";
 
 const supervisorsRoutes = Router();
 
 supervisorsRoutes.post(
   "",
+  tokenAuthMiddleware,
+  verifyManager,
   validateSupervisorsCreate(supervisorsCreateSchema),
   createSupervisorsController
 );
-supervisorsRoutes.get("/", listAllSupervisorsController);
-supervisorsRoutes.patch("/:id", updateSupervisorController);
-supervisorsRoutes.delete("/:id", deleteSupervisorControler);
+supervisorsRoutes.get(
+  "/",
+  tokenAuthMiddleware,
+  verifyManager,
+  listAllSupervisorsController
+);
+supervisorsRoutes.patch(
+  "/:id",
+  tokenAuthMiddleware,
+  verifyManager,
+  updateSupervisorController
+);
+supervisorsRoutes.delete(
+  "/:id",
+  tokenAuthMiddleware,
+  verifyManager,
+  deleteSupervisorControler
+);
 
 export default supervisorsRoutes;

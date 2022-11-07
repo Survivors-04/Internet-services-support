@@ -4,6 +4,7 @@ import { deleteInternetPlanController } from "../controllers/internet_plan/delet
 import { listingAllInternetPlanController } from "../controllers/internet_plan/listingAllInternetPlan.controller";
 import { listingClientsByInternetPlanController } from "../controllers/internet_plan/listingClientsByInternetPlan.controller";
 import { updateInternetPlanController } from "../controllers/internet_plan/updateInternetPlan.controller";
+import tokenAuthMiddleware from "../middlewares/tokenAuth.middleware";
 import {
   internetPlanCreateSchema,
   validateInternetPlanCreate,
@@ -12,19 +13,35 @@ import {
   internetPlanUpdateSchema,
   validateInternetPlanUpdate,
 } from "../middlewares/validationsInfosYup/validationInfoUpdateInternetPlan.middleware";
+import { verifyCollaboratorRoleMiddleware } from "../middlewares/verifyRoles/verifyCollaborator.middleware";
+import { verifySupervisorMiddleware } from "../middlewares/verifyRoles/verifySupervisors.middleware";
 
 export const internetPlanRoutes = Router();
 
 internetPlanRoutes.post(
   "",
   validateInternetPlanCreate(internetPlanCreateSchema),
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
   createInternetPlanController
 );
 internetPlanRoutes.get("", listingAllInternetPlanController);
-internetPlanRoutes.get("/:id/clients", listingClientsByInternetPlanController);
+internetPlanRoutes.get(
+  "/:id/clients",
+  tokenAuthMiddleware,
+  verifyCollaboratorRoleMiddleware,
+  listingClientsByInternetPlanController
+);
 internetPlanRoutes.patch(
   "/:id",
   validateInternetPlanUpdate(internetPlanUpdateSchema),
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
   updateInternetPlanController
 );
-internetPlanRoutes.delete("/:id", deleteInternetPlanController);
+internetPlanRoutes.delete(
+  "/:id",
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
+  deleteInternetPlanController
+);

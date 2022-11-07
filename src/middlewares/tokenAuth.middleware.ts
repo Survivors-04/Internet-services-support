@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 import { decode } from "punycode";
 
-const tokenAuthMiddleware = async (
+const tokenAuthMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
@@ -33,7 +33,7 @@ const tokenAuthMiddleware = async (
         role: decoded.role,
         is_active: decoded.is_active,
       };
-
+      console.log(req.user + "auth token")
       return next();
     }
   );

@@ -6,6 +6,7 @@ import { listingAllTeamsController } from "../controllers/teams/listingAllTeams.
 import { listingTeamByIdController } from "../controllers/teams/listingTeamById.controller";
 import { listingTeamByIdSupervisorController } from "../controllers/teams/listingTeamsByIdSupervisor.controller";
 import { removeCollaboratorInTeamController } from "../controllers/teams/removeCollaboratorInTeam.controller";
+import tokenAuthMiddleware from "../middlewares/tokenAuth.middleware";
 import {
   addCollaboratorInTeamSchema,
   validateAddCollaboratorInTeam,
@@ -14,25 +15,54 @@ import {
   teamCreateSchema,
   validateTeamCreate,
 } from "../middlewares/validationsInfosYup/validateInfoTeams.middleware";
+import { verifyCollaboratorRoleMiddleware } from "../middlewares/verifyRoles/verifyCollaborator.middleware";
+import { verifyManager } from "../middlewares/verifyRoles/verifyManager.middleware";
+import { verifySupervisorMiddleware } from "../middlewares/verifyRoles/verifySupervisors.middleware";
 
 export const teamsRoutes = Router();
 
 teamsRoutes.post(
   "",
   validateTeamCreate(teamCreateSchema),
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
   createTeamController
 );
 teamsRoutes.post(
   "/:id/collaborator",
   validateAddCollaboratorInTeam(addCollaboratorInTeamSchema),
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
   addCollaboratorInTeamController
 );
-teamsRoutes.get("", listingAllTeamsController);
-teamsRoutes.get("/:id", listingTeamByIdController);
-teamsRoutes.get("/supervisor/:id", listingTeamByIdSupervisorController);
-teamsRoutes.delete("/:id", deleteTeamController);
+teamsRoutes.get(
+  "",
+  tokenAuthMiddleware,
+  verifyCollaboratorRoleMiddleware,
+  listingAllTeamsController
+);
+teamsRoutes.get(
+  "/:id",
+  tokenAuthMiddleware,
+  verifyCollaboratorRoleMiddleware,
+  listingTeamByIdController
+);
+teamsRoutes.get(
+  "/supervisor/:id",
+  tokenAuthMiddleware,
+  verifyManager,
+  listingTeamByIdSupervisorController
+);
+teamsRoutes.delete(
+  "/:id",
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
+  deleteTeamController
+);
 teamsRoutes.delete(
   "/:id/collaborator",
   validateAddCollaboratorInTeam(addCollaboratorInTeamSchema),
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
   removeCollaboratorInTeamController
 );
