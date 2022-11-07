@@ -12,21 +12,42 @@ import {
   collaboratorUpdateSchema,
   validateColaboratorUpdate,
 } from "../middlewares/validationsInfosYup/validateInfoUpdateCollaborator.middleware";
+import { verifySupervisorMiddleware } from "../middlewares/verifyRoles/verifySupervisors.middleware";
+import tokenAuthMiddleware from "../middlewares/tokenAuth.middleware";
 
 const collaboratorRouter = Router();
 
 collaboratorRouter.post(
   "",
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
   validateCollaboratorCreate(collaboratorCreateSchema),
   createCollaboratorController
 );
-collaboratorRouter.get("", getCollaboratorsDataController);
-collaboratorRouter.get("/:id", getCollaboratorsDataController);
+collaboratorRouter.get(
+  "",
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
+  getCollaboratorsDataController
+);
+collaboratorRouter.get(
+  "/:id",
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
+  getCollaboratorsDataController
+);
 collaboratorRouter.patch(
   "/:id",
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
   validateColaboratorUpdate(collaboratorUpdateSchema),
   updateCollaboratorController
 );
-collaboratorRouter.delete("/:id", deleteCollaboratorController);
+collaboratorRouter.delete(
+  "/:id",
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
+  deleteCollaboratorController
+);
 
 export default collaboratorRouter;

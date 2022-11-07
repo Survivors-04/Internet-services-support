@@ -12,7 +12,8 @@ import {
   serviceUpdateSchema,
   validateServiceUpdate,
 } from "../middlewares/validationsInfosYup/validateInfoUpdateService.middleware";
-import verifyCollaboratorRoleMiddleware from "../middlewares/verifyCollaboratorRole.middleware";
+
+import { verifyCollaboratorRoleMiddleware } from "../middlewares/verifyRoles/verifyCollaborator.middleware";
 
 const servicesRoutes = Router();
 
@@ -29,9 +30,9 @@ servicesRoutes.get(
 );
 servicesRoutes.patch(
   "/:id",
-  validateServiceUpdate(serviceUpdateSchema),
   tokenAuthMiddleware,
   verifyCollaboratorRoleMiddleware,
+  validateServiceUpdate(serviceUpdateSchema),
   updateServicesController
 );
 servicesRoutes.delete(
