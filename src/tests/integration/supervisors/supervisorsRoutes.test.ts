@@ -36,8 +36,8 @@ describe("/supervisors", () => {
     expect(body).toHaveProperty("telephone");
     expect(body).not.toHaveProperty("cpf");
     expect(body).not.toHaveProperty("password");
-    expect(body.name).toEqual("Teste");
-    expect(body.email).toEqual("teste@mail.com");
+    expect(body.name).toEqual("Supervisor");
+    expect(body.email).toEqual("supervisor@mail.com");
     expect(body.telephone).toEqual("13984512783");
     expect(body.is_manager).toEqual(false);
     expect(body.is_active).toEqual(true);
@@ -122,7 +122,7 @@ describe("/supervisors", () => {
 
   test("PATCH /supervisors/:id - Should not be able to update supervisor without manager permission", async () => {
     await request(app).post("/supervisors").send(mockedManager);
-    await request(app).post('/supervisors').send(mockedSupervisor)
+    await request(app).post("/supervisors").send(mockedSupervisor);
 
     const newValues = { name: "false" };
 
@@ -320,7 +320,7 @@ describe("/supervisors", () => {
       .get("/supervisors")
       .set("Authorization", token);
 
-    expect(status).toBe(204);
     expect(body[0].is_active).toBe(false);
+    expect(status).toBe(204);
   });
 });

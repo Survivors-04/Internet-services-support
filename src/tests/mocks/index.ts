@@ -13,7 +13,7 @@ import { IServiceRequest } from "../../interfaces/services";
 import { IClientLogin, IClientRequest } from "../../interfaces/clients";
 
 export const mockedSupervisor: ISupervisorsRequest = {
-  name: "Teste",
+  name: "Supervisor",
   email: "supervisor@mail.com",
   password: "supervisor123",
   cpf: "12345678901",
@@ -61,9 +61,9 @@ export const mockedCollaboratorLogin: ICollaboratorLogin = {
 };
 
 export const mockedAttendance = {
-  collaborator_id: "",
-  client_id: "",
-  service_id: "",
+  collaboratorId: "",
+  clientId: "",
+  serviceId: "",
 };
 
 export const mockedService: IServiceRequest = {
@@ -85,7 +85,7 @@ export const mockedClientLogin: IClientLogin = {
   password: "Client123",
 };
 
-export const mockedTeams:ITeams = {
+export const mockedTeams: ITeams = {
   supervisor_id: "",
   collaborator_id: "",
-}
+};
