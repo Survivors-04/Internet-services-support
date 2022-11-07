@@ -8,7 +8,5 @@ export const updateServicesController = async (req: Request, res: Response) => {
   const data: IUpdateService = req.dataUpdateService;
   const service: Services = await updateServicesService(id, data);
 
-  return res.status(200).json({
-    service,
-  });
+  return res.status(200).json(service);
 };
