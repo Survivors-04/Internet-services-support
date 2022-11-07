@@ -1,15 +1,16 @@
-import deleteSupervisorService from "../../services/supervisors/deleteSupervisor.services"
+import {deleteSupervisorService} from "../../services/supervisors/deleteSupervisor.service"
 import { Request, Response } from "express"
+import { instanceToPlain } from "class-transformer"
 
 
-const deleteSupervisorControler = async (req: Request, res: Response)=>{
+export const deleteSupervisorControler = async (req: Request, res: Response)=>{
 
     const {id} = req.params
 
     const deleteSupervisor = await deleteSupervisorService(id)
 
-    return res.status(201).json("Supervisor deletado")
+    return res.status(201).json(instanceToPlain(("Supervisor deleted")))
 
 }
 
-export default deleteSupervisorControler
+

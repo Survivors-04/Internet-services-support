@@ -4,7 +4,7 @@ import { updateColaboratorService } from "../../services/colaborator/updateColab
 const updateCollaboratorController = async (req: Request, res: Response) => {
   const data = req.body;
   const { id } = req.params;
-  const updatedData = updateColaboratorService(data, id);
+  const updatedData = await updateColaboratorService(data, id);
   return res.status(200).json(updatedData);
 };
 
