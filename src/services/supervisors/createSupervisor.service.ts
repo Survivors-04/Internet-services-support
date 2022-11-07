@@ -35,7 +35,7 @@ export const createSupervisorService = async ({
   newSupervisor.telephone = telephone;
   newSupervisor.email = email;
   newSupervisor.is_manager = is_manager;
-  newSupervisor.password = hashedPassword;
+  newSupervisor.password = password;
 
   supervisorsRepository.create(newSupervisor);
   await supervisorsRepository.save(newSupervisor);
