@@ -19,6 +19,8 @@ export const updateServicesService = async (
     description: data.description ? data.description : service.description,
   });
 
+  if (data.id !== undefined) throw new AppError("Cannot edit id", 401);
+
   const updatedService = await serviceRepository.findOne({
     where: { id },
   });

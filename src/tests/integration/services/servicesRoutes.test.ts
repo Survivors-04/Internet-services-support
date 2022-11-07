@@ -130,7 +130,7 @@ describe("/services", () => {
     const { body, status } = await request(app)
       .patch(`/services/${serviceId}`)
       .set("Authorization", clientToken)
-      .send(newValues)
+      .send(newValues);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -193,12 +193,9 @@ describe("/services", () => {
       .set("Authorization", token);
     const deletedServiceId = deletedService.body[0].id;
 
-    const { status } = await request(app)
+    const { status, body } = await request(app)
       .delete(`/services/${deletedServiceId}`)
       .set("Autorization", token);
-    const { body } = await request(app)
-      .get("/services")
-      .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(204);
