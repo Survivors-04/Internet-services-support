@@ -4,7 +4,7 @@ import { createColaboratorService } from "../../services/colaborator/createColab
 import { instanceToPlain } from "class-transformer";
 
 const createCollaboratorController = async (req: Request, res: Response) => {
-  const data: IColaboratorRequest = req.body;
+  const data: IColaboratorRequest = req.dataCollaborator;
   const newColaborator = await createColaboratorService(data);
   return res.status(201).json(instanceToPlain(newColaborator));
 };

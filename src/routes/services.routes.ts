@@ -6,7 +6,7 @@ import { updateServicesController } from "../controllers/services/updateServices
 import {
   serviceCreateSchema,
   validateServiceCreate,
-} from "../middlewares/validationsInfosYup/vaidateInfoServices.middleware";
+} from "../middlewares/validationsInfosYup/validateInfoServices.middleware";
 import {
   serviceUpdateSchema,
   validateServiceUpdate,
