@@ -8,7 +8,9 @@ export const listAttendancesService = async ( id:string ):Promise<Attendance | A
 
   if( id ){
     const attendances = await attendancesRepo.findOneBy({ id:id });
-    const attendancesCollaborator = await attendancesRepo.findBy({collaborator:{id:id}})
+    const attendancesCollaborator = await attendancesRepo.find({
+      where:{ collaborator:{ id:id } }
+    });
 
     if ( attendances ) return attendances;
 
