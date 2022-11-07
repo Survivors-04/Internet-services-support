@@ -54,7 +54,7 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
     throw new AppError("User not Active", 403);
   }
 
-  if (!bcrypt.compareSync(password, user.password)) {
+  if (!bcrypt.compare(password, user.password)) {
     throw new AppError("Wrong email/password", 403);
   }
 
