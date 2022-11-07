@@ -53,20 +53,6 @@ describe("/supervisors", () => {
     expect(status).toBe(400);
   });
 
-  test("POST /supervisors - Should not be able to create a supervisor without manager permission", async () => {
-    const supervisorLogin = await request(app)
-      .post("/login")
-      .send(mockedSupervisorLogin);
-    const token = `Bearer ${supervisorLogin.body.token}`;
-
-    const { body, status } = await request(app)
-      .get("/supervisors")
-      .set("Authorization", token);
-
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(403);
-  });
-
   test("GET /supevisors - Must be able to list all supervisors", async () => {
     await request(app).post("/supervisors").send(mockedManager);
     const managerLogin = await request(app)
