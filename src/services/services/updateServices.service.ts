@@ -12,12 +12,14 @@ export const updateServicesService = async (
     where: { id },
   });
 
-  if (!service) throw new AppError("service not found", 409);
+  if (!service) throw new AppError("Service not found", 404);
 
   await serviceRepository.update(id, {
     name: data.name ? data.name : service.name,
     description: data.description ? data.description : service.description,
   });
+
+  if (data.id !== undefined) throw new AppError("Cannot edit id", 401);
 
   const updatedService = await serviceRepository.findOne({
     where: { id },

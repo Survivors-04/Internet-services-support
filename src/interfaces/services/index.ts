@@ -5,6 +5,7 @@ export interface IService {
 }
 
 export interface IUpdateService {
+  id?: string;
   name?: string;
   description?: string;
 }

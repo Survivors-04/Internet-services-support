@@ -1,5 +1,4 @@
 import { Attendance } from "../../entities/attendance.entity";
-import { Supervisor } from "../../entities/supervisor.entity";
 import { Team } from "../../entities/team.entity";
 
 export interface IColaboratorResponse {
@@ -30,7 +29,8 @@ export interface ICollaboratorUpdateRequest {
 export interface IColaboratorRequest extends ICollaboratorUpdateRequest {
   cpf: string;
   password: string;
-  isActive: boolean;
+  is_active: boolean;
+  is_supervisor: boolean;
 }
 
 export interface ICollaborator {
@@ -48,6 +48,16 @@ export interface ICollaboratorLogin {
 }
 
 export interface ITeams {
-  supervisor_id: string,
-  collaborator_id: string,
+  supervisor_id: string;
+  collaborator_id: string;
+}
+
+export interface ICollaboratorUpdateYup {
+  id?: string;
+  name?: string;
+  telephone?: string;
+  email?: string;
+  password?: string;
+  is_active?: boolean;
+  is_supervisor?: boolean;
 }

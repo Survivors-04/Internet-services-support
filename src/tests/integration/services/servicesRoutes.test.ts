@@ -7,6 +7,8 @@ import {
   mockedClientLogin,
   mockedCollaborator,
   mockedCollaboratorLogin,
+  mockedManager,
+  mockedManagerLogin,
   mockedService,
   mockedSupervisor,
   mockedSupervisorLogin,
@@ -28,9 +30,27 @@ describe("/services", () => {
   });
 
   test("POST /services - Must be able to create a service", async () => {
+    await request(app).post("/supervisors").send(mockedManager);
+
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const managerToken = `Bearer ${managerLogin.body.token}`;
+
+    await request(app)
+      .post("/collaborators")
+      .send(mockedCollaborator)
+      .set("Authorization", managerToken);
+
+    const collaborator = await request(app)
+      .post("/login")
+      .send(mockedCollaboratorLogin);
+    const collaboratorToken = `Bearer ${collaborator.body.token}`;
+
     const { body, status } = await request(app)
       .post("/services")
-      .send(mockedService);
+      .send(mockedService)
+      .set("Authorization", collaboratorToken);
 
     expect(body).toHaveProperty("id");
     expect(body).toHaveProperty("name");
@@ -56,7 +76,6 @@ describe("/services", () => {
   });
 
   test("GET /services - Must be able to list all services", async () => {
-    await request(app).post("/collaborators").send(mockedCollaborator);
     const collaboratorLogin = await request(app)
       .post("/login")
       .send(mockedCollaboratorLogin);
@@ -101,11 +120,11 @@ describe("/services", () => {
 
     const { body, status } = await request(app)
       .patch(`/services/${updatedServiceId}`)
-      .set("Autorization", token)
+      .set("Authorization", token)
       .send(newValues);
 
-    expect(body[0].name).toEqual("Joana Brito");
-    expect(body[0].description).toEqual("joanabrito@mail.com");
+    expect(body.name).toEqual("Joana Brito");
+    expect(body.description).toEqual("joanabrito@mail.com");
     expect(status).toBe(200);
   });
 
@@ -120,7 +139,7 @@ describe("/services", () => {
     const clientLogin = await request(app)
       .post("/login")
       .send(mockedClientLogin);
-    const clientToken = clientLogin.body.token;
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const updatedService = await request(app)
       .get("/services")
@@ -129,8 +148,8 @@ describe("/services", () => {
 
     const { body, status } = await request(app)
       .patch(`/services/${serviceId}`)
-      .send(newValues)
-      .set("Authorization", clientToken);
+      .set("Authorization", clientToken)
+      .send(newValues);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -142,7 +161,7 @@ describe("/services", () => {
     const collaboratorLogin = await request(app)
       .post("/login")
       .send(mockedCollaboratorLogin);
-    const token = `Bearer ${collaboratorLogin}`;
+    const token = `Bearer ${collaboratorLogin.body.token}`;
 
     const updatedService = await request(app)
       .get("/services")
@@ -181,8 +200,6 @@ describe("/services", () => {
   });
 
   test("DELETE /services/:id - Must be able to delete a service", async () => {
-    await request(app).post("/services").send(mockedCollaborator);
-
     const collaboratorLogin = await request(app)
       .post("/login")
       .send(mockedCollaboratorLogin);
@@ -191,27 +208,34 @@ describe("/services", () => {
     const deletedService = await request(app)
       .get("/services")
       .set("Authorization", token);
+
     const deletedServiceId = deletedService.body[0].id;
 
-    const { status } = await request(app)
+    const response = await request(app)
       .delete(`/services/${deletedServiceId}`)
-      .set("Autorization", token);
-    const { body } = await request(app)
-      .get("/services")
       .set("Authorization", token);
 
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(204);
+    console.log(response);
+
+    expect(response.body).toHaveProperty("message");
+    expect(response.status).toBe(204);
   });
 
   test("DELETE /services/:id - Should not be able to delete a service without collaborator permission", async () => {
-    await request(app).post("/supervisors").send(mockedSupervisor);
-    await request(app).post("/services").send(mockedService);
-
-    const supervisorLogin = await request(app)
+    const collaboratorLogin = await request(app)
       .post("/login")
-      .send(mockedSupervisorLogin);
-    const token = `Bearer ${supervisorLogin.body.token}`;
+      .send(mockedCollaboratorLogin);
+    const token = `Bearer ${collaboratorLogin.body.token}`;
+
+    await request(app)
+      .post("/services")
+      .send(mockedService)
+      .set("Authorization", token);
+
+    await request(app)
+      .post("/clients")
+      .send(mockedClient)
+      .set("Authorization", token);
 
     const clientLogin = await request(app)
       .post("/login")
@@ -232,12 +256,10 @@ describe("/services", () => {
   });
 
   test("DELETE /services/:id - Should not be able to delete service with invalid id", async () => {
-    await request(app).post("/services").send(mockedCollaborator);
-
     const collaboratorLogin = await request(app)
       .post("/login")
       .send(mockedCollaboratorLogin);
-    const token = collaboratorLogin.body.token;
+    const token = `Bearer ${collaboratorLogin.body.token}`;
 
     const response = await request(app)
       .delete(`/services/13970660-5dbe-423a-9a9d-5c23b37943cf`)

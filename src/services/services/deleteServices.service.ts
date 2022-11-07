@@ -6,9 +6,9 @@ export const deleteServicesService = async (id: string): Promise<string> => {
   const serviceRepository = AppDataSource.getRepository(Services);
   const service = await serviceRepository.findOne({ where: { id } });
 
-  if (!service) throw new AppError("service not found", 409);
+  if (!service) throw new AppError("service not found", 404);
 
   await serviceRepository.delete({ id });
 
-  return "service deleted successfully";
+  return "service deleted successfully" 
 };

@@ -3,7 +3,7 @@ import { deleteServicesService } from "../../services/services/deleteServices.se
 
 export const deleteServicesController = async (req: Request, res: Response) => {
   const id: string = req.params.id;
-  const serviceMessage: string = await deleteServicesService(id);
+  const deletedService = await deleteServicesService(id);
 
-  return res.status(200).json({ message: serviceMessage });
+  return res.status(204).json({message: deletedService});
 };

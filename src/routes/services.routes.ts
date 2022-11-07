@@ -7,12 +7,15 @@ import tokenAuthMiddleware from "../middlewares/tokenAuth.middleware";
 import {
   serviceCreateSchema,
   validateServiceCreate,
-} from "../middlewares/validationsInfosYup/vaidateInfoServices.middleware";
+} from "../middlewares/validationsInfosYup/validateInfoServices.middleware";
 import {
   serviceUpdateSchema,
   validateServiceUpdate,
 } from "../middlewares/validationsInfosYup/validateInfoUpdateService.middleware";
+
+
 import { verifyCollaboratorRoleMiddleware } from "../middlewares/verifyRoles/verifyCollaborator.middleware";
+
 
 const servicesRoutes = Router();
 

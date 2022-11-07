@@ -6,6 +6,7 @@ import {
   mockedAttendance,
   mockedClient,
   mockedCollaborator,
+  mockedInternetPlans,
   mockedManager,
   mockedManagerLogin,
   mockedService,
@@ -73,15 +74,114 @@ describe("/client", () => {
     expect(status).toBe(400);
   });
 
-  test("GET /clients - Must be able to list all clients", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
+  test("POST /clients/:id/plans - Must be able to create a client internet plan", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
-    console.log(managerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
-    console.log(token);
+
+    const client = await request(app)
+      .get("/clients")
+      .set("Authorization", token);
+    const clientId = client.body[0].id;
+
+    const plan = await request(app)
+      .post("/plans")
+      .send(mockedInternetPlans)
+      .set("Authorization", token);
+    const planId = plan.body.id;
+
+    const { body, status } = await request(app)
+      .post(`/clients/${clientId}/plans`)
+      .send(planId)
+      .set("Authorization", token);
+    
+    expect(body).toHaveProperty('message')
+    expect(status).toBe(201)
+  });
+
+  test("POST /clients/:id/plans - Should not be able to create a client internet plan with invalid client id", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const client = await request(app)
+      .get("/clients")
+      .set("Authorization", token);
+    const clientId = client.body[0].id;
+
+    const plan = await request(app)
+      .post("/plans")
+      .send(mockedInternetPlans)
+      .set("Authorization", token);
+    const planId = plan.body.id;
+
+    const { body, status } = await request(app)
+      .post(`/clients/13970660-5dbe-423a-9a9d-5c23b37943cf/plans`)
+      .send(planId)
+      .set("Authorization", token);
+    
+    expect(body).toHaveProperty('message')
+    expect(status).toBe(404)
+  });
+
+  test("POST /clients/:id/plans - Should not be able to create a client internet plan with invalid plan id", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const client = await request(app)
+      .get("/clients")
+      .set("Authorization", token);
+    const clientId = client.body[0].id;
+
+    const plan = await request(app)
+      .post("/plans")
+      .send(mockedInternetPlans)
+      .set("Authorization", token);
+    const planId = plan.body.id;
+
+    const { body, status } = await request(app)
+      .post(`/clients/${clientId}/plans`)
+      .send('13970660-5dbe-423a-9a9d-5c23b37943cf')
+      .set("Authorization", token);
+    
+    expect(body).toHaveProperty('message')
+    expect(status).toBe(404)
+  });
+  test("POST /clients/:id/plans - Should not be able to create a client internet plan without collaborator permission", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const client = await request(app)
+      .get("/clients")
+      .set("Authorization", token);
+    const clientId = client.body[0].id;
+
+    const plan = await request(app)
+      .post("/plans")
+      .send(mockedInternetPlans)
+      .set("Authorization", token);
+    const planId = plan.body.id;
+
+    const { body, status } = await request(app)
+      .post(`/clients/${clientId}/plans`)
+      .send(planId)
+      .set("Authorization", 'token');
+    
+    expect(body).toHaveProperty('message')
+    expect(status).toBe(403)
+  });
+
+  test("GET /clients - Must be able to list all clients", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const { body, status } = await request(app)
       .get("/clients")
@@ -92,8 +192,6 @@ describe("/client", () => {
   });
 
   test("GET /clients - Should not be able to list all attendances without collaborator permission", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -107,88 +205,48 @@ describe("/client", () => {
     expect(status).toBe(403);
   });
 
-  test("GET /clients/:id - Must be able to list an attendance by id", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
+  test("GET /clients/:id - Must be able to list a client by id", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
-
-    const collaborator = await request(app)
-      .get("/collaborators")
-      .set("Authorization", token);
-    const collaboratorId = collaborator.body[0].id;
 
     const client = await request(app)
       .get("/clients")
       .set("Authorization", token);
     const clientId = client.body[0].id;
 
-    const service = await request(app)
-      .get("/services")
-      .set("Authorization", token);
-    const serviceId = service.body[0].id;
-
-    mockedAttendance.collaboratorId = collaboratorId;
-    mockedAttendance.clientId = clientId;
-    mockedAttendance.serviceId = serviceId;
-
-    const attendance = await request(app)
-      .post("/clients")
-      .send(mockedAttendance)
-      .set("Authorization", token);
-    const attendanceId = attendance.body.id;
-
     const { body, status } = await request(app)
-      .get(`/clients/${attendanceId}`)
+      .get(`/clients/${clientId}`)
       .set("Authorization", token);
 
     expect(body).toHaveProperty("id");
-    expect(body).toHaveProperty("collaboratorId");
-    expect(body).toHaveProperty("clientId");
-    expect(body).toHaveProperty("serviceId");
-    expect(body).toHaveProperty("date");
+    expect(body).toHaveProperty("name");
+    expect(body).toHaveProperty("cpf");
+    expect(body).toHaveProperty("telephone");
+    expect(body).toHaveProperty("email");
     expect(body).toHaveProperty("is_active");
-    expect(body.collaboratorId).toBe(collaboratorId);
-    expect(body.clientId).toBe(clientId);
-    expect(body.serviceId).toBe(serviceId);
+    expect(body).toHaveProperty("created_date");
+    expect(body).toHaveProperty("updated_date");
+    expect(body).not.toHaveProperty("password");
+    expect(body.name).toBe("Client");
+    expect(body.cpf).toBe("12345678901");
+    expect(body.telephone).toBe("13984512783");
+    expect(body.email).toBe("client@mail.com");
     expect(body.is_active).toBe(true);
     expect(status).toBe(200);
   });
 
-  test("GET /clients/:id - Should not be able to list an attendance with invalid id", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
+  test("GET /clients/:id - Should not be able to list a client with invalid id", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
-    const collaborator = await request(app)
-      .get("/collaborators")
-      .set("Authorization", token);
-    const collaboratorId = collaborator.body[0].id;
-
     const client = await request(app)
       .get("/clients")
       .set("Authorization", token);
     const clientId = client.body[0].id;
-
-    const service = await request(app)
-      .get("/services")
-      .set("Authorization", token);
-    const serviceId = service.body[0].id;
-
-    mockedAttendance.collaboratorId = collaboratorId;
-    mockedAttendance.clientId = clientId;
-    mockedAttendance.serviceId = serviceId;
-
-    const attendance = await request(app)
-      .post("/clients")
-      .send(mockedAttendance)
-      .set("Authorization", token);
-    const attendanceId = attendance.body.id;
 
     const { body, status } = await request(app)
       .get(`/clients/13970660-5dbe-423a-9a9d-5c23b37943cf`)
@@ -198,199 +256,56 @@ describe("/client", () => {
     expect(status).toBe(404);
   });
 
-  test("GET /clients/:id - Should not be able to list an attendance without collaborator permission", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
+  test("GET /clients/:id - Should not be able to list a client without collaborator permission", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
-
-    const collaborator = await request(app)
-      .get("/collaborators")
-      .set("Authorization", token);
-    const collaboratorId = collaborator.body[0].id;
 
     const client = await request(app)
       .get("/clients")
       .set("Authorization", token);
     const clientId = client.body[0].id;
 
-    const service = await request(app)
-      .get("/services")
-      .set("Authorization", token);
-    const serviceId = service.body[0].id;
-
-    mockedAttendance.collaboratorId = collaboratorId;
-    mockedAttendance.clientId = clientId;
-    mockedAttendance.serviceId = serviceId;
-
-    const attendance = await request(app)
-      .post("/clients")
-      .send(mockedAttendance)
-      .set("Authorization", token);
-    const attendanceId = attendance.body.id;
-
     const { body, status } = await request(app)
-      .get(`/clients/${attendanceId}`)
+      .get(`/clients/${clientId}`)
       .set("Authorization", "token");
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
   });
 
-  test("GET /attedances/collaborators/:id - Must be able to read all atendances by collaborator", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
-    const managerLogin = await request(app)
-      .post("/login")
-      .send(mockedManagerLogin);
-    const token = `Bearer ${managerLogin.body.token}`;
-
-    const collaborator = await request(app)
-      .get("/collaborators")
-      .set("Authorization", token);
-    const collaboratorId = collaborator.body[0].id;
-
-    const client = await request(app)
-      .get("/clients")
-      .set("Authorization", token);
-    const clientId = client.body[0].id;
-
-    const service = await request(app)
-      .get("/services")
-      .set("Authorization", token);
-    const serviceId = service.body[0].id;
-
-    mockedAttendance.collaboratorId = collaboratorId;
-    mockedAttendance.clientId = clientId;
-    mockedAttendance.serviceId = serviceId;
-
-    const attendance = await request(app)
-      .post("/clients")
-      .send(mockedAttendance)
-      .set("Authorization", token);
-    const attendanceId = attendance.body.id;
-
-    const { body, status } = await request(app)
-      .get(`/clients/collaborators/${collaboratorId}`)
-      .set("Authorization", token);
-
-    expect(body).toHaveLength(5);
-    expect(status).toBe(200);
-  });
-
-  test("GET /clients/collaborators/:id - Should not be able to list attendances by collaborator with invalid collaborator id", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
-    const managerLogin = await request(app)
-      .post("/login")
-      .send(mockedManagerLogin);
-    const token = `Bearer ${managerLogin.body.token}`;
-
-    const collaborator = await request(app)
-      .get("/collaborators")
-      .set("Authorization", token);
-    const collaboratorId = collaborator.body[0].id;
-
-    const client = await request(app)
-      .get("/clients")
-      .set("Authorization", token);
-    const clientId = client.body[0].id;
-
-    const service = await request(app)
-      .get("/services")
-      .set("Authorization", token);
-    const serviceId = service.body[0].id;
-
-    mockedAttendance.collaboratorId = collaboratorId;
-    mockedAttendance.clientId = clientId;
-    mockedAttendance.serviceId = serviceId;
-
-    const attendance = await request(app)
-      .post("/clients")
-      .send(mockedAttendance)
-      .set("Authorization", token);
-    const attendanceId = attendance.body.id;
-
-    const { body, status } = await request(app)
-      .get(`/clients/collaborators/13970660-5dbe-423a-9a9d-5c23b37943cf`)
-      .set("Authorization", token);
-
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(404);
-  });
-
-  test("GET /clients/collaborators/:id - Should not be able to list an attendance by collaborator without collaborator permission", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
-    const managerLogin = await request(app)
-      .post("/login")
-      .send(mockedManagerLogin);
-    const token = `Bearer ${managerLogin.body.token}`;
-
-    const collaborator = await request(app)
-      .get("/collaborators")
-      .set("Authorization", token);
-    const collaboratorId = collaborator.body[0].id;
-
-    const client = await request(app)
-      .get("/clients")
-      .set("Authorization", token);
-    const clientId = client.body[0].id;
-
-    const service = await request(app)
-      .get("/services")
-      .set("Authorization", token);
-    const serviceId = service.body[0].id;
-
-    mockedAttendance.collaboratorId = collaboratorId;
-    mockedAttendance.clientId = clientId;
-    mockedAttendance.serviceId = serviceId;
-
-    const attendance = await request(app)
-      .post("/clients")
-      .send(mockedAttendance)
-      .set("Authorization", token);
-    const attendanceId = attendance.body.id;
-
-    const { body, status } = await request(app)
-      .get(`/clients/collaborators/${collaboratorId}`)
-      .set("Authorization", "token");
-
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(403);
-  });
-
-  test("DELETE /clients - Must be able to soft delete an attendance", async () => {
+  test("DELETE /clients - Must be able to soft delete a client", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = managerLogin.body.token;
+    console.log(token)
 
-    const deletedAttendance = await request(app)
+    const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    const deletedAttendanceId = deletedAttendance.body[0].id;
+    console.log(deletedClient)
+    const deletedClientId = deletedClient.body[0].id;
 
     const { body, status } = await request(app)
-      .delete(`/clients/${deletedAttendanceId}`)
+      .delete(`/clients/${deletedClientId}`)
       .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(204);
   });
 
-  test("DELETE /clients - Should not be able to delete an attendance with invalid id", async () => {
+  test("DELETE /clients - Should not be able to soft delete a client with invalid id", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = managerLogin.body.token;
 
-    const deletedAttendance = await request(app)
+    const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    const deletedAttendanceId = deletedAttendance.body[0].id;
+    const deletedClientId = deletedClient.body[0].id;
 
     const { body, status } = await request(app)
       .delete(`/clients/13970660-5dbe-423a-9a9d-5c23b37943cf`)
@@ -400,39 +315,38 @@ describe("/client", () => {
     expect(status).toBe(404);
   });
 
-  test("DELETE /clients - Should not be able to delete an attendance without collaborator permission", async () => {
+  test("DELETE /clients - Should not be able to soft delete a client without collaborator permission", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = managerLogin.body.token;
 
-    const deletedAttendance = await request(app)
+    const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    const deletedAttendanceId = deletedAttendance.body[0].id;
+    const deletedClientId = deletedClient.body[0].id;
 
     const { body, status } = await request(app)
-      .delete(`/clients/${deletedAttendanceId}`)
+      .delete(`/clients/${deletedClientId}`)
       .set("Authorization", "token");
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
   });
 
-  test("DELETE /clients - Should not be able to delete an attendance with is_active = false", async () => {
+  test("DELETE /clients - Should not be able to soft delete a client with is_active = false", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = managerLogin.body.token;
 
-    const deletedAttendance = await request(app)
+    const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    const deletedAttendanceId = deletedAttendance.body[0].id;
-    console.log(deletedAttendance.body);
+    const deletedClientId = deletedClient.body[0].id;
 
     const { body, status } = await request(app)
-      .delete(`/clients/${deletedAttendanceId}`)
+      .delete(`/clients/${deletedClientId}`)
       .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
