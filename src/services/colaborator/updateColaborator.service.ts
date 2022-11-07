@@ -14,14 +14,23 @@ export const updateColaboratorService = async (
     throw new AppError("Collaborator id not found!", 404);
   }
 
-  const { name, email, telephone, password, isActive } = data;
-
+  const { name, email, telephone, password, is_active } = data;
+  if (
+    data.id !== undefined ||
+    data.is_active !== undefined ||
+    data.is_supervisor !== undefined
+  ) {
+    throw new AppError(
+      "Cannot edit id, is_active or is_supervisor values",
+      401
+    );
+  }
   await collaboratorsRepo.update(id, {
     name: name && name,
     email: email && email,
     telephone: telephone && telephone,
     password: password && password,
-    is_active: isActive && isActive,
+    is_active: is_active && is_active,
   });
 
   const updatedData = await collaboratorsRepo.findOneBy({ id });
