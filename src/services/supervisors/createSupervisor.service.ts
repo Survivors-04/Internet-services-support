@@ -23,7 +23,7 @@ export const createSupervisorService = async ({
   );
 
   if (verifyIfAlreadyExists) {
-    throw new AppError("O email já está em uso");
+    throw new AppError("Email Already exists");
   }
 
   const hashedPassword = bcrypt.hashSync(password,10)
