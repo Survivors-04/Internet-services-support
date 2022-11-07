@@ -104,8 +104,8 @@ describe("/services", () => {
       .set("Autorization", token)
       .send(newValues);
 
-    expect(body[0].name).toEqual("Joana Brito");
-    expect(body[0].description).toEqual("joanabrito@mail.com");
+    expect(body.name).toEqual("Joana Brito");
+    expect(body.description).toEqual("joanabrito@mail.com");
     expect(status).toBe(200);
   });
 
