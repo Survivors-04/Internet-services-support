@@ -12,6 +12,8 @@ export const createColaboratorService = async (
     { cpf: cpf } || { email: email }
   );
 
+    console.log(colaborator)
+
   if (colaborator) {
     throw new AppError("CPF or Email already registered!");
   }

@@ -10,7 +10,10 @@ export const deleteAttendancesService = async (id:string):Promise<{
   const attendanceToBeDeleted = await attendanceRepo.findOneBy({ id:id });
 
   if( !attendanceToBeDeleted ){
-    throw new AppError("Attendance not information not found, maybe it not exists!", 404);
+    throw new AppError("Attendance information not found, maybe it not exists!", 404);
+  };
+  if( attendanceToBeDeleted.is_active === false) {
+    throw new AppError("Attendance already was deleted!");
   };
 
   await attendanceRepo.update(id,{ is_active: false });
