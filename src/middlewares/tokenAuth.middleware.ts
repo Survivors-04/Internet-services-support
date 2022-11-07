@@ -34,7 +34,7 @@ const tokenAuthMiddleware = (
         role: decoded.role,
         is_active: decoded.is_active,
       };
-      console.log(req.user + "auth token")
+ 
       return next();
     }
   );
