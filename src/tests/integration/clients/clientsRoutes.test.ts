@@ -73,85 +73,15 @@ describe("/client", () => {
     expect(status).toBe(400);
   });
 
-  test("POST /clients - Should not be able to create attedance with invalid clientId", async () => {
+  test("GET /clients - Must be able to list all clients", async () => {
     await request(app).post("/supervisors").send(mockedManager);
 
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
+    console.log(managerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
-
-    const collaborator = await request(app)
-      .get("/collaborators")
-      .set("Authorization", token);
-    const collaboratorId = collaborator.body[0].id;
-
-    const client = await request(app)
-      .get("/clients")
-      .set("Authorization", token);
-    const clientId = client.body[0].id;
-
-    const service = await request(app)
-      .get("/services")
-      .set("Authorization", token);
-    const serviceId = service.body[0].id;
-
-    mockedAttendance.collaboratorId = collaboratorId;
-    mockedAttendance.clientId = "13970660-5dbe-423a-9a9d-5c23b37943cf";
-    mockedAttendance.serviceId = serviceId;
-
-    const { body, status } = await request(app)
-      .post("/clients")
-      .send(mockedAttendance)
-      .set("Authorization", token);
-
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(404);
-  });
-
-  test("POST /clients - Should not be able to create attedance with invalid serviceId", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
-    const managerLogin = await request(app)
-      .post("/login")
-      .send(mockedManagerLogin);
-    const token = `Bearer ${managerLogin.body.token}`;
-
-    const collaborator = await request(app)
-      .get("/collaborators")
-      .set("Authorization", token);
-    const collaboratorId = collaborator.body[0].id;
-
-    const client = await request(app)
-      .get("/clients")
-      .set("Authorization", token);
-    const clientId = client.body[0].id;
-
-    const service = await request(app)
-      .get("/services")
-      .set("Authorization", token);
-    const serviceId = service.body[0].id;
-
-    mockedAttendance.collaboratorId = collaboratorId;
-    mockedAttendance.clientId = clientId;
-    mockedAttendance.serviceId = "13970660-5dbe-423a-9a9d-5c23b37943cf";
-
-    const { body, status } = await request(app)
-      .post("/clients")
-      .send(mockedAttendance)
-      .set("Authorization", token);
-
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(404);
-  });
-
-  test("GET /clients - Must be able to list all attendances", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
-    const managerLogin = await request(app)
-      .post("/login")
-      .send(mockedManagerLogin);
-    const token = `Bearer ${managerLogin.body.token}`;
+    console.log(token);
 
     const { body, status } = await request(app)
       .get("/clients")
