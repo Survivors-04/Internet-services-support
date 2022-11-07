@@ -8,5 +8,5 @@ export const verifyCollaboratorRoleMiddleware = (
   if (req.user.role > 1) {
     return next();
   }
-  throw new AppError("Unauthorized");
+  throw new AppError("Unauthorized", 403);
 };
