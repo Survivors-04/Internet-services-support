@@ -14,7 +14,7 @@ import {
   IInternetPlanUpdate,
 } from "../../interfaces/internetPlan";
 import { IService, IUpdateService } from "../../interfaces/services";
-import { ISupervisor } from "../../interfaces/supervisors";
+import { ISupervisor, ISupervisorsUpdate } from "../../interfaces/supervisors";
 import { ITeamValidateYup } from "../../interfaces/teams";
 
 declare global {
@@ -33,6 +33,7 @@ declare global {
       dataUpdateCollaborator: ICollaboratorUpdateYup;
       dataAddOrRemovePlanInClient: IAddingOrRemovingPlanToClient;
       dataClientUpdate: IClientUpdate;
+      dataSupervisorsUpdate: ISupervisorsUpdate;
       user: {
         id: string;
         role: number;

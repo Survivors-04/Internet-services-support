@@ -9,10 +9,9 @@ export const updateSupervisorController = async (
   res: Response
 ) => {
   const { id } = req.params;
-  const data:ISupervisorsUpdate = req.body;
+  const data: ISupervisorsUpdate = req.dataSupervisorsUpdate;
 
-  const userUpdated = await updateSupervisorService(
-    id,data);
+  const userUpdated = await updateSupervisorService(id, data);
 
   return res.status(200).json(instanceToPlain(userUpdated));
 };
