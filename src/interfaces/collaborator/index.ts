@@ -29,7 +29,8 @@ export interface ICollaboratorUpdateRequest {
 export interface IColaboratorRequest extends ICollaboratorUpdateRequest {
   cpf: string;
   password: string;
-  isActive: boolean;
+  is_active: boolean;
+  is_supervisor: boolean;
 }
 
 export interface ICollaborator {
@@ -52,9 +53,11 @@ export interface ITeams {
 }
 
 export interface ICollaboratorUpdateYup {
+  id?: string;
   name?: string;
   telephone?: string;
   email?: string;
   password?: string;
-  isActive?: boolean;
+  is_active?: boolean;
+  is_supervisor?: boolean;
 }

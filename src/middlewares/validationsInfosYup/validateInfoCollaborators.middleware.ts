@@ -22,7 +22,12 @@ export const collaboratorCreateSchema: SchemaOf<IColaboratorRequest> = yup
       .required(),
     cpf: yup.string().required(),
     telephone: yup.string().required(),
-    isActive: yup
+    is_active: yup
+      .boolean()
+      .default(() => true)
+      .transform(() => true)
+      .notRequired(),
+    is_supervisor: yup
       .boolean()
       .default(() => true)
       .transform(() => true)

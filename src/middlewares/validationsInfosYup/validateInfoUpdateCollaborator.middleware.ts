@@ -8,6 +8,7 @@ import { ICollaboratorUpdateYup } from "../../interfaces/collaborator";
 export const collaboratorUpdateSchema: SchemaOf<ICollaboratorUpdateYup> = yup
   .object()
   .shape({
+    id: yup.string().notRequired(),
     name: yup.string().notRequired(),
     email: yup.string().email().notRequired(),
     password: yup
@@ -15,7 +16,8 @@ export const collaboratorUpdateSchema: SchemaOf<ICollaboratorUpdateYup> = yup
       .transform((pws) => hashSync(pws, 10))
       .notRequired(),
     telephone: yup.string().notRequired(),
-    isActive: yup.boolean().notRequired(),
+    is_active: yup.boolean().notRequired(),
+    is_supervisor: yup.boolean().notRequired(),
   });
 
 export const validateColaboratorUpdate =
