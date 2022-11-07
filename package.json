@@ -12,12 +12,13 @@
     "testServices": "yarn test src/tests/integration/services/servicesRoutes.test.ts",
     "testSupervisors": "yarn test src/tests/integration/supervisors/supervisorsRoutes.test.ts",
     "testCollaborators": "yarn test src/tests/integration/collaborators/collaboratorsRoutes.test.ts"
+    "build": "tsc",
+    "start": "node dist/src/server.js"
+  },
+  "engines": {
+    "node": "16.x"
   },
   "dependencies": {
-    "@types/bcrypt": "^5.0.0",
-    "@types/jsonwebtoken": "^8.5.9",
-    "@types/mocha": "^10.0.0",
-    "@types/uuid": "^8.3.4",
     "bcrypt": "^5.1.0",
     "bcryptjs": "^2.4.3",
     "class-transformer": "^0.5.1",
@@ -29,15 +30,17 @@
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.10",
     "uuid": "^9.0.0",
-    "win-node-env": "^0.6.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.14",
     "@types/jest": "^29.2.1",
+    "@types/jsonwebtoken": "^8.5.9",
+    "@types/mocha": "^10.0.0",
     "@types/node": "^18.11.8",
     "@types/supertest": "^2.0.12",
-    "@types/yup": "^0.32.0",
+    "@types/uuid": "^8.3.4",
     "cross-env": "^7.0.3",
     "jest": "^29.2.2",
     "sqlite3": "^5.1.2",
