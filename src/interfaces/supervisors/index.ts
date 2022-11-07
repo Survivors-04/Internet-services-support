@@ -40,6 +40,14 @@ export interface ISupervisor {
   is_active: boolean;
 }
 
+export interface ISupervisorsUpdate {
+  name?: string;
+  email?: string;
+  password?: string;
+  telephone?: string;
+  
+}
+
 export interface IManager {}
 
 export interface IManagerLogin {}

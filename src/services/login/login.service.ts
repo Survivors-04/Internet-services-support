@@ -32,10 +32,12 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
 
   let user;
   let role;
+  let is_manager;
 
   if (searchUserOnClient) {
     user = searchUserOnClient;
     role = 1;
+    
   } else if (searchUserOnCollaborator) {
     user = searchUserOnCollaborator;
     role = 2;
@@ -45,6 +47,7 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
   } else if (searchUserOnSupervisor?.is_manager === true) {
     user = searchUserOnSupervisor;
     role = 4;
+    
   } else {
     throw new AppError("Wrong email/password", 403);
   }
@@ -60,7 +63,8 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
   const token = jwt.sign(
     {
       role: role,
-      is_active: user.is_active,
+      is_active: user.is_active
+      
     },
     process.env.SECRET_KEY as string,
     { expiresIn: "24h", subject: user.id }
