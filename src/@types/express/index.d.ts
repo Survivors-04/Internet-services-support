@@ -28,8 +28,10 @@ declare global {
       dataCollaborator: IColaboratorRequest;
       dataUpdateCollaborator: ICollaboratorUpdateYup;
       user: {
+        id:string;
         role: number;
         is_active: boolean;
+
       };
     }
   }
