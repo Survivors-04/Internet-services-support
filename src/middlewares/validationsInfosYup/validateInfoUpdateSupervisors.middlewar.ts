@@ -1,37 +1,24 @@
 import { Request, Response, NextFunction } from "express";
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { v4 as uuidv4 } from "uuid";
 import { hashSync } from "bcrypt";
-import { ISupervisor } from "../../interfaces/supervisors";
+import { ISupervisorsUpdate } from "../../interfaces/supervisors";
 import { AppError } from "../../errors/appError";
 
-export const supervisorsCreateSchema: SchemaOf<ISupervisor> = yup
+export const supervisorsUpdateSchema: SchemaOf<ISupervisorsUpdate> = yup
   .object()
   .shape({
-    id: yup
-      .string()
-      .default(() => uuidv4())
-      .transform(() => uuidv4())
-      .notRequired(),
-    name: yup.string().required(),
-    email: yup.string().email().required(),
+    name: yup.string().notRequired(),
+    email: yup.string().email().notRequired(),
     password: yup
       .string()
       .transform((pws) => hashSync(pws, 10))
-      .required(),
-    cpf: yup.string().required(),
-    telephone: yup.string().required(),
-    is_active: yup
-      .boolean()
-      .default(() => true)
-      .transform(() => true)
       .notRequired(),
-    is_manager: yup.boolean().required(),
+    telephone: yup.string().notRequired(),
   });
 
-export const validateSupervisorsCreate =
-  (schema: SchemaOf<ISupervisor>) =>
+export const validateSupervisorsUpdate =
+  (schema: SchemaOf<ISupervisorsUpdate>) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = req.body;
@@ -42,7 +29,7 @@ export const validateSupervisorsCreate =
           stripUnknown: true,
         });
 
-        req.dataSupervisors = validatedData;
+        req.dataSupervisorsUpdate = validatedData;
 
         next();
       } catch (err: any) {

@@ -7,6 +7,10 @@ import {
   supervisorsCreateSchema,
   validateSupervisorsCreate,
 } from "../middlewares/validationsInfosYup/validateInfoSupervisors.middleware";
+import {
+  supervisorsUpdateSchema,
+  validateSupervisorsUpdate,
+} from "../middlewares/validationsInfosYup/validateInfoUpdateSupervisors.middlewar";
 
 const supervisorsRoutes = Router();
 
@@ -16,7 +20,11 @@ supervisorsRoutes.post(
   createSupervisorsController
 );
 supervisorsRoutes.get("/", listAllSupervisorsController);
-supervisorsRoutes.patch("/:id", updateSupervisorController);
+supervisorsRoutes.patch(
+  "/:id",
+  validateSupervisorsUpdate(supervisorsUpdateSchema),
+  updateSupervisorController
+);
 supervisorsRoutes.delete("/:id", deleteSupervisorControler);
 
 export default supervisorsRoutes;

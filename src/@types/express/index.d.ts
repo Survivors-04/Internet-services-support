@@ -1,6 +1,10 @@
 import * as express from "express";
 import { IAttendanceRequest } from "../../interfaces/attendances";
-import { IClient } from "../../interfaces/clients";
+import {
+  IAddingOrRemovingPlanToClient,
+  IClient,
+  IClientUpdate,
+} from "../../interfaces/clients";
 import {
   IColaboratorRequest,
   ICollaboratorUpdateYup,
@@ -10,7 +14,7 @@ import {
   IInternetPlanUpdate,
 } from "../../interfaces/internetPlan";
 import { IService, IUpdateService } from "../../interfaces/services";
-import { ISupervisor } from "../../interfaces/supervisors";
+import { ISupervisor, ISupervisorsUpdate } from "../../interfaces/supervisors";
 import { ITeamValidateYup } from "../../interfaces/teams";
 
 declare global {
@@ -27,11 +31,13 @@ declare global {
       dataAttendance: IAttendanceRequest;
       dataCollaborator: IColaboratorRequest;
       dataUpdateCollaborator: ICollaboratorUpdateYup;
+      dataAddOrRemovePlanInClient: IAddingOrRemovingPlanToClient;
+      dataClientUpdate: IClientUpdate;
+      dataSupervisorsUpdate: ISupervisorsUpdate;
       user: {
-        id:string;
+        id: string;
         role: number;
         is_active: boolean;
-
       };
     }
   }

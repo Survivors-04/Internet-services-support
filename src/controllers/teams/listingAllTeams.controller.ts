@@ -1,3 +1,4 @@
+import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import { Team } from "../../entities/team.entity";
 import { listingAllTeamsService } from "../../services/teams/listingAllTeams.service";
@@ -8,5 +9,5 @@ export const listingAllTeamsController = async (
 ) => {
   const teams: Team[] = await listingAllTeamsService();
 
-  return res.status(200).json(teams);
+  return res.status(200).json(instanceToPlain(teams));
 };
