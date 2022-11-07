@@ -4,6 +4,7 @@ export interface IClientRequest {
   telephone: string;
   email: string;
   password?: string;
+  is_active?: boolean;
 }
 
 export interface IClient {
@@ -12,14 +13,20 @@ export interface IClient {
   cpf: string;
   email: string;
   telephone: string;
-  createdAt: Date;
-  updatedAt: Date;
-  isActive: boolean;
+  password: string;
+  created_date: Date;
+  updated_date: Date;
+  is_active: boolean;
 }
 
 export interface IClientUpdate {
   telephone?: string;
   email?: string;
   password?: string;
-  isActive?: boolean;
+  is_active?: boolean;
+}
+
+export interface IClientLogin {
+  email: string;
+  password: string;
 }

@@ -4,7 +4,7 @@ import { IClientRequest } from "../../interfaces/clients";
 import { AppError } from "../../errors/appError";
 import { hash } from "bcrypt";
 
-const createClientService = async ({
+export const createClientService = async ({
   name,
   cpf,
   telephone,
@@ -25,19 +25,15 @@ const createClientService = async ({
     throw new AppError("Password is missing", 400);
   }
 
-  const hashedPassword = await hash(password, 10);
-
   const client = clientRepository.create({
     name,
     cpf,
     telephone,
     email,
-    password: hashedPassword,
+    password: password,
   });
 
   await clientRepository.save(client);
 
   return client;
 };
-
-export default createClientService;
