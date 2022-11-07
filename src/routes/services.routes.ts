@@ -34,6 +34,11 @@ servicesRoutes.patch(
   verifyCollaboratorRoleMiddleware,
   updateServicesController
 );
-servicesRoutes.delete("/:id", deleteServicesController);
+servicesRoutes.delete(
+  "/:id",
+  tokenAuthMiddleware,
+  verifyCollaboratorRoleMiddleware,
+  deleteServicesController
+);
 
 export default servicesRoutes;

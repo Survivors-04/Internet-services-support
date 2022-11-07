@@ -208,7 +208,7 @@ describe("/services", () => {
     console.log(deletedService.body);
     const deletedServiceId = deletedService.body[0].id;
 
-    const { body, status } = await request(app)
+    const { status, body } = await request(app)
       .delete(`/services/${deletedServiceId}`)
       .set("Autorization", token);
 

@@ -5,5 +5,5 @@ export const deleteServicesController = async (req: Request, res: Response) => {
   const id: string = req.params.id;
   await deleteServicesService(id);
 
-  return res.status(200).json({ message: "service deleted successfully" });
+  return res.status(204).json({ message: "service deleted successfully" });
 };
