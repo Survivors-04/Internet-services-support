@@ -7,7 +7,7 @@ import tokenAuthMiddleware from "../middlewares/tokenAuth.middleware";
 import {
   serviceCreateSchema,
   validateServiceCreate,
-} from "../middlewares/validationsInfosYup/vaidateInfoServices.middleware";
+} from "../middlewares/validationsInfosYup/validateInfoServices.middleware";
 import {
   serviceUpdateSchema,
   validateServiceUpdate,
