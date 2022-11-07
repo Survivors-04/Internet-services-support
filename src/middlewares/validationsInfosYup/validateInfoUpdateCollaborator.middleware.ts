@@ -1,19 +1,25 @@
 import { Request, Response, NextFunction } from "express";
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { IUpdateService } from "../../interfaces/services";
+import { hashSync } from "bcrypt";
 import { AppError } from "../../errors/appError";
+import { ICollaboratorUpdateYup } from "../../interfaces/collaborator";
 
-export const serviceUpdateSchema: SchemaOf<IUpdateService> = yup
+export const collaboratorUpdateSchema: SchemaOf<ICollaboratorUpdateYup> = yup
   .object()
   .shape({
-    id: yup.string().notRequired(),
     name: yup.string().notRequired(),
-    description: yup.string().notRequired(),
+    email: yup.string().email().notRequired(),
+    password: yup
+      .string()
+      .transform((pws) => hashSync(pws, 10))
+      .notRequired(),
+    telephone: yup.string().notRequired(),
+    isActive: yup.boolean().notRequired(),
   });
 
-export const validateServiceUpdate =
-  (schema: SchemaOf<IUpdateService>) =>
+export const validateColaboratorUpdate =
+  (schema: SchemaOf<ICollaboratorUpdateYup>) =>
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const data = req.body;
@@ -24,7 +30,7 @@ export const validateServiceUpdate =
           stripUnknown: true,
         });
 
-        req.dataUpdateService = validatedData;
+        req.dataUpdateCollaborator = validatedData;
 
         next();
       } catch (err: any) {

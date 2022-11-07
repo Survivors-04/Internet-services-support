@@ -11,7 +11,7 @@ import {
   clientCreateSchema,
   validateClientCreate,
 } from "../middlewares/validationsInfosYup/validateInfoClient.middleware";
-import verifyClientRoleMiddleware from "../middlewares/verifyClientRole.middleware";
+import verifyClientRoleMiddleware from "../middlewares/verifyRoles/verifyClientRoles.middleware";
 
 const routes = Router();
 
@@ -20,16 +20,20 @@ routes.post(
   validateClientCreate(clientCreateSchema),
   createClientController
 );
-routes.get(
-  "",
+routes.get("",tokenAuthMiddleware, verifyClientRoleMiddleware, listClientController);
+routes.get("/:id",tokenAuthMiddleware, verifyClientRoleMiddleware, listClientByIdController);
+routes.patch("/:id",tokenAuthMiddleware,verifyClientRoleMiddleware, updateClientController);
+routes.delete("/:id",tokenAuthMiddleware,verifyClientRoleMiddleware, deleteClientController);
+routes.post(
+  "/:id/plans",tokenAuthMiddleware,
+  verifyClientRoleMiddleware,
+  createClientPlanController
+);
+routes.delete(
+  "/:id/plans",
   tokenAuthMiddleware,
   verifyClientRoleMiddleware,
-  listClientController
+  deleteClientPlanController
 );
-routes.get("/:id", listClientByIdController);
-routes.patch("/:id", updateClientController);
-routes.delete("/:id", deleteClientController);
-routes.post("/:id/plans", createClientPlanController);
-routes.delete("/:id/plans", deleteClientPlanController);
 
 export default routes;
