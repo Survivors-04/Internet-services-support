@@ -8,7 +8,13 @@ import {
   supervisorsCreateSchema,
   validateSupervisorsCreate,
 } from "../middlewares/validationsInfosYup/validateInfoSupervisors.middleware";
+
 import { verifyManager } from "../middlewares/verifyRoles/verifyManager.middleware";
+import {
+  supervisorsUpdateSchema,
+  validateSupervisorsUpdate,
+} from "../middlewares/validationsInfosYup/validateInfoUpdateSupervisors.middlewar";
+
 
 const supervisorsRoutes = Router();
 
@@ -19,6 +25,7 @@ supervisorsRoutes.post(
   validateSupervisorsCreate(supervisorsCreateSchema),
   createSupervisorsController
 );
+
 supervisorsRoutes.get(
   "/",
   tokenAuthMiddleware,
@@ -29,6 +36,7 @@ supervisorsRoutes.patch(
   "/:id",
   tokenAuthMiddleware,
   verifyManager,
+  validateSupervisorsUpdate(supervisorsUpdateSchema),
   updateSupervisorController
 );
 supervisorsRoutes.delete(
@@ -37,5 +45,6 @@ supervisorsRoutes.delete(
   verifyManager,
   deleteSupervisorControler
 );
+
 
 export default supervisorsRoutes;
