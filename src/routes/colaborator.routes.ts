@@ -18,13 +18,11 @@ import tokenAuthMiddleware from "../middlewares/tokenAuth.middleware";
 const collaboratorRouter = Router();
 
 collaboratorRouter.post(
-  
   "",
-  validateCollaboratorCreate(collaboratorCreateSchema),
   tokenAuthMiddleware,
   verifySupervisorMiddleware,
+  validateCollaboratorCreate(collaboratorCreateSchema),
   createCollaboratorController
-
 );
 collaboratorRouter.get(
   "",
@@ -39,13 +37,11 @@ collaboratorRouter.get(
   getCollaboratorsDataController
 );
 collaboratorRouter.patch(
-  
   "/:id",
-  validateColaboratorUpdate(collaboratorUpdateSchema),
   tokenAuthMiddleware,
   verifySupervisorMiddleware,
+  validateColaboratorUpdate(collaboratorUpdateSchema),
   updateCollaboratorController
-
 );
 collaboratorRouter.delete(
   "/:id",

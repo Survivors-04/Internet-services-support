@@ -30,9 +30,9 @@ teamsRoutes.post(
 );
 teamsRoutes.post(
   "/:id/collaborator",
-  validateAddCollaboratorInTeam(addCollaboratorInTeamSchema),
   tokenAuthMiddleware,
   verifySupervisorMiddleware,
+  validateAddCollaboratorInTeam(addCollaboratorInTeamSchema),
   addCollaboratorInTeamController
 );
 teamsRoutes.get(
@@ -61,8 +61,8 @@ teamsRoutes.delete(
 );
 teamsRoutes.delete(
   "/:id/collaborator",
-  validateAddCollaboratorInTeam(addCollaboratorInTeamSchema),
   tokenAuthMiddleware,
   verifySupervisorMiddleware,
+  validateAddCollaboratorInTeam(addCollaboratorInTeamSchema),
   removeCollaboratorInTeamController
 );

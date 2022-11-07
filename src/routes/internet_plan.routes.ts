@@ -20,9 +20,9 @@ export const internetPlanRoutes = Router();
 
 internetPlanRoutes.post(
   "",
-  validateInternetPlanCreate(internetPlanCreateSchema),
   tokenAuthMiddleware,
   verifySupervisorMiddleware,
+  validateInternetPlanCreate(internetPlanCreateSchema),
   createInternetPlanController
 );
 internetPlanRoutes.get("", listingAllInternetPlanController);
@@ -34,9 +34,9 @@ internetPlanRoutes.get(
 );
 internetPlanRoutes.patch(
   "/:id",
-  validateInternetPlanUpdate(internetPlanUpdateSchema),
   tokenAuthMiddleware,
   verifySupervisorMiddleware,
+  validateInternetPlanUpdate(internetPlanUpdateSchema),
   updateInternetPlanController
 );
 internetPlanRoutes.delete(
