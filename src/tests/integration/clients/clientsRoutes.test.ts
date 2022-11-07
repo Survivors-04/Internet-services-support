@@ -151,16 +151,20 @@ describe("/client", () => {
     expect(body).toHaveProperty('message')
     expect(status).toBe(404)
   });
+
   test("POST /clients/:id/plans - Should not be able to create a client internet plan without collaborator permission", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
+    console.log(token)
 
     const client = await request(app)
       .get("/clients")
       .set("Authorization", token);
     const clientId = client.body[0].id;
+
+    const clientLogin = await request(app).post('')
 
     const plan = await request(app)
       .post("/plans")
@@ -285,7 +289,6 @@ describe("/client", () => {
     const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    console.log(deletedClient)
     const deletedClientId = deletedClient.body[0].id;
 
     const { body, status } = await request(app)
