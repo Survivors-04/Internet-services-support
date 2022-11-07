@@ -11,7 +11,7 @@
     "test": "NODE_ENV=test jest --verbose",
     "testServices": "yarn test src/tests/integration/services/servicesRoutes.test.ts",
     "testSupervisors": "yarn test src/tests/integration/supervisors/supervisorsRoutes.test.ts",
-    "testCollaborators": "yarn test src/tests/integration/collaborators/collaboratorsRoutes.test.ts"
+    "testCollaborators": "yarn test src/tests/integration/collaborators/collaboratorsRoutes.test.ts",
     "build": "tsc",
     "start": "node dist/src/server.js"
   },

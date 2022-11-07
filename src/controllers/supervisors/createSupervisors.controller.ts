@@ -19,5 +19,5 @@ export const createSupervisorsController = async (
     password,
   });
 
-  return res.status(200).json(instanceToPlain(newSupervisor));
+  return res.status(201).json(instanceToPlain(newSupervisor));
 };

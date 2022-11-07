@@ -5,7 +5,7 @@ import handleErrorMiddleware from "../../middlewares/HandleError.middleware";
 
 
 export const listAllSupervisorsController = async (req: Request, res:Response)=>{
-
+       
         const allSupervisors = await listAllSupervisorsService()
     
         return res.status(200).json(allSupervisors)

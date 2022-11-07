@@ -17,8 +17,8 @@ const tokenAuthMiddleware = async (
 
   token = token.split(" ")[1];
 
-  jwt.verify(token, process.env.SECRET_KEY as string, (error, decoded: any) => {
-    if (error) {
+  jwt.verify(token as string, process.env.SECRET_KEY as string, (err:any, decoded: any) => {
+    if (err) {
       return res.status(401).json({
         message: "Invalid token",
       });
@@ -27,6 +27,7 @@ const tokenAuthMiddleware = async (
     req.user = {
       role: decoded.role,
       is_active: decoded.is_active,
+     
     };
 
     return next();
