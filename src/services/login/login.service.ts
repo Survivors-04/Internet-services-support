@@ -3,10 +3,9 @@ import { Client } from "../../entities/client.entity";
 import { Collaborator } from "../../entities/collaborator.entity";
 import { Supervisor } from "../../entities/supervisor.entity";
 import { AppError } from "../../errors/appError";
-
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { compare } from "bcrypt";
 
 interface ILoginRequest {
   email: string;
@@ -54,7 +53,9 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
     throw new AppError("User not Active", 403);
   }
 
-  if (!bcrypt.compare(password, user.password)) {
+  const passwordMatch = await compare(password, user.password)
+
+  if (!passwordMatch) {
     throw new AppError("Wrong email/password", 403);
   }
 
