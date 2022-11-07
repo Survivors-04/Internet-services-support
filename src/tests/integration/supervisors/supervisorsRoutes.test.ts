@@ -36,8 +36,8 @@ describe("/supervisors", () => {
     expect(body).toHaveProperty("telephone");
     expect(body).not.toHaveProperty("cpf");
     expect(body).not.toHaveProperty("password");
-    expect(body.name).toEqual("Teste");
-    expect(body.email).toEqual("teste@mail.com");
+    expect(body.name).toEqual("Supervisor");
+    expect(body.email).toEqual("supervisor@mail.com");
     expect(body.telephone).toEqual("13984512783");
     expect(body.is_manager).toEqual(false);
     expect(body.is_active).toEqual(true);
@@ -96,6 +96,8 @@ describe("/supervisors", () => {
   });
 
   test("PATCH /supervisors/:id - Must be able to update a supervisor", async () => {
+    await request(app).post("/supervisors").send(mockedManager);
+
     const newValues = { name: "Joana Brito", email: "joanabrito@mail.com" };
 
     const managerLogin = await request(app)
@@ -119,6 +121,9 @@ describe("/supervisors", () => {
   });
 
   test("PATCH /supervisors/:id - Should not be able to update supervisor without manager permission", async () => {
+    await request(app).post("/supervisors").send(mockedManager);
+    await request(app).post("/supervisors").send(mockedSupervisor);
+
     const newValues = { name: "false" };
 
     const managerLogin = await request(app)
@@ -129,12 +134,12 @@ describe("/supervisors", () => {
     const supervisorLogin = await request(app)
       .post("/login")
       .send(mockedSupervisorLogin);
-    const supervisorToken = supervisorLogin.body.token;
+    const supervisorToken = `Bearer ${supervisorLogin.body.token}`;
 
     const updatedSupervisor = await request(app)
       .get("/supervisors")
       .set("Authorization", managerToken);
-    const supervisorId = updatedSupervisor.body[0].token;
+    const supervisorId = updatedSupervisor.body[0].id;
 
     const { body, status } = await request(app)
       .patch(`/supervisors/${supervisorId}`)
@@ -168,7 +173,6 @@ describe("/supervisors", () => {
   });
 
   test("PATCH /supervisors/:id - Should not be able to update is_manager field value", async () => {
-    await request(app).post('/supervisors').send(mockedManager)
     const newValues = { is_manager: false };
 
     const managerLogin = await request(app)
@@ -235,7 +239,6 @@ describe("/supervisors", () => {
   });
 
   test("DELETE /supervisors/:id - Should not be able to delete a supervisor without manager permission", async () => {
-    
     await request(app).post("/supervisors").send(mockedSupervisor);
     const managerLogin = await request(app)
       .post("/login")
@@ -317,7 +320,7 @@ describe("/supervisors", () => {
       .get("/supervisors")
       .set("Authorization", token);
 
-    expect(status).toBe(204);
     expect(body[0].is_active).toBe(false);
+    expect(status).toBe(204);
   });
 });

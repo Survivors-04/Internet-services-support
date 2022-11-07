@@ -5,7 +5,6 @@ import {
   ISupervisorsUpdate,
   IUpdateSupervisorRequest,
 } from "../../interfaces/supervisors";
-
 export const updateSupervisorService = async (
   id: string,
   data: ISupervisorsUpdate

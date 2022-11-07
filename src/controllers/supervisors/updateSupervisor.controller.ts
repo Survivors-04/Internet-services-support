@@ -9,9 +9,6 @@ export const updateSupervisorController = async (
   res: Response
 ) => {
   const { id } = req.params;
-  
-  
-
   const data:ISupervisorsUpdate = req.body;
 
   const userUpdated = await updateSupervisorService(
