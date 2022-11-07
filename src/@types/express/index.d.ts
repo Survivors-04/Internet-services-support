@@ -24,6 +24,7 @@ declare global {
       user: {
         role: number;
         is_active: boolean;
+  
       };
     }
   }

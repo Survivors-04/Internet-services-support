@@ -11,7 +11,7 @@ import {
 const supervisorsRoutes = Router();
 
 supervisorsRoutes.post(
-  "/",
+  "",
   validateSupervisorsCreate(supervisorsCreateSchema),
   createSupervisorsController
 );

@@ -1,22 +1,18 @@
+import { instanceToPlain } from "class-transformer";
 import { Request, Response } from "express";
 import { AppError } from "../../errors/appError";
+import { ISupervisorsUpdate } from "../../interfaces/supervisors";
 import { updateSupervisorService } from "../../services/supervisors/updateSupervisor.service";
 
-export const updateSupervisorController = async (req: Request, res: Response) => {
+export const updateSupervisorController = async (
+  req: Request,
+  res: Response
+) => {
   const { id } = req.params;
+  const data:ISupervisorsUpdate = req.body;
 
-  const { telephone, email, is_manager, password} = req.body;
+  const userUpdated = await updateSupervisorService(
+    id,data);
 
-  const userUpdated = await updateSupervisorService({
-    id,
-    telephone,
-    email,
-    is_manager,
-    password,
-  });
-
-  return res.status(200).json(userUpdated);
-
+  return res.status(200).json(instanceToPlain(userUpdated));
 };
-
-

@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  PrimaryColumn,
 } from "typeorm";
 import { Exclude } from "class-transformer";
 import { v4 as uuid } from "uuid";
@@ -14,7 +15,7 @@ import { Internet_plan } from "./internet_plan.entity";
 
 @Entity("Client")
 export class Client {
-  @PrimaryGeneratedColumn("uuid")
+  @PrimaryColumn("uuid")
   id: string;
 
   @Column({ length: 120 })
