@@ -12,7 +12,7 @@ export const updateServicesService = async (
     where: { id },
   });
 
-  if (!service) throw new AppError("service not found", 409);
+  if (!service) throw new AppError("Service not found", 404);
 
   await serviceRepository.update(id, {
     name: data.name ? data.name : service.name,
