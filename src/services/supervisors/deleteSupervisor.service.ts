@@ -8,14 +8,16 @@ export const deleteSupervisorService = async (id: string) => {
   const selectedSupervisor = await supervisorsRepository.findOneBy({ id });
 
   if (!selectedSupervisor) {
-    throw new AppError("Supervisor não encontrado");
+    throw new AppError("Supervisor not found", 404);
   }
-  if (!selectedSupervisor.is_active) {
-    throw new AppError("user not found");
+  if (selectedSupervisor.is_active === false) {
+    throw new AppError("Supervisor not found");
   }
 
   await supervisorsRepository.save({
     id: selectedSupervisor.id,
     is_active: false,
   });
+
+  return "Supervisor successfully deleted";
 };
