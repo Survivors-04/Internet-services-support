@@ -14,7 +14,7 @@ export const createInternetPlanService = async (
   });
 
   if (findedInternetPlan)
-    throw new AppError("internet plan already registered", 409);
+    throw new AppError("internet plan already registered", 400);
 
   const internetPlan = internetPlanRepository.create({ ...data });
 
