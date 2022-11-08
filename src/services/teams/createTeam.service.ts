@@ -14,22 +14,23 @@ export const createTeamService = async (
     id: data.supervisorId,
   });
 
-  if (!supervisor) throw new AppError("supervisor not found", 409);
+  if (!supervisor) throw new AppError("supervisor not found", 404);
 
   const supervisorAlreadyInTeam = await teamRepository.findOneBy({
     supervisor: supervisor,
   });
 
   if (supervisorAlreadyInTeam)
-    throw new AppError("supervisor is already in a team", 409);
+    throw new AppError("supervisor is already in a team", 400);
 
-  const team = teamRepository.create({
+  const team = teamRepository.create({ 
     id: data.id,
     supervisor: supervisor,
     collaborator: data.collaborator,
   });
 
   await teamRepository.save(team);
-
+  console.log(team)
+  console.log(team.supervisor.id)
   return team;
 };
