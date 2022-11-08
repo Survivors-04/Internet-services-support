@@ -9,12 +9,12 @@ export const verifyOnlyListOwnUserMiddleware = (req: Request, res: Response, nex
     if(req.user.id === idParams){
         return next()
     }
-    console.log(req.user.role>=2)
+    // console.log(req.user.role>=2)
     if(req.user.role >= 2){
         return next()
     }else{
         // console.log("teste")
-        throw new AppError("User must be atleast Colaborator")
+        throw new AppError("User must be atleast Colaborator", 403)
     }
 
        
