@@ -279,7 +279,7 @@ describe("/collaborators", () => {
       .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
-    expect(status).toBe(204);
+    expect(status).toBe(202);
   });
 
   test("DELETE /collaborators/:id - Should not be able to delete a collaborator without supervisor permission", async () => {
