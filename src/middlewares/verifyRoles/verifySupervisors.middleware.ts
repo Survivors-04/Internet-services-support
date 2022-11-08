@@ -5,7 +5,6 @@ export const verifySupervisorMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-    console.log(req.user + "midle supervisors")
   if (req.user.role <= 2) {
     
     return res.status(403).json({

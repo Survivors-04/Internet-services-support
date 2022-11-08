@@ -50,7 +50,7 @@ export const mockedCollaborator: ICollaborator = {
   name: "Teste",
   cpf: "12345678901",
   telephone: "13984512783",
-  email: "teste@mail.com",
+  email: "collaborator@mail.com",
   password: "Teste123",
   is_active: true,
 };
