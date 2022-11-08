@@ -70,8 +70,10 @@ describe("/teams", () => {
       .set("Authorization", token);
 
     expect(body).toHaveProperty("id");
-    expect(body).toHaveProperty("supervisorId");
-    expect(body).toHaveProperty("collaboratorId");
+    expect(body).toHaveProperty("supervisor");
+    expect(body).toHaveProperty("collaborator");
+    expect(body.supervisor.id).toBe(supervisorId);
+    expect(body.collaborator.id).toBe(collaboratorId);
     expect(status).toBe(201);
   });
 
@@ -369,5 +371,147 @@ describe("/teams", () => {
     expect(status).toBe(403);
   });
 
-  test('GET /teams - Must be able to list all teams')
+  test("GET /teams - Must be able to list all teams", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const { body, status } = await request(app)
+      .get("/teams")
+      .set("Authorization", token);
+
+    expect(body).toHaveLength(1);
+    expect(status).toBe(200);
+  });
+
+  test("GET /teams - Should not be able to list all teams without collaborator permission", async () => {
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const token = `Bearer ${clientLogin.body.token}`;
+
+    const { body, status } = await request(app)
+      .get("/teams")
+      .set("Authorization", token);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
+  });
+
+  test("GET /teams/:id - Must be able to list a team by id", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const team = await request(app).get("/teams").set("Authorization", token);
+    const teamId = team.body[0].id;
+
+    const { body, status } = await request(app)
+      .get(`/teams/${teamId}`)
+      .set("Authorization", token);
+
+    expect(body).toHaveProperty("id");
+    expect(body).toHaveProperty("supervisor");
+    expect(body).toHaveProperty("collaborator");
+    expect(status).toBe(200);
+  });
+
+  test("GET /teams/:id - Should not be able to list a team with invalid id", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const team = await request(app).get("/teams").set("Authorization", token);
+    const teamId = "13970660-5dbe-423a-9a9d-5c23b37943cf";
+
+    const { body, status } = await request(app)
+      .get(`/teams/${teamId}`)
+      .set("Authorization", token);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(404);
+  });
+
+  test("GET /teams/:id - Should not be able to list a team without collaborator permission", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
+
+    const team = await request(app).get("/teams").set("Authorization", token);
+    const teamId = team.body[0].id;
+
+    const { body, status } = await request(app)
+      .get(`/teams/${teamId}`)
+      .set("Authorization", clientToken);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
+  });
+
+  test("GET /teams/supervisor/:id - Must be able to list a team by supervisor id", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const team = await request(app).get("/teams").set("Authorization", token);
+    const supervisorId = team.body[0].supervisor.id;
+
+    const { body, status } = await request(app)
+      .get(`/teams/supervisor/${supervisorId}`)
+      .set("Authorization", token);
+
+    expect(body).toHaveProperty("id");
+    expect(body).toHaveProperty("supervisor");
+    expect(body).toHaveProperty("collaborator");
+    expect(status).toBe(200);
+  });
+
+  test("GET /teams/supervisor/:id - Should not be able to list a team with invalid supervisor id", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const team = await request(app).get("/teams").set("Authorization", token);
+    const supervisorId = "13970660-5dbe-423a-9a9d-5c23b37943cf";
+
+    const { body, status } = await request(app)
+      .get(`/teams/supervisor/${supervisorId}`)
+      .set("Authorization", token);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(404);
+  });
+
+  test("GET /teams/supervisor/:id - Must be able to list a team by supervisor without manager permission", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const team = await request(app).get("/teams").set("Authorization", token);
+    const supervisorId = team.body[0].supervisor.id;
+
+    const clientLogin = await request(app).post('/login').send(mockedClientLogin)
+    const clientToken = `Bearer ${clientLogin.body.token}`
+
+    const { body, status } = await request(app)
+      .get(`/teams/supervisor/${supervisorId}`)
+      .set("Authorization", clientToken);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
+  });
+
+
 });
