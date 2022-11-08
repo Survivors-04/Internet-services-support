@@ -70,8 +70,8 @@ describe("/teams", () => {
       .set("Authorization", token);
 
     expect(body).toHaveProperty("id");
-    expect(body).toHaveProperty("supervisorId");
-    expect(body).toHaveProperty("collaboratorId");
+    expect(body).toHaveProperty("supervisor");
+    expect(body).toHaveProperty("collaborator");
     expect(status).toBe(201);
   });
 
@@ -369,5 +369,5 @@ describe("/teams", () => {
     expect(status).toBe(403);
   });
 
-  test('GET /teams - Must be able to list all teams')
+  // test('GET /teams - Must be able to list all teams')
 });
