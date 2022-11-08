@@ -23,6 +23,8 @@ describe("/services", () => {
       .catch((err) => {
         console.error("Error during Data Source initilization", err);
       });
+    await request(app).post("/supervisors").send(mockedManager);
+    await request(app).post("/clients").send(mockedClient);
   });
 
   afterAll(async () => {
@@ -30,8 +32,6 @@ describe("/services", () => {
   });
 
   test("POST /services - Must be able to create a service", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -61,7 +61,6 @@ describe("/services", () => {
   });
 
   test("POST /services - Should not be able to create a service without collaborator permission", async () => {
-    await request(app).post("/clients").send(mockedClient);
     const clientLogin = await request(app)
       .post("/login")
       .send(mockedClientLogin);
@@ -76,10 +75,10 @@ describe("/services", () => {
   });
 
   test("GET /services - Must be able to list all services", async () => {
-    const collaboratorLogin = await request(app)
+    const managerLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const token = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const { body } = await request(app)
       .get("/services")
@@ -108,10 +107,10 @@ describe("/services", () => {
       description: "joanabrito@mail.com",
     };
 
-    const collaborator = await request(app)
+    const managerLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const token = `Bearer ${collaborator.body.token}`;
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const updatedService = await request(app)
       .get("/services")
@@ -131,10 +130,10 @@ describe("/services", () => {
   test("PATCH /services/:id - Should not be able to update service without collaborator permission", async () => {
     const newValues = { name: "false" };
 
-    const collaboratorLogin = await request(app)
+    const managerLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const collaboratorToken = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const clientLogin = await request(app)
       .post("/login")
@@ -143,7 +142,7 @@ describe("/services", () => {
 
     const updatedService = await request(app)
       .get("/services")
-      .set("Authorization", collaboratorToken);
+      .set("Authorization", token);
     const serviceId = updatedService.body[0].token;
 
     const { body, status } = await request(app)
@@ -158,10 +157,10 @@ describe("/services", () => {
   test("PATCH /services/:id - Should not be ablue to update service with invalid id", async () => {
     const newValues = { name: "bob" };
 
-    const collaboratorLogin = await request(app)
+    const managerLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const token = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const updatedService = await request(app)
       .get("/services")
@@ -180,10 +179,10 @@ describe("/services", () => {
   test("PATCH /services/:id - Should not be able to update id field value", async () => {
     const newValues = { id: "13970660-5dbe-423a-9a9d-5c23b37943cf" };
 
-    const collaboratorLogin = await request(app)
+    const managerLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const token = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const updatedService = await request(app)
       .get("/services")
@@ -200,10 +199,10 @@ describe("/services", () => {
   });
 
   test("DELETE /services/:id - Must be able to delete a service", async () => {
-    const collaboratorLogin = await request(app)
+    const managerLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const token = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const deletedService = await request(app)
       .get("/services")
@@ -220,10 +219,10 @@ describe("/services", () => {
   });
 
   test("DELETE /services/:id - Should not be able to delete a service without collaborator permission", async () => {
-    const collaboratorLogin = await request(app)
+    const managerLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const token = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
 
     await request(app)
       .post("/services")
@@ -254,10 +253,10 @@ describe("/services", () => {
   });
 
   test("DELETE /services/:id - Should not be able to delete service with invalid id", async () => {
-    const collaboratorLogin = await request(app)
+    const managerLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const token = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const response = await request(app)
       .delete(`/services/13970660-5dbe-423a-9a9d-5c23b37943cf`)

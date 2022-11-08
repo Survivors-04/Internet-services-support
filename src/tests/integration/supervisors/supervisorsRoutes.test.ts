@@ -3,9 +3,12 @@ import { AppDataSource } from "../../../data-source";
 import request from "supertest";
 import app from "../../../app";
 import {
+  mockedClient,
+  mockedClientLogin,
   mockedManager,
   mockedManagerLogin,
   mockedSupervisor,
+  mockedSupervisorDeleted,
   mockedSupervisorLogin,
 } from "../../mocks";
 
@@ -18,6 +21,9 @@ describe("/supervisors", () => {
       .catch((err) => {
         console.error("Error during Data Source initilization", err);
       });
+
+    await request(app).post("/supervisors").send(mockedManager);
+    await request(app).post("/clients").send(mockedClient);
   });
 
   afterAll(async () => {
@@ -54,17 +60,17 @@ describe("/supervisors", () => {
   });
 
   test("GET /supevisors - Must be able to list all supervisors", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
-    const { body } = await request(app)
+    const { body, status } = await request(app)
       .get("/supervisors")
       .set("Authorization", token);
 
     expect(body).toHaveLength(2);
+    expect(status).toBe(200);
   });
 
   test("GET /supervisors - Should not be able to list supervisors without manager permission", async () => {
@@ -82,8 +88,6 @@ describe("/supervisors", () => {
   });
 
   test("PATCH /supervisors/:id - Must be able to update a supervisor", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const newValues = { name: "Joana Brito", email: "joanabrito@mail.com" };
 
     const managerLogin = await request(app)
@@ -102,35 +106,34 @@ describe("/supervisors", () => {
       .send(newValues);
 
     expect(body.name).toEqual("Joana Brito");
+    expect(body.email).toEqual("joanabrito@mail.com");
     expect(body).not.toHaveProperty("password");
     expect(status).toBe(200);
   });
 
   test("PATCH /supervisors/:id - Should not be able to update supervisor without manager permission", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-    await request(app).post("/supervisors").send(mockedSupervisor);
-
     const newValues = { name: "false" };
+    await request(app).post("/supervisors").send(mockedManager);
 
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
-    const managerToken = `Bearer ${managerLogin.body.token}`;
+    const token = `Bearer ${managerLogin.body.token}`;
 
-    const supervisorLogin = await request(app)
+    const clientLogin = await request(app)
       .post("/login")
-      .send(mockedSupervisorLogin);
-    const supervisorToken = `Bearer ${supervisorLogin.body.token}`;
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const updatedSupervisor = await request(app)
       .get("/supervisors")
-      .set("Authorization", managerToken);
+      .set("Authorization", token);
     const supervisorId = updatedSupervisor.body[0].id;
 
     const { body, status } = await request(app)
       .patch(`/supervisors/${supervisorId}`)
       .send(newValues)
-      .set("Authorization", supervisorToken);
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -143,6 +146,11 @@ describe("/supervisors", () => {
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
+
+    const updatedSupervisor = await request(app)
+      .get("/supervisors")
+      .set("Authorization", token);
+    const updatedSupervisorId = updatedSupervisor.body[0].id;
 
     const { body, status } = await request(app)
       .patch("/supervisors/13970660-5dbe-423a-9a9d-5c23b37943cf")
@@ -245,8 +253,6 @@ describe("/supervisors", () => {
   });
 
   test("DELETE /supervisors/:id - Should not be able to delete supervisor with invalid id", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -261,8 +267,6 @@ describe("/supervisors", () => {
   });
 
   test("DELETE /supervisors/:id - Should not be able to delete supervisor with is_active = false", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -286,26 +290,24 @@ describe("/supervisors", () => {
   });
 
   test("DELETE /supervisors/:id - Must be able to soft delete a supervisor", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
+
+    await request(app).post("/supervisors").send(mockedSupervisorDeleted);
 
     const deletedSupervisor = await request(app)
       .get("/supervisors")
       .set("Authorization", token);
     const deletedSupervisorId = deletedSupervisor.body[1].id;
 
-    const { status } = await request(app)
+    const { body, status } = await request(app)
       .delete(`/supervisors/${deletedSupervisorId}`)
       .set("Authorization", token);
-    const { body } = await request(app)
-      .get("/supervisors")
-      .set("Authorization", token);
 
-    expect(body[1].is_active).toBe(false);
+    expect(body).toHaveProperty("message");
     expect(status).toBe(200);
+
   });
 });
