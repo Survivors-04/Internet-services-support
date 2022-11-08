@@ -252,25 +252,6 @@ describe("/supervisors", () => {
     expect(status).toBe(403);
   });
 
-  test("DELETE /supervisors/:id - Should not be able to delete supervisor with is_active = false", async () => {
-    const managerLogin = await request(app)
-      .post("/login")
-      .send(mockedManagerLogin);
-    const token = `Bearer ${managerLogin.body.token}`;
-
-    const deletedSupervisor = await request(app)
-      .get("/supervisors")
-      .set("Authorization", token);
-    const deletedSupervisorId = deletedSupervisor.body[0].id;
-
-    const { body, status } = await request(app)
-      .delete(`/supervisors/${deletedSupervisorId}`)
-      .set("Authorization", token);
-
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(400);
-  });
-
   test("DELETE /supervisors/:id - Should not be able to delete supervisor with invalid id", async () => {
     const managerLogin = await request(app)
       .post("/login")
@@ -283,6 +264,29 @@ describe("/supervisors", () => {
 
     expect(response.body).toHaveProperty("message");
     expect(response.status).toBe(404);
+  });
+
+  test("DELETE /supervisors/:id - Should not be able to delete supervisor with is_active = false", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const deletedSupervisor = await request(app)
+      .get("/supervisors")
+      .set("Authorization", token);
+    const deletedSupervisorId = deletedSupervisor.body[0].id;
+
+    await request(app)
+      .delete(`/supervisors/${deletedSupervisorId}`)
+      .set("Authorization", token);
+
+    const { body, status } = await request(app)
+      .delete(`/supervisors/${deletedSupervisorId}`)
+      .set("Authorization", token);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(400);
   });
 
   test("DELETE /supervisors/:id - Must be able to soft delete a supervisor", async () => {
@@ -303,6 +307,7 @@ describe("/supervisors", () => {
       .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
-    expect(status).toBe(204);
+    expect(status).toBe(200);
+
   });
 });

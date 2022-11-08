@@ -15,9 +15,8 @@ export const updateSupervisorService = async (
     id,
   });
   const key = Object.keys(data);
-
   if (!selectedSupervisor) {
-    throw new AppError("Usuário não encontrado");
+    throw new AppError("Usuário não encontrado", 404);
   }
 
   if (
@@ -29,9 +28,13 @@ export const updateSupervisorService = async (
   }
 
   await supervisorsRepository.update(id, {
+    name: data.name ? data.name : selectedSupervisor.name,
     telephone: data.telephone ? data.telephone : selectedSupervisor.telephone,
     email: data.email ? data.email : selectedSupervisor.email,
     password: data.password ? data.password : selectedSupervisor.password,
+    is_manager: data.is_manager
+      ? data.is_manager
+      : selectedSupervisor.is_manager,
   });
 
   const userUpdated = await supervisorsRepository.findOneBy({
