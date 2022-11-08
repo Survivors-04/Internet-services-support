@@ -11,7 +11,6 @@ export const deleteInternetPlanService = async (
 
   if (!internetPlan) throw new AppError("internet plan not found", 404);
 
-  await internetPlanRepository.delete({ id });
+  await internetPlanRepository.delete(internetPlan);
 
-  
 };
