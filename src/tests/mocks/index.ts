@@ -26,6 +26,15 @@ export const mockedSupervisorLogin: ISupervisorsLogin = {
   password: "supervisor123",
 };
 
+export const mockedSupervisorDeleted: ISupervisorsRequest = {
+  name: "Supervisor",
+  email: "supervisordeleted@mail.com",
+  password: "supervisor123",
+  cpf: "12345675911",
+  telephone: "13984517583",
+  is_manager: false,
+};
+
 export const mockedManager: ISupervisorsRequest = {
   name: "Manager",
   email: "manager@mail.com",
@@ -57,7 +66,7 @@ export const mockedCollaborator: ICollaborator = {
 };
 
 export const mockedCollaboratorLogin: ICollaboratorLogin = {
-  email: "collaborator@mail.com",
+  email: "teste@mail.com",
   password: "Teste123",
 };
 
