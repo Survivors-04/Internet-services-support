@@ -141,7 +141,7 @@ describe("/client", () => {
 
     const { body, status } = await request(app)
       .post(`/clients/${clientId}/plans`)
-      .send({internet_plan_id})
+      .send({ internet_plan_id })
       .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
@@ -395,22 +395,52 @@ describe("/client", () => {
     expect(status).toBe(202);
   });
 
-  test("DELETE /clients - Should not be able to delete a client internet plan with invalid id", async () => {
-    "    13970660-5dbe-423a-9a9d-5c23b37943cf";
+  test("DELETE /clients/:id/plans - Should not be able to delete a client internet plan with invalid id", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
-    const deletedClient = await request(app)
+    const client = await request(app)
       .get("/clients")
       .set("Authorization", token);
+    const clientId = client.body[0].id;
+
+    const internet_plan_id = "13970660-5dbe-423a-9a9d-5c23b37943cf";
 
     const { body, status } = await request(app)
-      .delete(`/clients/`)
+      .delete(`/clients/${clientId}/plans`)
+      .send({ internet_plan_id })
       .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(404);
+  });
+
+  test("DELETE /clients/:id/plans - Should not be able to soft delete a client without collaborator permission", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const client = await request(app)
+      .get("/clients")
+      .set("Authorization", token);
+    const clientId = client.body[0].id;
+
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
+
+    const internet_plan_id = client.body[0].client_plan[0].id;
+
+    const { body, status } = await request(app)
+      .delete(`/clients/${clientId}/plans`)
+      .set("Authorization", clientToken)
+      .send({ internet_plan_id });
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
   });
 });
