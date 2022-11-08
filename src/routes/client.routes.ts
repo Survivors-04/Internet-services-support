@@ -19,7 +19,9 @@ import {
   clientUpdateSchema,
   validateClientUpdate,
 } from "../middlewares/validationsInfosYup/validateInfoUpdateClient.middleware";
+import verifyCollaboratorRoleMiddleware from "../middlewares/verifyCollaboratorRole.middleware";
 import verifyClientRoleMiddleware from "../middlewares/verifyRoles/verifyClientRoles.middleware";
+import { verifyOnlyListOwnUserMiddleware } from "../middlewares/verifyRoles/verifyOnlyListOwnUser.middleware";
 
 const routes = Router();
 
@@ -37,7 +39,9 @@ routes.get(
 routes.get(
   "/:id",
   tokenAuthMiddleware,
-  verifyClientRoleMiddleware,
+  // verifyClientRoleMiddleware,
+  // verifyCollaboratorRoleMiddleware,
+  verifyOnlyListOwnUserMiddleware,
   listClientByIdController
 );
 routes.patch(
@@ -50,20 +54,23 @@ routes.patch(
 routes.delete(
   "/:id",
   tokenAuthMiddleware,
-  verifyClientRoleMiddleware,
+  // verifyClientRoleMiddleware,
+  verifyCollaboratorRoleMiddleware,
   deleteClientController
 );
 routes.post(
   "/:id/plans",
   tokenAuthMiddleware,
-  verifyClientRoleMiddleware,
+  // verifyClientRoleMiddleware,
+  verifyCollaboratorRoleMiddleware,
   validateAddOrRemovePlanInClient(addOrRemovePlanInClientSchema),
   createClientPlanController
 );
 routes.delete(
   "/:id/plans",
   tokenAuthMiddleware,
-  verifyClientRoleMiddleware,
+  verifyCollaboratorRoleMiddleware,
+  // verifyClientRoleMiddleware,
   validateAddOrRemovePlanInClient(addOrRemovePlanInClientSchema),
   deleteClientPlanController
 );

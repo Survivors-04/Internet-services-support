@@ -4,7 +4,7 @@ import { instanceToPlain } from "class-transformer";
 
 const listClientByIdController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  
+  // console.log("teste")
   const clients = await listClientByIdService(id);
 
   return res.json(instanceToPlain(clients));
