@@ -454,7 +454,7 @@ describe("/client", () => {
       .delete(`/clients/${clientId}/plans`)
       .set("Authorization", clientToken)
       .send({ internet_plan_id });
-
+    console.log(body)
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
   });

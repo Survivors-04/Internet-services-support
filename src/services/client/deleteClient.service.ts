@@ -24,7 +24,7 @@ export const deleteClientService = async (id: string): Promise<Client> => {
     id,
   });
 
-  console.log(returningClient)
+  // console.log(returningClient)
 
   return returningClient!;
 };
