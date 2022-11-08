@@ -9,6 +9,7 @@ import {
   mockedClientLogin,
   mockedCollaborator,
   mockedInternetPlans,
+  mockedInternetPlans2,
   mockedManager,
   mockedManagerLogin,
   mockedService,
@@ -112,9 +113,7 @@ describe("/client", () => {
       .set("Authorization", token);
     const clientId = client.body[0].id;
 
-    const plan = await request(app)
-      .get("/plans")
-      .set("Authorization", token);
+    const plan = await request(app).get("/plans").set("Authorization", token);
     const internet_plan_id = plan.body[0].id;
 
     const { body, status } = await request(app)
@@ -137,15 +136,12 @@ describe("/client", () => {
       .set("Authorization", token);
     const clientId = client.body[0].id;
 
-    const plan = await request(app)
-      .get("/plans")
-      .set("Authorization", token);
-    const internet_plan_id = plan.body[0].id;
-    console.log({internet_plan_id})
+    const plan = await request(app).get("/plans").set("Authorization", token);
+    const internet_plan_id = "13970660-5dbe-423a-9a9d-5c23b37943cf";
 
     const { body, status } = await request(app)
       .post(`/clients/${clientId}/plans`)
-      .send("13970660-5dbe-423a-9a9d-5c23b37943cf")
+      .send({internet_plan_id})
       .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
@@ -169,10 +165,10 @@ describe("/client", () => {
     const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const plan = await request(app)
-      .get("/plans")
+      .post("/plans")
+      .send(mockedInternetPlans2)
       .set("Authorization", token);
-    const internet_plan_id = plan.body[0].id;
-    console.log({internet_plan_id})
+    const internet_plan_id = plan.body.id;
 
     const { body, status } = await request(app)
       .post(`/clients/${clientId}/plans`)
@@ -386,21 +382,21 @@ describe("/client", () => {
     const client = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    const clientId = client.body[0].id
+    const clientId = client.body[0].id;
 
-    const internet_plan_id = client.body[0].client_plan[0].id
+    const internet_plan_id = client.body[0].client_plan[0].id;
 
     const { body, status } = await request(app)
       .delete(`/clients/${clientId}/plans`)
       .set("Authorization", token)
-      .send({internet_plan_id});
+      .send({ internet_plan_id });
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(202);
   });
 
   test("DELETE /clients - Should not be able to delete a client internet plan with invalid id", async () => {
-    '    13970660-5dbe-423a-9a9d-5c23b37943cf'
+    "    13970660-5dbe-423a-9a9d-5c23b37943cf";
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -409,7 +405,6 @@ describe("/client", () => {
     const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    
 
     const { body, status } = await request(app)
       .delete(`/clients/`)
