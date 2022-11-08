@@ -5,6 +5,7 @@ const verifyCollaboratorRoleMiddleware = async (
   res: Response,
   next: NextFunction
 ) => {
+  
   if (req.user.role < 2) {
     return res.status(403).json({
       message: "Only collaborators or superiors can access this route",

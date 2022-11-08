@@ -283,7 +283,8 @@ describe("/client", () => {
       .post("/login")
       .send(mockedClientLogin);
     const clientToken = `Bearer ${clientLogin.body.token}`;
-
+    console.log(clientId)
+    console.log(clientToken)
     const { body, status } = await request(app)
       .get(`/clients/${clientId}`)
       .set("Authorization", clientToken);
