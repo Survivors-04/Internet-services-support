@@ -15,7 +15,6 @@ import {
   validateSupervisorsUpdate,
 } from "../middlewares/validationsInfosYup/validateInfoUpdateSupervisors.middlewar";
 
-
 const supervisorsRoutes = Router();
 
 supervisorsRoutes.post(
@@ -25,7 +24,7 @@ supervisorsRoutes.post(
 );
 
 supervisorsRoutes.get(
-  "/",
+  "",
   tokenAuthMiddleware,
   verifyManager,
   listAllSupervisorsController
@@ -43,6 +42,5 @@ supervisorsRoutes.delete(
   verifyManager,
   deleteSupervisorControler
 );
-
 
 export default supervisorsRoutes;

@@ -41,11 +41,13 @@ export interface ISupervisor {
 }
 
 export interface ISupervisorsUpdate {
+  id?: string;
   name?: string;
   email?: string;
   password?: string;
   telephone?: string;
-  
+  is_manager?: boolean;
+  is_active?: boolean;
 }
 
 export interface IManager {}

@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
-import { decode } from "punycode";
 
 const tokenAuthMiddleware = (
   req: Request,
@@ -29,12 +28,11 @@ const tokenAuthMiddleware = (
       }
 
       req.user = {
-
         id: decoded.id,
         role: decoded.role,
         is_active: decoded.is_active,
       };
- 
+
       return next();
     }
   );
