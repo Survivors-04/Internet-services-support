@@ -55,6 +55,13 @@ export const mockedInternetPlans: IInternetPlanRequest = {
   price: 400.0,
 };
 
+export const mockedInternetPlans2: IInternetPlanRequest = {
+  name: "Teste2",
+  description: "Teste1234",
+  price: 400.0,
+};
+
+
 export const mockedCollaborator: ICollaborator = {
   name: "Teste",
   cpf: "12345678901",
