@@ -14,7 +14,7 @@ export const updateColaboratorService = async (
     throw new AppError("Collaborator id not found!", 404);
   }
 
-  const { name, email, telephone, password, is_active } = data;
+  const { name, email, telephone, password } = data;
   if (
     data.id !== undefined ||
     data.is_active !== undefined ||
@@ -30,7 +30,6 @@ export const updateColaboratorService = async (
     email: email && email,
     telephone: telephone && telephone,
     password: password && password,
-    is_active: is_active && is_active,
   });
 
   const updatedData = await collaboratorsRepo.findOneBy({ id });

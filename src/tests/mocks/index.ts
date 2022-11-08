@@ -56,6 +56,13 @@ export const mockedInternetPlans: IInternetPlan = {
   price: 400.0,
 };
 
+export const mockedInternetPlans2: IInternetPlanRequest = {
+  name: "Teste2",
+  description: "Teste1234",
+  price: 400.0,
+};
+
+
 export const mockedCollaborator: ICollaborator = {
   name: "Teste",
   cpf: "12345678901",
@@ -86,6 +93,15 @@ export const mockedClient: IClientRequest = {
   cpf: "12345678901",
   telephone: "13984512783",
   email: "client@mail.com",
+  password: "Client123",
+  is_active: true,
+};
+
+export const mockedClientDeleted: IClientRequest = {
+  name: "Client",
+  cpf: "12345632401",
+  telephone: "13984545983",
+  email: "clientdeleted@mail.com",
   password: "Client123",
   is_active: true,
 };

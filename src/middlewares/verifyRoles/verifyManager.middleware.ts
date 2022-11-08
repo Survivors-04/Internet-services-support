@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { AppError } from "../../errors/appError";
+
 export const verifyManager = (
   req: Request,
   res: Response,
@@ -10,5 +10,5 @@ export const verifyManager = (
       message: "access only managers",
     });
   }
-  next();
+  return next();
 };
