@@ -4,14 +4,14 @@ import { AppError } from "../../errors/appError";
 
 export const deleteInternetPlanService = async (
   id: string
-): Promise<string> => {
+): Promise<void> => {
   const internetPlanRepository = AppDataSource.getRepository(Internet_plan);
 
   const internetPlan = await internetPlanRepository.findOneBy({ id });
 
-  if (!internetPlan) throw new AppError("internet plan not found", 409);
+  if (!internetPlan) throw new AppError("internet plan not found", 404);
 
   await internetPlanRepository.delete({ id });
 
-  return "internet plan deleted successfully";
+  
 };

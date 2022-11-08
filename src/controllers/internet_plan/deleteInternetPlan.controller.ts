@@ -6,7 +6,7 @@ export const deleteInternetPlanController = async (
   res: Response
 ) => {
   const id = req.params.id;
-  const internetPlanMessage: string = await deleteInternetPlanService(id);
+  const internetPlanMessage = await deleteInternetPlanService(id);
 
-  return res.status(200).json({ message: internetPlanMessage });
+  return res.status(204).json({ message: "internet plan deleted successfully" });
 };

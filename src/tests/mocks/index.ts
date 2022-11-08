@@ -8,7 +8,7 @@ import {
   ISupervisorsLogin,
   ISupervisorsRequest,
 } from "../../interfaces/supervisors";
-import { IInternetPlanRequest } from "../../interfaces/internetPlan";
+import { IInternetPlan, IInternetPlanRequest } from "../../interfaces/internetPlan";
 import { IServiceRequest } from "../../interfaces/services";
 import { IClientLogin, IClientRequest } from "../../interfaces/clients";
 
@@ -40,7 +40,8 @@ export const mockedManagerLogin: ISupervisorsLogin = {
   password: "Manager123",
 };
 
-export const mockedInternetPlans: IInternetPlanRequest = {
+export const mockedInternetPlans: IInternetPlan = {
+  id:"testteId",
   name: "Teste",
   description: "Teste123",
   price: 400.0,
@@ -50,7 +51,7 @@ export const mockedCollaborator: ICollaborator = {
   name: "Teste",
   cpf: "12345678901",
   telephone: "13984512783",
-  email: "teste@mail.com",
+  email: "collaborator@mail.com",
   password: "Teste123",
   is_active: true,
 };
