@@ -5,6 +5,7 @@ import app from "../../../app";
 import {
   mockedAttendance,
   mockedClient,
+  mockedClientLogin,
   mockedCollaborator,
   mockedManager,
   mockedManagerLogin,
@@ -20,26 +21,14 @@ describe("/attendance", () => {
       .catch((err) => {
         console.error("Error during Data Source initialization", err);
       });
+    await request(app).post("/supervisors").send(mockedManager);
   });
 
   afterAll(async () => {
     await connection.destroy();
   });
 
-  let createdAttendance = {
-    id: "",
-    collaborator: {},
-    client: {},
-    service: {},
-    date: "",
-    is_active: true,
-  };
-
-  let idCollaborator = "";
-
   test("POST /attendances - Must be able to create an attendance", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -48,7 +37,7 @@ describe("/attendance", () => {
     const collaborator = await request(app)
       .post("/collaborators")
       .send(mockedCollaborator)
-      .set("Authroization", token);
+      .set("Authorization", token);
     const collaboratorId = collaborator.body.id;
 
     const client = await request(app)
@@ -217,17 +206,20 @@ describe("/attendance", () => {
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
+
     const { body, status } = await request(app)
       .get("/attendances")
-      .set("Authorization", "token");
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
   });
 
   test("GET /attendances/:id - Must be able to list an attendance by id", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -276,8 +268,6 @@ describe("/attendance", () => {
   });
 
   test("GET /attendances/:id - Should not be able to list an attendance with invalid id", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -317,8 +307,6 @@ describe("/attendance", () => {
   });
 
   test("GET /attendances/:id - Should not be able to list an attendance without collaborator permission", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -349,17 +337,20 @@ describe("/attendance", () => {
       .set("Authorization", token);
     const attendanceId = attendance.body.id;
 
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
+
     const { body, status } = await request(app)
       .get(`/attendances/${attendanceId}`)
-      .set("Authorization", "token");
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
   });
 
   test("GET /attedances/collaborators/:id - Must be able to read all atendances by collaborator", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -399,8 +390,6 @@ describe("/attendance", () => {
   });
 
   test("GET /attendances/collaborators/:id - Should not be able to list attendances by collaborator with invalid collaborator id", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -440,8 +429,6 @@ describe("/attendance", () => {
   });
 
   test("GET /attendances/collaborators/:id - Should not be able to list an attendance by collaborator without collaborator permission", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -472,9 +459,14 @@ describe("/attendance", () => {
       .set("Authorization", token);
     const attendanceId = attendance.body.id;
 
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
+
     const { body, status } = await request(app)
       .get(`/attendances/collaborators/${collaboratorId}`)
-      .set("Authorization", "token");
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -484,76 +476,75 @@ describe("/attendance", () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
-    const token = managerLogin.body.token;
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const deletedAttendance = await request(app)
       .get("/attendances")
       .set("Authorization", token);
     const deletedAttendanceId = deletedAttendance.body[0].id;
 
-    const {body, status} = await request(app)
+    const { body, status } = await request(app)
       .delete(`/attendances/${deletedAttendanceId}`)
       .set("Authorization", token);
-    
-    expect(body).toHaveProperty('message')
-    expect(status).toBe(204)
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(204);
   });
 
   test("DELETE /attendances - Should not be able to delete an attendance with invalid id", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
-    const token = managerLogin.body.token;
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const deletedAttendance = await request(app)
       .get("/attendances")
       .set("Authorization", token);
     const deletedAttendanceId = deletedAttendance.body[0].id;
 
-    const {body, status} = await request(app)
+    const { body, status } = await request(app)
       .delete(`/attendances/13970660-5dbe-423a-9a9d-5c23b37943cf`)
       .set("Authorization", token);
-    
-    expect(body).toHaveProperty('message')
-    expect(status).toBe(404)
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(404);
   });
 
   test("DELETE /attendances - Should not be able to delete an attendance without collaborator permission", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
-    const token = managerLogin.body.token;
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const deletedAttendance = await request(app)
       .get("/attendances")
       .set("Authorization", token);
     const deletedAttendanceId = deletedAttendance.body[0].id;
 
-    const {body, status} = await request(app)
+    const { body, status } = await request(app)
       .delete(`/attendances/${deletedAttendanceId}`)
-      .set("Authorization", 'token');
-    
-    expect(body).toHaveProperty('message')
-    expect(status).toBe(403)
+      .set("Authorization", "clientToken");
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
   });
 
   test("DELETE /attendances - Should not be able to delete an attendance with is_active = false", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
-    const token = managerLogin.body.token;
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const deletedAttendance = await request(app)
       .get("/attendances")
       .set("Authorization", token);
     const deletedAttendanceId = deletedAttendance.body[0].id;
-    console.log(deletedAttendance.body)
 
-    const {body, status} = await request(app)
+    const { body, status } = await request(app)
       .delete(`/attendances/${deletedAttendanceId}`)
       .set("Authorization", token);
-    
-    expect(body).toHaveProperty('message')
-    expect(status).toBe(400)
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(400);
   });
 });
