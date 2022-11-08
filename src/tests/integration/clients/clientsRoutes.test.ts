@@ -5,6 +5,7 @@ import app from "../../../app";
 import {
   mockedAttendance,
   mockedClient,
+  mockedClientLogin,
   mockedCollaborator,
   mockedInternetPlans,
   mockedManager,
@@ -21,6 +22,7 @@ describe("/client", () => {
       .catch((err) => {
         console.error("Error during Data Source initialization", err);
       });
+    await request(app).post("/supervisors").send(mockedManager);
   });
 
   afterAll(async () => {
@@ -28,8 +30,6 @@ describe("/client", () => {
   });
 
   test("POST /clients - Must be able to create a client", async () => {
-    await request(app).post("/supervisors").send(mockedManager);
-
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -90,16 +90,14 @@ describe("/client", () => {
       .send(mockedInternetPlans)
       .set("Authorization", token);
     const internet_plan_id = plan.body.id;
-    console.log(internet_plan_id)
 
     const { body, status } = await request(app)
       .post(`/clients/${clientId}/plans`)
-      .send({internet_plan_id})
+      .send({ internet_plan_id })
       .set("Authorization", token);
-    
-    console.log(body)
-    expect(body).toHaveProperty('message')
-    expect(status).toBe(201)
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(201);
   });
 
   test("POST /clients/:id/plans - Should not be able to create a client internet plan with invalid client id", async () => {
@@ -121,11 +119,11 @@ describe("/client", () => {
 
     const { body, status } = await request(app)
       .post(`/clients/13970660-5dbe-423a-9a9d-5c23b37943cf/plans`)
-      .send({internet_plan_id})
+      .send({ internet_plan_id })
       .set("Authorization", token);
-    
-    expect(body).toHaveProperty('message')
-    expect(status).toBe(404)
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(404);
   });
 
   test("POST /clients/:id/plans - Should not be able to create a client internet plan with invalid plan id", async () => {
@@ -147,11 +145,11 @@ describe("/client", () => {
 
     const { body, status } = await request(app)
       .post(`/clients/${clientId}/plans`)
-      .send('13970660-5dbe-423a-9a9d-5c23b37943cf')
+      .send("13970660-5dbe-423a-9a9d-5c23b37943cf")
       .set("Authorization", token);
-    
-    expect(body).toHaveProperty('message')
-    expect(status).toBe(404)
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(404);
   });
 
   test("POST /clients/:id/plans - Should not be able to create a client internet plan without collaborator permission", async () => {
@@ -159,14 +157,16 @@ describe("/client", () => {
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
-    console.log(token)
 
     const client = await request(app)
       .get("/clients")
       .set("Authorization", token);
     const clientId = client.body[0].id;
 
-    const clientLogin = await request(app).post('')
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const plan = await request(app)
       .post("/plans")
@@ -176,11 +176,11 @@ describe("/client", () => {
 
     const { body, status } = await request(app)
       .post(`/clients/${clientId}/plans`)
-      .send({internet_plan_id})
-      .set("Authorization", 'token');
-    
-    expect(body).toHaveProperty('message')
-    expect(status).toBe(403)
+      .send({ internet_plan_id })
+      .set("Authorization", clientToken);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
   });
 
   test("GET /clients - Must be able to list all clients", async () => {
@@ -203,17 +203,20 @@ describe("/client", () => {
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
-    
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const { body, status } = await request(app)
       .get("/clients")
-      .set("Authorization", "token");
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
   });
 
-  test("GET /clients/:id - Must be able to list a client by id", async () => {
+  test("GET /clients/:id - Must be able to list a client by own id", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -224,9 +227,14 @@ describe("/client", () => {
       .set("Authorization", token);
     const clientId = client.body[0].id;
 
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
+
     const { body, status } = await request(app)
       .get(`/clients/${clientId}`)
-      .set("Authorization", token);
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("id");
     expect(body).toHaveProperty("name");
@@ -264,7 +272,7 @@ describe("/client", () => {
     expect(status).toBe(404);
   });
 
-  test("GET /clients/:id - Should not be able to list a client without collaborator permission", async () => {
+  test("GET /clients/:id - Should not be able to list other client without collaborator permission", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
@@ -275,9 +283,14 @@ describe("/client", () => {
       .set("Authorization", token);
     const clientId = client.body[0].id;
 
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
+
     const { body, status } = await request(app)
       .get(`/clients/${clientId}`)
-      .set("Authorization", "token");
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -288,7 +301,6 @@ describe("/client", () => {
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
-    console.log(token)
 
     const deletedClient = await request(app)
       .get("/clients")
@@ -307,12 +319,11 @@ describe("/client", () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
-    const token = managerLogin.body.token;
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    const deletedClientId = deletedClient.body[0].id;
 
     const { body, status } = await request(app)
       .delete(`/clients/13970660-5dbe-423a-9a9d-5c23b37943cf`)
@@ -322,30 +333,36 @@ describe("/client", () => {
     expect(status).toBe(404);
   });
 
-  test("DELETE /clients - Should not be able to soft delete a client without collaborator permission", async () => {
+  test("DELETE /clients/:id - Should not be able to soft delete a client without collaborator permission", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
-    const token = managerLogin.body.token;
+    const token = `Bearer ${managerLogin.body.token}`;
+    console.log(token);
 
     const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
     const deletedClientId = deletedClient.body[0].id;
 
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
+
     const { body, status } = await request(app)
       .delete(`/clients/${deletedClientId}`)
-      .set("Authorization", "token");
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
   });
 
-  test("DELETE /clients - Should not be able to soft delete a client with is_active = false", async () => {
+  test("DELETE /clients/:id - Should not be able to soft delete a client with is_active = false", async () => {
     const managerLogin = await request(app)
       .post("/login")
       .send(mockedManagerLogin);
-    const token = managerLogin.body.token;
+    const token = `Bearer ${managerLogin.body.token}`;
 
     const deletedClient = await request(app)
       .get("/clients")
@@ -356,7 +373,28 @@ describe("/client", () => {
       .delete(`/clients/${deletedClientId}`)
       .set("Authorization", token);
 
+    console.log(body);
     expect(body).toHaveProperty("message");
     expect(status).toBe(400);
+  });
+
+  test("DELETE /clients/:id/plans - Must be able to delete internet plan from client", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const deletedClient = await request(app)
+      .get("/clients")
+      .set("Authorization", token);
+    console.log(deletedClient)
+    const deletedClientId = deletedClient.body[0].id;
+
+    // const { body, status } = await request(app)
+    //   .delete(`/clients/${deletedClientId}`)
+    //   .set("Authorization", token);
+
+    // expect(body).toHaveProperty("message");
+    // expect(status).toBe(204);
   });
 });
