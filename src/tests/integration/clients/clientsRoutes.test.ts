@@ -377,7 +377,7 @@ describe("/client", () => {
     const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    const deletedClientId = deletedClient.body[1].id;
+    const deletedClientId = deletedClient.body[2].id;
 
     const { body, status } = await request(app)
       .delete(`/clients/${deletedClientId}`)
