@@ -110,7 +110,7 @@ export const mockedClientLogin: IClientLogin = {
   password: "Client123",
 };
 
-export const mockedTeams: ITeams = {
-  supervisor_id: "",
-  collaborator_id: "",
+export const mockedTeams = {
+  supervisorId: "",
+  collaboratorId: "",
 };

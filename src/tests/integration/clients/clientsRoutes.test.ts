@@ -446,15 +446,24 @@ describe("/client", () => {
     const clientLogin = await request(app)
       .post("/login")
       .send(mockedClientLogin);
-    const clientToken = `Bearer ${clientLogin.body.token}`;
 
-    const internet_plan_id = client.body[0].client_plan[0].id;
+    const clientToken = `Bearer ${clientLogin.body.token}`;
+    const plan = await request(app)
+      .post("/plans")
+      .send(mockedInternetPlans2)
+      .set("Authorization", token);
+    const internet_plan_id = plan.body.id;
+
+    await request(app)
+      .post(`/clients/${clientId}/plans`)
+      .send({ internet_plan_id })
+      .set("Authorization", clientToken);
 
     const { body, status } = await request(app)
       .delete(`/clients/${clientId}/plans`)
       .set("Authorization", clientToken)
       .send({ internet_plan_id });
-    console.log(body)
+
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
   });
