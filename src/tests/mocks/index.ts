@@ -89,6 +89,15 @@ export const mockedClient: IClientRequest = {
   is_active: true,
 };
 
+export const mockedClientDeleted: IClientRequest = {
+  name: "Client",
+  cpf: "12345632401",
+  telephone: "13984545983",
+  email: "clientdeleted@mail.com",
+  password: "Client123",
+  is_active: true,
+};
+
 export const mockedClientLogin: IClientLogin = {
   email: "client@mail.com",
   password: "Client123",

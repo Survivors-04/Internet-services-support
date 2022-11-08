@@ -5,6 +5,7 @@ import app from "../../../app";
 import {
   mockedAttendance,
   mockedClient,
+  mockedClientDeleted,
   mockedClientLogin,
   mockedCollaborator,
   mockedInternetPlans,
@@ -112,10 +113,9 @@ describe("/client", () => {
     const clientId = client.body[0].id;
 
     const plan = await request(app)
-      .post("/plans")
-      .send(mockedInternetPlans)
+      .get("/plans")
       .set("Authorization", token);
-    const internet_plan_id = plan.body.id;
+    const internet_plan_id = plan.body[0].id;
 
     const { body, status } = await request(app)
       .post(`/clients/13970660-5dbe-423a-9a9d-5c23b37943cf/plans`)
@@ -138,10 +138,10 @@ describe("/client", () => {
     const clientId = client.body[0].id;
 
     const plan = await request(app)
-      .post("/plans")
-      .send(mockedInternetPlans)
+      .get("/plans")
       .set("Authorization", token);
-    const internet_plan_id = plan.body.id;
+    const internet_plan_id = plan.body[0].id;
+    console.log({internet_plan_id})
 
     const { body, status } = await request(app)
       .post(`/clients/${clientId}/plans`)
@@ -169,10 +169,10 @@ describe("/client", () => {
     const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const plan = await request(app)
-      .post("/plans")
-      .send(mockedInternetPlans)
+      .get("/plans")
       .set("Authorization", token);
-    const internet_plan_id = plan.body.id;
+    const internet_plan_id = plan.body[0].id;
+    console.log({internet_plan_id})
 
     const { body, status } = await request(app)
       .post(`/clients/${clientId}/plans`)
@@ -303,16 +303,17 @@ describe("/client", () => {
     const token = `Bearer ${managerLogin.body.token}`;
 
     const deletedClient = await request(app)
-      .get("/clients")
+      .post("/clients")
+      .send(mockedClientDeleted)
       .set("Authorization", token);
-    const deletedClientId = deletedClient.body[0].id;
+    const deletedClientId = deletedClient.body.id;
 
     const { body, status } = await request(app)
       .delete(`/clients/${deletedClientId}`)
       .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
-    expect(status).toBe(204);
+    expect(status).toBe(202);
   });
 
   test("DELETE /clients - Should not be able to soft delete a client with invalid id", async () => {
@@ -338,7 +339,6 @@ describe("/client", () => {
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
-    console.log(token);
 
     const deletedClient = await request(app)
       .get("/clients")
@@ -367,13 +367,12 @@ describe("/client", () => {
     const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    const deletedClientId = deletedClient.body[0].id;
+    const deletedClientId = deletedClient.body[1].id;
 
     const { body, status } = await request(app)
       .delete(`/clients/${deletedClientId}`)
       .set("Authorization", token);
 
-    console.log(body);
     expect(body).toHaveProperty("message");
     expect(status).toBe(400);
   });
@@ -384,17 +383,39 @@ describe("/client", () => {
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
+    const client = await request(app)
+      .get("/clients")
+      .set("Authorization", token);
+    const clientId = client.body[0].id
+
+    const internet_plan_id = client.body[0].client_plan[0].id
+
+    const { body, status } = await request(app)
+      .delete(`/clients/${clientId}/plans`)
+      .set("Authorization", token)
+      .send({internet_plan_id});
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(202);
+  });
+
+  test("DELETE /clients - Should not be able to delete a client internet plan with invalid id", async () => {
+    '    13970660-5dbe-423a-9a9d-5c23b37943cf'
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
     const deletedClient = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    console.log(deletedClient)
-    const deletedClientId = deletedClient.body[0].id;
+    
 
-    // const { body, status } = await request(app)
-    //   .delete(`/clients/${deletedClientId}`)
-    //   .set("Authorization", token);
+    const { body, status } = await request(app)
+      .delete(`/clients/`)
+      .set("Authorization", token);
 
-    // expect(body).toHaveProperty("message");
-    // expect(status).toBe(204);
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(404);
   });
 });
