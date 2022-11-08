@@ -274,10 +274,24 @@ describe("/client", () => {
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
+    const client2 = {
+      name: "Supervisor",
+      email: "client2@mail.com",
+      password: "client2",
+      cpf: "19995555599",
+      telephone: "999999999",
+      is_manager: false,
+    };
+
+    await request(app)
+      .post("/clients")
+      .send(client2)
+      .set("Authorization", token);
+
     const client = await request(app)
       .get("/clients")
       .set("Authorization", token);
-    const clientId = client.body[0].id;
+    const clientId = client.body[1].id;
 
     const clientLogin = await request(app)
       .post("/login")
