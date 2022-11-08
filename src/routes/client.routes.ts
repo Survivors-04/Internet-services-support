@@ -69,7 +69,8 @@ routes.post(
 routes.delete(
   "/:id/plans",
   tokenAuthMiddleware,
-  verifyClientRoleMiddleware,
+  verifyCollaboratorRoleMiddleware,
+  // verifyClientRoleMiddleware,
   validateAddOrRemovePlanInClient(addOrRemovePlanInClientSchema),
   deleteClientPlanController
 );
