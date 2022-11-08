@@ -175,7 +175,7 @@ describe("/plans", () => {
 
     const { body, status } = await request(app)
       .patch(`/plans/${plansTobeUpdateId}`)
-      .set("Autorization", token)
+      .set("Authorization", token)
       .send(newValues);
 
     expect(body[0].name).toEqual("planoTeste");

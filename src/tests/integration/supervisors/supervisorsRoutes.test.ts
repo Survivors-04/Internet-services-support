@@ -98,7 +98,7 @@ describe("/supervisors", () => {
 
     const { body, status } = await request(app)
       .patch(`/supervisors/${updatedSupervisorId}`)
-      .set("Autorization", token)
+      .set("Authorization", token)
       .send(newValues);
 
     expect(body[0].name).toEqual("Joana Brito");
@@ -243,7 +243,7 @@ describe("/supervisors", () => {
 
     const { body, status } = await request(app)
       .delete(`/supervisors/${deletedSupervisorId}`)
-      .set("Autorization", supervisorToken);
+      .set("Authorization", supervisorToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -301,7 +301,7 @@ describe("/supervisors", () => {
 
     const { status } = await request(app)
       .delete(`/supervisors/${deletedSupervisorId}`)
-      .set("Autorization", token);
+      .set("Authorization", token);
     const { body } = await request(app)
       .get("/supervisors")
       .set("Authorization", token);

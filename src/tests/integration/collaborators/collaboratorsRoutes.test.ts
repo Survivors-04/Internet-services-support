@@ -9,6 +9,8 @@ import {
   mockedCollaboratorLogin,
   mockedManager,
   mockedManagerLogin,
+  mockedClient,
+  mockedClientLogin,
 } from "../../mocks";
 
 describe("/collaborators", () => {
@@ -21,6 +23,7 @@ describe("/collaborators", () => {
         console.error("Error during Data Source initilization", err);
       });
     await request(app).post("/supervisors").send(mockedManager);
+    await request(app).post("/clients").send(mockedClient);
   });
 
   afterAll(async () => {
@@ -73,20 +76,14 @@ describe("/collaborators", () => {
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
-    await request(app)
-      .post("/collaborators")
-      .send(mockedCollaborator)
-      .set("Authorization", token);
-
-    const collaboratorLogin = await request(app)
+    const clientLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin)
-      .set("Authorization", token);
-    const collaboratorToken = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const { body, status } = await request(app)
       .get("/collaborators")
-      .set("Authorization", collaboratorToken);
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -106,14 +103,14 @@ describe("/collaborators", () => {
   });
 
   test("GET /collaborators - Should not be able to list collaborators without supervisor permission", async () => {
-    const collaboratorLogin = await request(app)
+    const clientLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const collaboratorToken = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const { body, status } = await request(app)
       .get("/collaborators")
-      .set("Authorization", collaboratorToken);
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -159,30 +156,10 @@ describe("/collaborators", () => {
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
-    const collaborator = {
-      name: "Teste",
-      cpf: "12345678901",
-      telephone: "13984512783",
-      email: "collaborator2@mail.com",
-      password: "Teste123"
-    };
-
-    const login = {
-      email: 'collaborator2@mail.com',
-      password: "Teste123"
-    }
-
-    await request(app)
-      .post("/collaborators")
-      .send(collaborator)
-      .set("Authorization", token);
-
-    const collaboratorLogin = await request(app)
+    const clientLogin = await request(app)
       .post("/login")
-      .send(login);
-    console.log(collaboratorLogin)
-    const collaboratorToken = `Bearer ${collaboratorLogin.body.token}`;
-    console.log("collaboratorToken", collaboratorToken);
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const updatedCollaborator = await request(app)
       .get("/collaborators")
@@ -192,7 +169,7 @@ describe("/collaborators", () => {
     const { body, status } = await request(app)
       .patch(`/collaborators/${collaboratorId}`)
       .send(newValues)
-      .set("Authorization", collaboratorToken);
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
@@ -299,7 +276,7 @@ describe("/collaborators", () => {
 
     const { body, status } = await request(app)
       .delete(`/collaborators/${deletedCollaboratorId}`)
-      .set("Autorization", token);
+      .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(204);
@@ -311,10 +288,10 @@ describe("/collaborators", () => {
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
-    const collaboratorLogin = await request(app)
+    const clientLogin = await request(app)
       .post("/login")
-      .send(mockedCollaboratorLogin);
-    const collaboratorToken = `Bearer ${collaboratorLogin.body.token}`;
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const deletedCollaborator = await request(app)
       .get("/collaborators")
@@ -323,7 +300,7 @@ describe("/collaborators", () => {
 
     const { body, status } = await request(app)
       .delete(`/collaborators/${deletedCollaboratorId}`)
-      .set("Autorization", collaboratorToken);
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
