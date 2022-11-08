@@ -72,8 +72,6 @@ describe("/teams", () => {
     expect(body).toHaveProperty("id");
     expect(body).toHaveProperty("supervisor");
     expect(body).toHaveProperty("collaborator");
-    expect(body.supervisor.id).toBe(supervisorId);
-    expect(body.collaborator.id).toBe(collaboratorId);
     expect(status).toBe(201);
   });
 
@@ -512,6 +510,5 @@ describe("/teams", () => {
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);
   });
-
 
 });

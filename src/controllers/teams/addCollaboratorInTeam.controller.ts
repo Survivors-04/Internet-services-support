@@ -14,5 +14,5 @@ export const addCollaboratorInTeamController = async (
     dataCollaborator
   );
 
-  return res.status(200).json({ message: teamMessage });
+  return res.status(201).json({ message: teamMessage });
 };
