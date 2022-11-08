@@ -56,7 +56,7 @@ export const mockedCollaborator: ICollaborator = {
 };
 
 export const mockedCollaboratorLogin: ICollaboratorLogin = {
-  email: "collaborator@mail.com",
+  email: "teste@mail.com",
   password: "Teste123",
 };
 

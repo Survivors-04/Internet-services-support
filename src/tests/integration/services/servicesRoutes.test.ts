@@ -215,10 +215,8 @@ describe("/services", () => {
       .delete(`/services/${deletedServiceId}`)
       .set("Authorization", token);
 
-    console.log(response);
-
     expect(response.body).toHaveProperty("message");
-    expect(response.status).toBe(204);
+    expect(response.status).toBe(200);
   });
 
   test("DELETE /services/:id - Should not be able to delete a service without collaborator permission", async () => {
@@ -249,7 +247,7 @@ describe("/services", () => {
 
     const { body, status } = await request(app)
       .delete(`/services/${deletedServiceId}`)
-      .set("Autorization", clientToken);
+      .set("Authorization", clientToken);
 
     expect(body).toHaveProperty("message");
     expect(status).toBe(403);

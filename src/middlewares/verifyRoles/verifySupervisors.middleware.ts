@@ -6,7 +6,6 @@ export const verifySupervisorMiddleware = (
   next: NextFunction
 ) => {
   if (req.user.role <= 2) {
-    
     return res.status(403).json({
       message: "access only for supervisors and managers",
     });
