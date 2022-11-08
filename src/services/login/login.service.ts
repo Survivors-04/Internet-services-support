@@ -31,7 +31,7 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
 
   let user;
   let role;
-  let is_manager;
+ 
 
   if (searchUserOnClient) {
     user = searchUserOnClient;
@@ -66,7 +66,7 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
       is_active: user.is_active,
     },
     process.env.SECRET_KEY as string,
-    { expiresIn: "24h", subject: user.id }
+    { expiresIn: "24h"}
   );
 
   return token;

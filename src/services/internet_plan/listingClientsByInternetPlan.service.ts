@@ -17,6 +17,6 @@ export const listingClientsByInternetPlanService = async (
   const returnedClients = clients.filter(
     (elem) => elem.client_plan.filter((plan) => plan.id === id).length > 0
   );
-
+    console.log(returnedClients)
   return returnedClients;
 };
