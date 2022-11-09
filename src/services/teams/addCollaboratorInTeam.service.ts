@@ -16,8 +16,8 @@ export const addCollaboratorInTeamService = async (
     id: data.collaboratorId,
   });
 
-  if (!team) throw new AppError("team not found", 409);
-  if (!collaborator) throw new AppError("collaborator not found", 409);
+  if (!team) throw new AppError("team not found", 404);
+  if (!collaborator) throw new AppError("collaborator not found", 404);
 
   const collaboratorIsAlreadyTeam = team.collaborator.find(
     (elem) => elem.id === collaborator.id
@@ -32,7 +32,5 @@ export const addCollaboratorInTeamService = async (
   await teamRepository.save(team);
   await collaboratorRepository.save(collaborator);
 
-
-  
   return "collaborator successfully added";
 };

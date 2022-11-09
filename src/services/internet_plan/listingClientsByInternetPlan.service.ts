@@ -14,7 +14,7 @@ export const listingClientsByInternetPlanService = async (
   });
   const internetPlan = plans.find((plan) => plan.id === id);
 
-  if (!internetPlan) throw new AppError("internet plan not found", 409);
+  if (!internetPlan) throw new AppError("internet plan not found", 404);
 
   return internetPlan;
 };

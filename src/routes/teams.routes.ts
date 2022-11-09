@@ -23,9 +23,9 @@ export const teamsRoutes = Router();
 
 teamsRoutes.post(
   "",
-  validateTeamCreate(teamCreateSchema),
   tokenAuthMiddleware,
   verifySupervisorMiddleware,
+  validateTeamCreate(teamCreateSchema),
   createTeamController
 );
 teamsRoutes.post(

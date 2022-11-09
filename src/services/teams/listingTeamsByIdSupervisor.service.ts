@@ -12,7 +12,7 @@ export const listingTeamByIdSupervisorService = async (
   const teams = await teamRepository.find();
   const supervisor = await supervisorsRepository.findOneBy({ id });
 
-  if (!supervisor) throw new AppError("supervisor not found", 409);
+  if (!supervisor) throw new AppError("supervisor not found", 404);
 
   const teamsWithSupervisor = teams.filter((team) => team.supervisor.id === id);
 

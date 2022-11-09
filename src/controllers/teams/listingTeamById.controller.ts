@@ -10,5 +10,5 @@ export const listingTeamByIdController = async (
   const id: string = req.params.id;
   const team: Team = await listingTeamByIdService(id);
 
-  return res.status(201).json(instanceToPlain(team));
+  return res.status(200).json(instanceToPlain(team));
 };

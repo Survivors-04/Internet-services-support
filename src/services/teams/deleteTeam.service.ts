@@ -7,7 +7,7 @@ export const deleteTeamService = async (id: string): Promise<string> => {
 
   const team = await teamRepository.findOneBy({ id });
 
-  if (!team) throw new AppError("team not found", 409);
+  if (!team) throw new AppError("team not found", 404);
 
   await teamRepository.delete({ id });
 

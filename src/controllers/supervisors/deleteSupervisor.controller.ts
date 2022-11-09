@@ -9,5 +9,5 @@ export const deleteSupervisorControler = async (
 
   const deleteSupervisor: string = await deleteSupervisorService(id);
 
-  return res.status(200).json({ message: deleteSupervisor });
+  return res.status(202).json({ message: deleteSupervisor });
 };

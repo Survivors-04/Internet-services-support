@@ -14,11 +14,14 @@ import {
   supervisorsUpdateSchema,
   validateSupervisorsUpdate,
 } from "../middlewares/validationsInfosYup/validateInfoUpdateSupervisors.middlewar";
+import { verifySupervisorMiddleware } from "../middlewares/verifyRoles/verifySupervisors.middleware";
 
 const supervisorsRoutes = Router();
 
 supervisorsRoutes.post(
   "",
+  tokenAuthMiddleware,
+  verifySupervisorMiddleware,
   validateSupervisorsCreate(supervisorsCreateSchema),
   createSupervisorsController
 );

@@ -11,7 +11,7 @@ export const deleteCollaboratorService = async (id: string) => {
   }
 
   if (!collaboratorToBeDeleted) {
-    throw new AppError("User id not found!", 404);
+    throw new AppError("Collaborator id not found!", 404);
   }
 
   await collaboratorsRepo.update(id, { is_active: false });
