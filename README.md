@@ -95,12 +95,15 @@ A autenticação dessa aplicação é feita através de:
 Authorization: Bearer Token
 ```
 
-Todas rotas pedem que um Bearer Token seja passado com exceção dessas duas:
+Todas rotas pedem que um Bearer Token seja passado com exceção dessas:
 
 | Método | Rota                                            | Descrição                                      |
 | ------ | ----------------------------------------------- | ---------------------------------------------- |
 | POST   | [/login](#11-criação-do-token-através-do-login) | Gerando token de acesso as rotas da aplicação. |
 | POST   | [/clients](#21-criação-do-cliente)              | Criação de um cliente.                         |
+| POST   | [/attendances](#81-criação-do-atendimento)      | Criação de um atendimento.                     |
+| POST   | [/services](#71-criação-do-serviço)             | Criação de um serviço.                         |
+| POST   | [/supervisors](#51-criação-do-supervisor)       | Criação de um supervisor.                      |
 | GET    | [/plans](#32-listando-planos-de-internet)       | Listando os planos de internet.                |
 
 Exemplo de header de uma request:
@@ -134,10 +137,10 @@ Base URL: https://internet-services-support.herokuapp.com/
   - [DELETE - /clients/:id](#25-deletando-o-cliente-pelo-id)
   - [POST - /clients/:id/plans](#26-adicionando-plano-de-internet-ao-cliente)
   - [DELETE - /clients/:id/plans](#27-removendo-plano-de-internet-do-cliente)
-- [Internet_plan](#3-internet-plan)
+- [Internet_plan](#3-internet_plan)
   - [POST - /plans](#31-criação-do-plano-de-internet)
   - [GET - /plans](#32-listando-planos-de-internet)
-  - [GET - /plans/:id/clients](#33-listando-planos-ativos-por-id)
+  - [GET - /plans/:id/clients](#33-listando-clientes-com-planos-ativos-por-id)
   - [PATCH - /plans/:id](#34-atualizando-plano-de-internet-pelo-id)
   - [DELETE - /plans/:id](#35-deletando-plano-de-internet-pelo-id)
 - [Collaborators](#4-collaborators)
@@ -595,13 +598,11 @@ vazio
 ### Exemplo de Response:
 
 ```
-202 Accepted
+204 No content
 ```
 
 ```json
-{
-  "message": "Client deleted"
-}
+vazio
 ```
 
 ### Possíveis Erros:
@@ -716,13 +717,11 @@ OBS.: Chaves não presentes no schema serão removidas.
 ### Exemplo de Response:
 
 ```
-202 Accepted
+204 No content
 ```
 
 ```json
-{
-  "message": "Client plan deleted"
-}
+vazio
 ```
 
 ### Possíveis Erros:
@@ -887,7 +886,7 @@ Nenhum, o máximo que pode acontecer é retornar uma lista vazia.
 
 ---
 
-### 3.3. **Listando planos ativos por ID**
+### 3.3. **Listando clientes com planos ativos por ID**
 
 [ Voltar para os Endpoints ](#5-endpoints)
 
@@ -1077,13 +1076,11 @@ vazio
 ### Exemplo de Response:
 
 ```
-202 Accepted
+204 No content
 ```
 
 ```json
-{
-  "message": "internet plan deleted successfully"
-}
+vazio
 ```
 
 ### Possíveis Erros:
@@ -1264,7 +1261,7 @@ vazio
 
 [ Voltar aos Endpoints ](#5-endpoints)
 
-### `/clients/:id`
+### `/collaborators/:id`
 
 ### Exemplo de Request:
 
@@ -1418,13 +1415,11 @@ vazio
 ### Exemplo de Response:
 
 ```
-202 Accepted
+204 No content
 ```
 
 ```json
-{
-  "message": "Collaborator deleted"
-}
+vazio
 ```
 
 ### Possíveis Erros:
@@ -1476,7 +1471,7 @@ O objeto Supervisor é definido como:
 ```
 POST /supervisors
 Host: https://internet-services-support.herokuapp.com/
-Authorization: Bearer Token
+Authorization: None
 Content-type: application/json
 ```
 
@@ -1538,11 +1533,9 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ### Possíveis Erros:
 
-| Código do Erro  | Descrição                                 |
-| --------------- | ----------------------------------------- |
-| 403 Forbidden   | Invalid token.                            |
-| 403 Forbidden   | access only for supervisors and managers. |
-| 400 Bad Request | Email Already exists!                     |
+| Código do Erro  | Descrição             |
+| --------------- | --------------------- |
+| 400 Bad Request | Email Already exists! |
 
 ---
 
@@ -1708,13 +1701,11 @@ vazio
 ### Exemplo de Response:
 
 ```
-202 Accepted
+204 No content
 ```
 
 ```json
-{
-  "message": "Supervisor successfully deleted"
-}
+vazio
 ```
 
 ### Possíveis Erros:
@@ -1817,12 +1808,12 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ### Possíveis Erros:
 
-| Código do Erro            | Descrição                                 |
-| ------------------------- | ----------------------------------------- |
-| 403 Forbidden             | Invalid token.                            |
-| 403 Forbidden             | access only for supervisors and managers. |
-| 404 Not found             | supervisor not found.                     |
-| 500 Internal server error | supervisor is already in a team.          |
+| Código do Erro  | Descrição                                 |
+| --------------- | ----------------------------------------- |
+| 403 Forbidden   | Invalid token.                            |
+| 403 Forbidden   | access only for supervisors and managers. |
+| 404 Not found   | supervisor not found.                     |
+| 400 Bad request | supervisor is already in a team.          |
 
 ---
 
@@ -2038,13 +2029,11 @@ vazio
 ### Exemplo de Response:
 
 ```
-202 Accepted
+204 No content
 ```
 
 ```json
-{
-  "message": "team successfully deleted"
-}
+vazio
 ```
 
 ### Possíveis Erros:
@@ -2158,13 +2147,11 @@ OBS.: Chaves não presentes no schema serão removidas.
 ### Exemplo de Response:
 
 ```
-202 Accepted
+204 No content
 ```
 
 ```json
-{
-  "message": "collaborator successfully removed"
-}
+vazio
 ```
 
 ### Possíveis Erros:
@@ -2402,13 +2389,11 @@ vazio
 ### Exemplo de Response:
 
 ```
-202 Accepted
+204 No content
 ```
 
 ```json
-{
-  "message": "service deleted successfully"
-}
+vazio
 ```
 
 ### Possíveis Erros:
