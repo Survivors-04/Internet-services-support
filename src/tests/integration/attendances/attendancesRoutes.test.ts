@@ -489,6 +489,7 @@ console.log(attendance.body)
       .delete(`/attendances/${deletedAttendanceId}`)
       .set("Authorization", token);
 
+    //expect(body).toHaveProperty("message");
     expect(status).toBe(204);
   });
 
