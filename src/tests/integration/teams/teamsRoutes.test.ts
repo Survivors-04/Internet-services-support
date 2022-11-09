@@ -152,8 +152,8 @@ describe("/teams", () => {
       .set("Authorization", token);
 
     expect(body).toHaveProperty("id");
-    expect(body).toHaveProperty("supervisorId");
-    expect(body).toHaveProperty("collaboratorId");
+    expect(body).toHaveProperty("supervisor");
+    expect(body).toHaveProperty("collaborator");
     expect(status).toBe(201);
   });
 
@@ -207,7 +207,7 @@ describe("/teams", () => {
     mockedTeams.supervisorId = supervisorId;
 
     const { body, status } = await request(app)
-      .post("/teams")
+      .post("/teams/:id/collaborator")
       .send(mockedTeams)
       .set("Authorization", token);
 
@@ -374,12 +374,14 @@ describe("/teams", () => {
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
+      
+    
 
     const { body, status } = await request(app)
       .get("/teams")
       .set("Authorization", token);
 
-    expect(body).toHaveLength(1);
+    expect(body).toHaveLength(2);
     expect(status).toBe(200);
   });
 
@@ -468,9 +470,10 @@ describe("/teams", () => {
       .get(`/teams/supervisor/${supervisorId}`)
       .set("Authorization", token);
 
-    expect(body).toHaveProperty("id");
-    expect(body).toHaveProperty("supervisor");
-    expect(body).toHaveProperty("collaborator");
+      console.log(body)
+    expect(body[0]).toHaveProperty("id");
+    expect(body[0]).toHaveProperty("collaborator");
+    expect(body[0]).toHaveProperty("supervisor");
     expect(status).toBe(200);
   });
 

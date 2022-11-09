@@ -49,7 +49,7 @@ export interface ICollaboratorLogin {
 
 export interface ITeams {
   supervisor_id: string;
-  collaborator_id: string;
+  collaborator:[string];
 }
 
 export interface ICollaboratorUpdateYup {

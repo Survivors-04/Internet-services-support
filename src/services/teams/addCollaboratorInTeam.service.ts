@@ -16,15 +16,15 @@ export const addCollaboratorInTeamService = async (
     id: data.collaboratorId,
   });
 
-  if (!team) throw new AppError("team not found", 409);
-  if (!collaborator) throw new AppError("collaborator not found", 409);
+  if (!team) throw new AppError("team not found", 404);
+  if (!collaborator) throw new AppError("collaborator not found", 404);
 
   const collaboratorIsAlreadyTeam = team.collaborator.find(
     (elem) => elem.id === collaborator.id
   );
 
   if (collaboratorIsAlreadyTeam)
-    throw new AppError("collaborator is already registered in this team", 409);
+    throw new AppError("collaborator is already registered in this team", 404);
 
   team?.collaborator.push(collaborator!);
   collaborator!.team = team!;
