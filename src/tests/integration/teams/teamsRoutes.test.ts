@@ -182,39 +182,6 @@ describe("/teams", () => {
     expect(status).toBe(404);
   });
 
-  test("POST /teams - Should not be able to create a team with invalid collaborator id", async () => {
-    const managerLogin = await request(app)
-      .post("/login")
-      .send(mockedManagerLogin);
-    const token = `Bearer ${managerLogin.body.token}`;
-
-    const collaborator = await request(app)
-      .get("/collaborators")
-      .set("Authorization", token);
-    const collaboratorId = "13970660-5dbe-423a-9a9d-5c23b37943cf";
-
-    supervisorTeam.email = "supervisor2@mail.com";
-    supervisorTeam.cpf = "63481083169956";
-
-    await request(app).post("/supervisors").send(supervisorTeam);
-
-    const supervisor = await request(app)
-      .get("/supervisors")
-      .set("Authorization", token);
-    const supervisorId = supervisor.body[3].id;
-
-    mockedTeams.collaboratorId = collaboratorId;
-    mockedTeams.supervisorId = supervisorId;
-
-    const { body, status } = await request(app)
-      .post("/teams")
-      .send(mockedTeams)
-      .set("Authorization", token);
-
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(404);
-  });
-
   test("POST /teams - Should not be able to create a team without supervisor permission", async () => {
     const managerLogin = await request(app)
       .post("/login")
@@ -468,7 +435,6 @@ describe("/teams", () => {
       .get(`/teams/supervisor/${supervisorId}`)
       .set("Authorization", token);
 
-    console.log(body);
     expect(body[0]).toHaveProperty("id");
     expect(body[0]).toHaveProperty("collaborator");
     expect(body[0]).toHaveProperty("supervisor");
@@ -522,9 +488,68 @@ describe("/teams", () => {
 
     const team = await request(app).get("/teams").set("Authorization", token);
     const teamId = team.body[0].id;
+    console.log(team.body);
 
     const { body, status } = await request(app)
       .delete(`/teams/${teamId}`)
+      .set("Authorization", token);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(202);
+  });
+
+  test("DELETE /teams/:id - Should not be able to delete a team with invalid id", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const team = await request(app).get("/teams").set("Authorization", token);
+    const teamId = "13970660-5dbe-423a-9a9d-5c23b37943cf";
+
+    const { body, status } = await request(app)
+      .delete(`/teams/${teamId}`)
+      .set("Authorization", token);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(404);
+  });
+
+  test("DELETE /teams/:id - Should not be able to delete a team without", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`
+
+    const team = await request(app).get("/teams").set("Authorization", token);
+    const teamId = team.body[1].id;
+
+    const { body, status } = await request(app)
+      .delete(`/teams/${teamId}`)
+      .set("Authorization", clientToken);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(403);
+  });
+
+  test("DELETE /teams/:id/collaborator/ - Must be able to remove a collaborator from a team", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const team = await request(app).get("/teams").set("Authorization", token);
+    const teamId = team.body[0].id;
+    const collaboratorId = team.body[0].collaborator[0].id;
+
+    const { body, status } = await request(app)
+      .delete(`/teams/${teamId}/collaborator`)
+      .send({ collaboratorId })
       .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
