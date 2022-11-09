@@ -9,7 +9,7 @@ export const listAttendancesService = async ( id:string ) =>{
   const attendancesRepo = AppDataSource.getRepository(Attendance);
   const collaboratorsRepo = AppDataSource.getRepository(Collaborator);
 
-  if( id ){
+  if (id) {
   
     const attendance   = await attendancesRepo.findOneBy({ id });
     const collaborator = await collaboratorsRepo.findOneBy({ id });
