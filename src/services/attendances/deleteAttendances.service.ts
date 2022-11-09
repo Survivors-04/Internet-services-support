@@ -17,6 +17,8 @@ export const deleteAttendancesService = async (id:string):Promise<{
   };
 
   await attendanceRepo.update(id,{ is_active: false });
+  const wasDeleted = attendanceRepo.findOneBy({ id:id });
+  
   
   return {message: "Attendance was deleted"};
 

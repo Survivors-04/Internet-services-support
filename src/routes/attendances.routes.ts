@@ -35,6 +35,10 @@ attendancesRouter.get(
   verifySupervisorMiddleware,
   listAttendancesController
 );
-attendancesRouter.delete("/:id", deleteAttendancesController);
+attendancesRouter.delete(
+  "/:id", 
+  tokenAuthMiddleware,
+  verifyCollaboratorRoleMiddleware, 
+  deleteAttendancesController);
 
 export default attendancesRouter;
