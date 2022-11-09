@@ -610,7 +610,7 @@ vazio
 | --------------- | ------------------------------------------------------ |
 | 403 Forbidden   | Invalid token.                                         |
 | 403 Forbidden   | Only collaborators or superiors can access this route. |
-| 404 Not found   | Client not found. This account is disabled             |
+| 404 Not found   | Client not found.                                      |
 | 400 Bad request | This account is disabled.                              |
 
 ---
@@ -2176,5 +2176,247 @@ OBS.: Chaves não presentes no schema serão removidas.
 | 404 Not found  | team not found.                              |
 | 404 Not found  | collaborator not found.                      |
 | 409 Conflict   | collaborator is not registered in this team. |
+
+---
+
+## 7. **Services**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto Service é definido como:
+
+| Campo       | Tipo   | Descrição                       |
+| ----------- | ------ | ------------------------------- |
+| id          | string | Identificador único do serviço. |
+| name        | string | O nome do serviço.              |
+| description | string | A descrição do serviço.         |
+
+### Endpoints
+
+| Método | Rota          | Descrição                                         |
+| ------ | ------------- | ------------------------------------------------- |
+| POST   | /services     | Criação de um service.                            |
+| GET    | /services     | Lista todos os serviços.                          |
+| PATCH  | /services/:id | Atualiza um serviço usando seu ID como parâmetro. |
+| DELETE | /services/:id | Deleta um serviço usando seu ID como parâmetro.   |
+
+---
+
+### 7.1. **Criação do serviço**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/services`
+
+### Exemplo de Request:
+
+```
+POST /services
+Host: https://internet-services-support.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+{
+  "name": "Name",
+  "description": "Description"
+}
+```
+
+### Schema de Validação com Yup:
+
+```javascript
+   id: yup
+    .string()
+    .default(() => uuidv4())
+    .transform(() => uuidv4())
+    .notRequired(),
+  name: yup.string().required(),
+  description: yup.string().required(),
+```
+
+OBS.: Chaves não presentes no schema serão removidas.
+
+### Exemplo de Response:
+
+```
+201 Created
+```
+
+```json
+{
+  "id": "16d7b5ee-a87b-42d0-b432-1f4993b1a81d",
+  "name": "Name",
+  "description": "Description"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                   |
+| -------------- | --------------------------- |
+| 400 Conflict   | service already registered. |
+
+---
+
+### 7.2. **Listando serviços**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/services`
+
+### Exemplo de Request:
+
+```
+GET /services
+Host: https://internet-services-support.herokuapp.com/
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+  {
+    "id": "16d7b5ee-a87b-42d0-b432-1f4993b1a81d",
+    "name": "teste",
+    "description": "Description"
+  }
+]
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição      |
+| -------------- | -------------- |
+| 403 Forbidden  | Invalid token. |
+| 403 Forbidden  | Unauthorized.  |
+
+---
+
+### 7.3. **Atualizando serviço pelo ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/services/:id`
+
+### Exemplo de Request:
+
+```
+PATCH /services/:id
+Host: https://internet-services-support.herokuapp.com/
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                                |
+| --------- | ------ | ---------------------------------------- |
+| id        | string | Identificador único do serviço (Service) |
+
+### Corpo da Requisição:
+
+```json
+{
+  "name": "Agendamento técnico",
+  "description": "casa do cliente"
+}
+```
+
+### Schema de Validação com Yup:
+
+```javascript
+  name: yup.string().notRequired(),
+  description: yup.string().notRequired(),
+```
+
+OBS.: Chaves não presentes no schema serão removidas.
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "id": "16d7b5ee-a87b-42d0-b432-1f4993b1a81d",
+  "name": "Agendamento técnico",
+  "description": "casa do cliente"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro   | Descrição          |
+| ---------------- | ------------------ |
+| 403 Forbidden    | Invalid token.     |
+| 403 Forbidden    | Unauthorized.      |
+| 404 Not found    | Service not found. |
+| 401 Unauthorized | Cannot edit id.    |
+
+---
+
+### 7.4. **Deletando serviço pelo ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/services/:id`
+
+### Exemplo de Request:
+
+```
+DELETE /services/:id
+Host: https://internet-services-support.herokuapp.com/
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                                |
+| --------- | ------ | ---------------------------------------- |
+| id        | string | Identificador único do serviço (Service) |
+
+### Corpo da Requisição:
+
+```json
+vazio
+```
+
+### Exemplo de Response:
+
+```
+202 Accepted
+```
+
+```json
+{
+  "message": "service deleted successfully"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                                              |
+| -------------- | ------------------------------------------------------ |
+| 403 Forbidden  | Invalid token.                                         |
+| 403 Forbidden  | Only collaborators or superiors can access this route. |
+| 404 Not found  | service not found.                                     |
 
 ---
