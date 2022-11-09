@@ -214,8 +214,7 @@ describe("/services", () => {
       .delete(`/services/${deletedServiceId}`)
       .set("Authorization", token);
 
-    expect(response.body).toHaveProperty("message");
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(204);
   });
 
   test("DELETE /services/:id - Should not be able to delete a service without collaborator permission", async () => {

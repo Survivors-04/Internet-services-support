@@ -278,8 +278,7 @@ describe("/plans", () => {
       .delete(`/plans/${deletedPlanId}`)
       .set("Authorization", tokenSupervisors);
 
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(202);
+    expect(status).toBe(204);
   });
 
   test("DELETE /plans/:id - Should not be able to delete internet_plan without supervisor permission", async () => {

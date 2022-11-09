@@ -306,7 +306,6 @@ describe("/supervisors", () => {
       .delete(`/supervisors/${deletedSupervisorId}`)
       .set("Authorization", token);
 
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(202);
+    expect(status).toBe(204);
   });
 });
