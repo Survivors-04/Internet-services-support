@@ -323,8 +323,7 @@ describe("/client", () => {
       .delete(`/clients/${deletedClientId}`)
       .set("Authorization", token);
 
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(202);
+    expect(status).toBe(204);
   });
 
   test("DELETE /clients - Should not be able to soft delete a client with invalid id", async () => {
@@ -406,8 +405,7 @@ describe("/client", () => {
       .set("Authorization", token)
       .send({ internet_plan_id });
 
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(202);
+    expect(status).toBe(204);
   });
 
   test("DELETE /clients/:id/plans - Should not be able to delete a client internet plan with invalid id", async () => {
