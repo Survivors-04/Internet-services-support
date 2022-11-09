@@ -224,9 +224,7 @@ Content-type: application/json
 
 ```json
 {
-  "data": {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4ZmEzODYwLTBjYTctNDMyOS1iYWJkLWQ3MjhkY2RmZTA5YSIsInJvbGUiOjQsImlzX2FjdGl2ZSI6dHJ1ZSwiaWF0IjoxNjY3OTIyNjk3LCJleHAiOjE2NjgwMDkwOTcsInN1YiI6IjU4ZmEzODYwLTBjYTctNDMyOS1iYWJkLWQ3MjhkY2RmZTA5YSJ9.2xjH9Er8aUpMxElxwBrTsEej6UpK301hfrc8XUpogrY"
-  }
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjU4ZmEzODYwLTBjYTctNDMyOS1iYWJkLWQ3MjhkY2RmZTA5YSIsInJvbGUiOjQsImlzX2FjdGl2ZSI6dHJ1ZSwiaWF0IjoxNjY3OTIyNjk3LCJleHAiOjE2NjgwMDkwOTcsInN1YiI6IjU4ZmEzODYwLTBjYTctNDMyOS1iYWJkLWQ3MjhkY2RmZTA5YSJ9.2xjH9Er8aUpMxElxwBrTsEej6UpK301hfrc8XUpogrY"
 }
 ```
 
@@ -341,16 +339,14 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "id": "72c9fab0-7fb4-4276-9099-42b90761e8d6",
-    "name": "EnriqueBds",
-    "cpf": "12345679801",
-    "telephone": "13982651234",
-    "email": "enrique@mail.com",
-    "is_active": true,
-    "created_date": "2022-11-08T16:27:27.971Z",
-    "updated_date": "2022-11-08T16:27:27.971Z"
-  }
+  "id": "72c9fab0-7fb4-4276-9099-42b90761e8d6",
+  "name": "EnriqueBds",
+  "cpf": "12345679801",
+  "telephone": "13982651234",
+  "email": "enrique@mail.com",
+  "is_active": true,
+  "created_date": "2022-11-08T16:27:27.971Z",
+  "updated_date": "2022-11-08T16:27:27.971Z"
 }
 ```
 
@@ -390,43 +386,41 @@ Vazio
 ```
 
 ```json
-{
-  "data": [
-    {
-      "id": "7779447f-bbbd-43d7-af5b-07362027e1e7",
-      "name": "felipe",
-      "cpf": "56944459800",
-      "telephone": "11959267759",
-      "email": "felipe.silva@gmail.com",
-      "is_active": true,
-      "created_date": "2022-11-04T14:53:03.244Z",
-      "updated_date": "2022-11-04T14:53:03.244Z",
-      "client_plan": []
-    },
-    {
-      "id": "bf46bd5a-a24c-4415-8e88-4ab5ba3a7607",
-      "name": "Kenzinho",
-      "cpf": "56968459800",
-      "telephone": "11959267759",
-      "email": "kenzinho.@gmail.com",
-      "is_active": true,
-      "created_date": "2022-11-04T18:26:56.787Z",
-      "updated_date": "2022-11-04T18:26:56.787Z",
-      "client_plan": []
-    },
-    {
-      "id": "81a4090e-4a15-4d0e-befb-1c0606f34f17",
-      "name": "Patin da Kenzie",
-      "cpf": "56944459800",
-      "telephone": "11959267759",
-      "email": "patindakenzie.@gmail.com",
-      "is_active": true,
-      "created_date": "2022-11-04T16:50:29.294Z",
-      "updated_date": "2022-11-04T16:50:29.294Z",
-      "client_plan": []
-    }
-  ]
-}
+[
+  {
+    "id": "7779447f-bbbd-43d7-af5b-07362027e1e7",
+    "name": "felipe",
+    "cpf": "56944459800",
+    "telephone": "11959267759",
+    "email": "felipe.silva@gmail.com",
+    "is_active": true,
+    "created_date": "2022-11-04T14:53:03.244Z",
+    "updated_date": "2022-11-04T14:53:03.244Z",
+    "client_plan": []
+  },
+  {
+    "id": "bf46bd5a-a24c-4415-8e88-4ab5ba3a7607",
+    "name": "Kenzinho",
+    "cpf": "56968459800",
+    "telephone": "11959267759",
+    "email": "kenzinho.@gmail.com",
+    "is_active": true,
+    "created_date": "2022-11-04T18:26:56.787Z",
+    "updated_date": "2022-11-04T18:26:56.787Z",
+    "client_plan": []
+  },
+  {
+    "id": "81a4090e-4a15-4d0e-befb-1c0606f34f17",
+    "name": "Patin da Kenzie",
+    "cpf": "56944459800",
+    "telephone": "11959267759",
+    "email": "patindakenzie.@gmail.com",
+    "is_active": true,
+    "created_date": "2022-11-04T16:50:29.294Z",
+    "updated_date": "2022-11-04T16:50:29.294Z",
+    "client_plan": []
+  }
+]
 ```
 
 ### Possíveis Erros:
@@ -473,17 +467,15 @@ Vazio
 
 ```json
 {
-  "data": {
-    "id": "7779447f-bbbd-43d7-af5b-07362027e1e7",
-    "name": "felipe",
-    "cpf": "56944459800",
-    "telephone": "11959267759",
-    "email": "felipe.silva@gmail.com",
-    "is_active": true,
-    "created_date": "2022-11-04T14:53:03.244Z",
-    "updated_date": "2022-11-04T14:53:03.244Z",
-    "client_plan": []
-  }
+  "id": "7779447f-bbbd-43d7-af5b-07362027e1e7",
+  "name": "felipe",
+  "cpf": "56944459800",
+  "telephone": "11959267759",
+  "email": "felipe.silva@gmail.com",
+  "is_active": true,
+  "created_date": "2022-11-04T14:53:03.244Z",
+  "updated_date": "2022-11-04T14:53:03.244Z",
+  "client_plan": []
 }
 ```
 
@@ -548,19 +540,17 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "message": "Client updated",
-    "client": {
-      "id": "72c9fab0-7fb4-4276-9099-42b90761e8d6",
-      "name": "EnriqueBds",
-      "cpf": "12345679801",
-      "telephone": "11959359843",
-      "email": "kenzinho@kenzie.com",
-      "is_active": true,
-      "created_date": "2022-11-08T16:27:27.971Z",
-      "updated_date": "2022-11-08T19:25:23.277Z",
-      "client_plan": []
-    }
+  "message": "Client updated",
+  "client": {
+    "id": "72c9fab0-7fb4-4276-9099-42b90761e8d6",
+    "name": "EnriqueBds",
+    "cpf": "12345679801",
+    "telephone": "11959359843",
+    "email": "kenzinho@kenzie.com",
+    "is_active": true,
+    "created_date": "2022-11-08T16:27:27.971Z",
+    "updated_date": "2022-11-08T19:25:23.277Z",
+    "client_plan": []
   }
 }
 ```
@@ -610,9 +600,7 @@ vazio
 
 ```json
 {
-  "data": {
-    "message": "Client deleted"
-  }
+  "message": "Client deleted"
 }
 ```
 
@@ -622,7 +610,7 @@ vazio
 | --------------- | ------------------------------------------------------ |
 | 403 Forbidden   | Invalid token.                                         |
 | 403 Forbidden   | Only collaborators or superiors can access this route. |
-| 404 Not found   | Client not found. This account is disabled             |
+| 404 Not found   | Client not found.                                      |
 | 400 Bad request | This account is disabled.                              |
 
 ---
@@ -672,9 +660,7 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "message": "Plan added to the client"
-  }
+  "message": "Plan added to the client"
 }
 ```
 
@@ -735,9 +721,7 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "message": "Client plan deleted"
-  }
+  "message": "Client plan deleted"
 }
 ```
 
@@ -824,12 +808,10 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "id": "59951149-d355-43ce-b080-0bf7b58b2f4c",
-    "name": "Plan",
-    "description": "Description",
-    "price": 120
-  }
+  "id": "59951149-d355-43ce-b080-0bf7b58b2f4c",
+  "name": "Plan",
+  "description": "Description",
+  "price": 120
 }
 ```
 
@@ -871,34 +853,32 @@ vazio
 ```
 
 ```json
-{
-  "data": [
-    {
-      "id": "3e85450b-a9ac-4e25-93bb-9293dd497d6d",
-      "name": "nome exemplo",
-      "description": "internet 16gb cada um",
-      "price": "150"
-    },
-    {
-      "id": "beb2a0c3-c16d-412e-a8fd-d0317b8c2189",
-      "name": "nome exemplo",
-      "description": "internet 16gb cada um",
-      "price": "150"
-    },
-    {
-      "id": "23f0c1ce-1d2a-4dfd-9c1e-955d15fc3a30",
-      "name": "nome exemplo",
-      "description": "internet 16gb cada um",
-      "price": "150"
-    },
-    {
-      "id": "73342526-064e-462e-832f-2d1fd556db54",
-      "name": "nome exemplo",
-      "description": "internet 16gb cada um",
-      "price": "150"
-    }
-  ]
-}
+[
+  {
+    "id": "3e85450b-a9ac-4e25-93bb-9293dd497d6d",
+    "name": "nome exemplo",
+    "description": "internet 16gb cada um",
+    "price": "150"
+  },
+  {
+    "id": "beb2a0c3-c16d-412e-a8fd-d0317b8c2189",
+    "name": "nome exemplo",
+    "description": "internet 16gb cada um",
+    "price": "150"
+  },
+  {
+    "id": "23f0c1ce-1d2a-4dfd-9c1e-955d15fc3a30",
+    "name": "nome exemplo",
+    "description": "internet 16gb cada um",
+    "price": "150"
+  },
+  {
+    "id": "73342526-064e-462e-832f-2d1fd556db54",
+    "name": "nome exemplo",
+    "description": "internet 16gb cada um",
+    "price": "150"
+  }
+]
 ```
 
 ### Possíveis Erros:
@@ -941,52 +921,50 @@ vazio
 ```
 
 ```json
-{
-  "data": [
-    {
-      "id": "72c9fab0-7fb4-4276-9099-42b90761e8d6",
-      "name": "EnriqueBds",
-      "cpf": "12345679801",
-      "telephone": "13982651234",
-      "email": "enrique@mail.com",
-      "is_active": true,
-      "created_date": "2022-11-08T16:27:27.971Z",
-      "updated_date": "2022-11-08T16:27:27.971Z",
-      "client_plan": [
-        {
-          "id": "38f492bd-9311-480d-87ce-bfdcfb0309a8",
-          "internet_plan": {
-            "id": "23f0c1ce-1d2a-4dfd-9c1e-955d15fc3a30",
-            "name": "testando",
-            "description": "internet 16gb cada um",
-            "price": "150"
-          }
+[
+  {
+    "id": "72c9fab0-7fb4-4276-9099-42b90761e8d6",
+    "name": "EnriqueBds",
+    "cpf": "12345679801",
+    "telephone": "13982651234",
+    "email": "enrique@mail.com",
+    "is_active": true,
+    "created_date": "2022-11-08T16:27:27.971Z",
+    "updated_date": "2022-11-08T16:27:27.971Z",
+    "client_plan": [
+      {
+        "id": "38f492bd-9311-480d-87ce-bfdcfb0309a8",
+        "internet_plan": {
+          "id": "23f0c1ce-1d2a-4dfd-9c1e-955d15fc3a30",
+          "name": "testando",
+          "description": "internet 16gb cada um",
+          "price": "150"
         }
-      ]
-    },
-    {
-      "id": "7779447f-bbbd-43d7-af5b-07362027e1e7",
-      "name": "edmar",
-      "cpf": "56944459800",
-      "telephone": "11555511111",
-      "email": "edmar.silva@gmail.com",
-      "is_active": true,
-      "created_date": "2022-11-04T14:53:03.244Z",
-      "updated_date": "2022-11-04T14:53:03.244Z",
-      "client_plan": [
-        {
-          "id": "38f492bd-9311-480d-87ce-bfdcfb0309a8",
-          "internet_plan": {
-            "id": "23f0c1ce-1d2a-4dfd-9c1e-955d15fc3a30",
-            "name": "testando",
-            "description": "internet 16gb cada um",
-            "price": "150"
-          }
+      }
+    ]
+  },
+  {
+    "id": "7779447f-bbbd-43d7-af5b-07362027e1e7",
+    "name": "edmar",
+    "cpf": "56944459800",
+    "telephone": "11555511111",
+    "email": "edmar.silva@gmail.com",
+    "is_active": true,
+    "created_date": "2022-11-04T14:53:03.244Z",
+    "updated_date": "2022-11-04T14:53:03.244Z",
+    "client_plan": [
+      {
+        "id": "38f492bd-9311-480d-87ce-bfdcfb0309a8",
+        "internet_plan": {
+          "id": "23f0c1ce-1d2a-4dfd-9c1e-955d15fc3a30",
+          "name": "testando",
+          "description": "internet 16gb cada um",
+          "price": "150"
         }
-      ]
-    }
-  ]
-}
+      }
+    ]
+  }
+]
 ```
 
 ### Observações:
@@ -1052,12 +1030,10 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "id": "beb2a0c3-c16d-412e-a8fd-d0317b8c2189",
-    "name": "Plano de celular",
-    "description": "plano de 8gb",
-    "price": "40"
-  }
+  "id": "beb2a0c3-c16d-412e-a8fd-d0317b8c2189",
+  "name": "Plano de celular",
+  "description": "plano de 8gb",
+  "price": "40"
 }
 ```
 
@@ -1106,9 +1082,7 @@ vazio
 
 ```json
 {
-  "data": {
-    "message": "internet plan deleted successfully"
-  }
+  "message": "internet plan deleted successfully"
 }
 ```
 
@@ -1210,14 +1184,12 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "id": "4b8d69de-26ce-4f33-8460-c4dcca8e0d04",
-    "name": "Teste",
-    "cpf": "12345678921",
-    "telephone": "13984512783",
-    "email": "teste50@mail.com",
-    "is_active": true
-  }
+  "id": "4b8d69de-26ce-4f33-8460-c4dcca8e0d04",
+  "name": "Teste",
+  "cpf": "12345678921",
+  "telephone": "13984512783",
+  "email": "teste50@mail.com",
+  "is_active": true
 }
 ```
 
@@ -1259,26 +1231,24 @@ vazio
 ```
 
 ```json
-{
-  "data": [
-    {
-      "id": "7921829e-a949-4e74-9abf-601ee439eef2",
-      "name": "testando",
-      "is_active": true,
-      "cpf": "52933337800",
-      "telephone": "1956151",
-      "email": "testandogmail.com"
-    },
-    {
-      "id": "4b8d69de-26ce-4f33-8460-c4dcca8e0d04",
-      "name": "Teste",
-      "is_active": true,
-      "cpf": "12345678921",
-      "telephone": "13984512783",
-      "email": "teste50@mail.com"
-    }
-  ]
-}
+[
+  {
+    "id": "7921829e-a949-4e74-9abf-601ee439eef2",
+    "name": "testando",
+    "is_active": true,
+    "cpf": "52933337800",
+    "telephone": "1956151",
+    "email": "testandogmail.com"
+  },
+  {
+    "id": "4b8d69de-26ce-4f33-8460-c4dcca8e0d04",
+    "name": "Teste",
+    "is_active": true,
+    "cpf": "12345678921",
+    "telephone": "13984512783",
+    "email": "teste50@mail.com"
+  }
+]
 ```
 
 ### Possíveis Erros:
@@ -1325,14 +1295,12 @@ Vazio
 
 ```json
 {
-  "data": {
-    "id": "a6822e4c-31ad-4b10-acf3-8d41c967a556",
-    "name": "Roberto",
-    "is_active": true,
-    "cpf": "06858288782",
-    "telephone": "995397895",
-    "email": "ed2017@gmail.com"
-  }
+  "id": "a6822e4c-31ad-4b10-acf3-8d41c967a556",
+  "name": "Roberto",
+  "is_active": true,
+  "cpf": "06858288782",
+  "telephone": "995397895",
+  "email": "ed2017@gmail.com"
 }
 ```
 
@@ -1400,14 +1368,12 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "id": "7921829e-a949-4e74-9abf-601ee439eef2",
-    "name": "bob",
-    "is_active": true,
-    "cpf": "52933337890",
-    "telephone": "1956151",
-    "email": "testandogmail.com"
-  }
+  "id": "7921829e-a949-4e74-9abf-601ee439eef2",
+  "name": "bob",
+  "is_active": true,
+  "cpf": "52933337890",
+  "telephone": "1956151",
+  "email": "testandogmail.com"
 }
 ```
 
@@ -1457,9 +1423,7 @@ vazio
 
 ```json
 {
-  "data": {
-    "message": "Collaborator deleted"
-  }
+  "message": "Collaborator deleted"
 }
 ```
 
@@ -1563,14 +1527,12 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "id": "74bf3912-40da-4390-9ea6-cf9e5ab0b24f",
-    "name": "Mario",
-    "telephone": "13984512783",
-    "email": "mario@mail.com",
-    "is_manager": true,
-    "is_active": true
-  }
+  "id": "74bf3912-40da-4390-9ea6-cf9e5ab0b24f",
+  "name": "Mario",
+  "telephone": "13984512783",
+  "email": "mario@mail.com",
+  "is_manager": true,
+  "is_active": true
 }
 ```
 
@@ -1612,26 +1574,24 @@ vazio
 ```
 
 ```json
-{
-  "data": [
-    {
-      "id": "cdb982e9-0b05-4ab2-b642-c7c8d4985d83",
-      "name": "Manager",
-      "telephone": "13984512783",
-      "email": "manager@mail.com",
-      "is_manager": true,
-      "is_active": false
-    },
-    {
-      "id": "74bf3912-40da-4390-9ea6-cf9e5ab0b24f",
-      "name": "Mario",
-      "telephone": "13984512783",
-      "email": "mario@mail.com",
-      "is_manager": true,
-      "is_active": true
-    }
-  ]
-}
+[
+  {
+    "id": "cdb982e9-0b05-4ab2-b642-c7c8d4985d83",
+    "name": "Manager",
+    "telephone": "13984512783",
+    "email": "manager@mail.com",
+    "is_manager": true,
+    "is_active": false
+  },
+  {
+    "id": "74bf3912-40da-4390-9ea6-cf9e5ab0b24f",
+    "name": "Mario",
+    "telephone": "13984512783",
+    "email": "mario@mail.com",
+    "is_manager": true,
+    "is_active": true
+  }
+]
 ```
 
 ### Possíveis Erros:
@@ -1698,14 +1658,12 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "id": "7b1ca044-2f40-4042-bae6-4471067e0ec1",
-    "name": "Sonic Bolado",
-    "telephone": "13984512783",
-    "email": "soniczinho@gmail.com",
-    "is_manager": true,
-    "is_active": true
-  }
+  "id": "7b1ca044-2f40-4042-bae6-4471067e0ec1",
+  "name": "Sonic Bolado",
+  "telephone": "13984512783",
+  "email": "soniczinho@gmail.com",
+  "is_manager": true,
+  "is_active": true
 }
 ```
 
@@ -1755,9 +1713,7 @@ vazio
 
 ```json
 {
-  "data": {
-    "message": "Supervisor successfully deleted"
-  }
+  "message": "Supervisor successfully deleted"
 }
 ```
 
@@ -1846,18 +1802,16 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "id": "207df14e-0535-4663-b69d-28e1a2c3ac2f",
-    "supervisor": {
-      "id": "87b711e2-c75d-4de2-9d7f-47ba27503ebb",
-      "name": "Roberto",
-      "telephone": "995397895",
-      "email": "beto@gmail.com",
-      "is_manager": true,
-      "is_active": true
-    },
-    "collaborator": []
-  }
+  "id": "207df14e-0535-4663-b69d-28e1a2c3ac2f",
+  "supervisor": {
+    "id": "87b711e2-c75d-4de2-9d7f-47ba27503ebb",
+    "name": "Roberto",
+    "telephone": "995397895",
+    "email": "beto@gmail.com",
+    "is_manager": true,
+    "is_active": true
+  },
+  "collaborator": []
 }
 ```
 
@@ -1900,34 +1854,32 @@ vazio
 ```
 
 ```json
-{
-  "data": [
-    {
-      "id": "207df14e-0535-4663-b69d-28e1a2c3ac2f",
-      "supervisor": {
-        "id": "87b711e2-c75d-4de2-9d7f-47ba27503ebb",
-        "name": "Edmar",
-        "telephone": "995397895",
-        "email": "ed2010@gmail.com",
-        "is_manager": true,
-        "is_active": true
-      },
-      "collaborator": []
+[
+  {
+    "id": "207df14e-0535-4663-b69d-28e1a2c3ac2f",
+    "supervisor": {
+      "id": "87b711e2-c75d-4de2-9d7f-47ba27503ebb",
+      "name": "Edmar",
+      "telephone": "995397895",
+      "email": "ed2010@gmail.com",
+      "is_manager": true,
+      "is_active": true
     },
-    {
-      "id": "309gd14e-0535-4663-b69d-28e1a2c3ub7h",
-      "supervisor": {
-        "id": "87b711e2-c75d-4de2-9d7f-47ba27503ebb",
-        "name": "Roberto",
-        "telephone": "995397201",
-        "email": "beto18@gmail.com",
-        "is_manager": true,
-        "is_active": true
-      },
-      "collaborator": []
-    }
-  ]
-}
+    "collaborator": []
+  },
+  {
+    "id": "309gd14e-0535-4663-b69d-28e1a2c3ub7h",
+    "supervisor": {
+      "id": "87b711e2-c75d-4de2-9d7f-47ba27503ebb",
+      "name": "Roberto",
+      "telephone": "995397201",
+      "email": "beto18@gmail.com",
+      "is_manager": true,
+      "is_active": true
+    },
+    "collaborator": []
+  }
+]
 ```
 
 ### Possíveis Erros:
@@ -1974,18 +1926,16 @@ Vazio
 
 ```json
 {
-  "data": {
-    "id": "207df14e-0535-4663-b69d-28e1a2c3ac2f",
-    "supervisor": {
-      "id": "87b711e2-c75d-4de2-9d7f-47ba27503ebb",
-      "name": "Roberto",
-      "telephone": "995397895",
-      "email": "beto@gmail.com",
-      "is_manager": true,
-      "is_active": true
-    },
-    "collaborator": []
-  }
+  "id": "207df14e-0535-4663-b69d-28e1a2c3ac2f",
+  "supervisor": {
+    "id": "87b711e2-c75d-4de2-9d7f-47ba27503ebb",
+    "name": "Roberto",
+    "telephone": "995397895",
+    "email": "beto@gmail.com",
+    "is_manager": true,
+    "is_active": true
+  },
+  "collaborator": []
 }
 ```
 
@@ -2034,18 +1984,16 @@ Vazio
 
 ```json
 {
-  "data": {
-    "id": "207df14e-0535-4663-b69d-28e1a2c3ac2f",
-    "supervisor": {
-      "id": "87b711e2-c75d-4de2-9d7f-47ba27503ebb",
-      "name": "Roberto",
-      "telephone": "995397895",
-      "email": "beto@gmail.com",
-      "is_manager": true,
-      "is_active": true
-    },
-    "collaborator": []
-  }
+  "id": "207df14e-0535-4663-b69d-28e1a2c3ac2f",
+  "supervisor": {
+    "id": "87b711e2-c75d-4de2-9d7f-47ba27503ebb",
+    "name": "Roberto",
+    "telephone": "995397895",
+    "email": "beto@gmail.com",
+    "is_manager": true,
+    "is_active": true
+  },
+  "collaborator": []
 }
 ```
 
@@ -2095,9 +2043,7 @@ vazio
 
 ```json
 {
-  "data": {
-    "message": "team successfully deleted"
-  }
+  "message": "team successfully deleted"
 }
 ```
 
@@ -2156,9 +2102,7 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "message": "collaborator successfully added"
-  }
+  "message": "collaborator successfully added"
 }
 ```
 
@@ -2219,9 +2163,7 @@ OBS.: Chaves não presentes no schema serão removidas.
 
 ```json
 {
-  "data": {
-    "message": "collaborator successfully removed"
-  }
+  "message": "collaborator successfully removed"
 }
 ```
 
@@ -2234,5 +2176,247 @@ OBS.: Chaves não presentes no schema serão removidas.
 | 404 Not found  | team not found.                              |
 | 404 Not found  | collaborator not found.                      |
 | 409 Conflict   | collaborator is not registered in this team. |
+
+---
+
+## 7. **Services**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto Service é definido como:
+
+| Campo       | Tipo   | Descrição                       |
+| ----------- | ------ | ------------------------------- |
+| id          | string | Identificador único do serviço. |
+| name        | string | O nome do serviço.              |
+| description | string | A descrição do serviço.         |
+
+### Endpoints
+
+| Método | Rota          | Descrição                                         |
+| ------ | ------------- | ------------------------------------------------- |
+| POST   | /services     | Criação de um service.                            |
+| GET    | /services     | Lista todos os serviços.                          |
+| PATCH  | /services/:id | Atualiza um serviço usando seu ID como parâmetro. |
+| DELETE | /services/:id | Deleta um serviço usando seu ID como parâmetro.   |
+
+---
+
+### 7.1. **Criação do serviço**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/services`
+
+### Exemplo de Request:
+
+```
+POST /services
+Host: https://internet-services-support.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+{
+  "name": "Name",
+  "description": "Description"
+}
+```
+
+### Schema de Validação com Yup:
+
+```javascript
+   id: yup
+    .string()
+    .default(() => uuidv4())
+    .transform(() => uuidv4())
+    .notRequired(),
+  name: yup.string().required(),
+  description: yup.string().required(),
+```
+
+OBS.: Chaves não presentes no schema serão removidas.
+
+### Exemplo de Response:
+
+```
+201 Created
+```
+
+```json
+{
+  "id": "16d7b5ee-a87b-42d0-b432-1f4993b1a81d",
+  "name": "Name",
+  "description": "Description"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                   |
+| -------------- | --------------------------- |
+| 400 Conflict   | service already registered. |
+
+---
+
+### 7.2. **Listando serviços**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/services`
+
+### Exemplo de Request:
+
+```
+GET /services
+Host: https://internet-services-support.herokuapp.com/
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+  {
+    "id": "16d7b5ee-a87b-42d0-b432-1f4993b1a81d",
+    "name": "teste",
+    "description": "Description"
+  }
+]
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição      |
+| -------------- | -------------- |
+| 403 Forbidden  | Invalid token. |
+| 403 Forbidden  | Unauthorized.  |
+
+---
+
+### 7.3. **Atualizando serviço pelo ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/services/:id`
+
+### Exemplo de Request:
+
+```
+PATCH /services/:id
+Host: https://internet-services-support.herokuapp.com/
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                                |
+| --------- | ------ | ---------------------------------------- |
+| id        | string | Identificador único do serviço (Service) |
+
+### Corpo da Requisição:
+
+```json
+{
+  "name": "Agendamento técnico",
+  "description": "casa do cliente"
+}
+```
+
+### Schema de Validação com Yup:
+
+```javascript
+  name: yup.string().notRequired(),
+  description: yup.string().notRequired(),
+```
+
+OBS.: Chaves não presentes no schema serão removidas.
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "id": "16d7b5ee-a87b-42d0-b432-1f4993b1a81d",
+  "name": "Agendamento técnico",
+  "description": "casa do cliente"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro   | Descrição          |
+| ---------------- | ------------------ |
+| 403 Forbidden    | Invalid token.     |
+| 403 Forbidden    | Unauthorized.      |
+| 404 Not found    | Service not found. |
+| 401 Unauthorized | Cannot edit id.    |
+
+---
+
+### 7.4. **Deletando serviço pelo ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/services/:id`
+
+### Exemplo de Request:
+
+```
+DELETE /services/:id
+Host: https://internet-services-support.herokuapp.com/
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                                |
+| --------- | ------ | ---------------------------------------- |
+| id        | string | Identificador único do serviço (Service) |
+
+### Corpo da Requisição:
+
+```json
+vazio
+```
+
+### Exemplo de Response:
+
+```
+202 Accepted
+```
+
+```json
+{
+  "message": "service deleted successfully"
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                                              |
+| -------------- | ------------------------------------------------------ |
+| 403 Forbidden  | Invalid token.                                         |
+| 403 Forbidden  | Only collaborators or superiors can access this route. |
+| 404 Not found  | service not found.                                     |
 
 ---
