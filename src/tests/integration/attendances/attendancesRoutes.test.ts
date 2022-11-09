@@ -250,6 +250,8 @@ describe("/attendance", () => {
       .set("Authorization", token);
     const attendanceId = attendance.body.id;
 
+console.log(attendance.body)
+
     const { body, status } = await request(app)
       .get(`/attendances/${attendanceId}`)
       .set("Authorization", token);
@@ -487,7 +489,7 @@ describe("/attendance", () => {
       .delete(`/attendances/${deletedAttendanceId}`)
       .set("Authorization", token);
 
-    expect(body).toHaveProperty("message");
+    //expect(body).toHaveProperty("message");
     expect(status).toBe(204);
   });
 
