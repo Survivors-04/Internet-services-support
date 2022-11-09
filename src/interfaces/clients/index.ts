@@ -20,10 +20,10 @@ export interface IClient {
 }
 
 export interface IClientUpdate {
+  name?: string;
   telephone?: string;
   email?: string;
   password?: string;
-  is_active?: boolean;
 }
 
 export interface IClientLogin {

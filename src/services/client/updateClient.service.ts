@@ -5,7 +5,7 @@ import { AppError } from "../../errors/appError";
 import { hash } from "bcrypt";
 
 export const updateClientService = async (
-  { telephone, email, password }: IClientUpdate,
+  { name, telephone, email, password }: IClientUpdate,
   id: string
 ): Promise<Client> => {
   const clientRepository = AppDataSource.getRepository(Client);
@@ -19,6 +19,7 @@ export const updateClientService = async (
   }
 
   await clientRepository.update(id, {
+    name: name ? name : findClient.name,
     telephone: telephone ? telephone : findClient.telephone,
     email: email ? email : findClient.email,
     password: password ? await hash(password, 10) : findClient.password,
