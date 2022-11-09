@@ -20,8 +20,6 @@ const supervisorsRoutes = Router();
 
 supervisorsRoutes.post(
   "",
-  tokenAuthMiddleware,
-  verifySupervisorMiddleware,
   validateSupervisorsCreate(supervisorsCreateSchema),
   createSupervisorsController
 );

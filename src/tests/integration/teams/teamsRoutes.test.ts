@@ -207,7 +207,7 @@ describe("/teams", () => {
     mockedTeams.supervisorId = supervisorId;
 
     const { body, status } = await request(app)
-      .post("/teams/:id/collaborator")
+      .post("/teams")
       .send(mockedTeams)
       .set("Authorization", token);
 
@@ -374,8 +374,6 @@ describe("/teams", () => {
       .post("/login")
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
-      
-    
 
     const { body, status } = await request(app)
       .get("/teams")
@@ -470,7 +468,7 @@ describe("/teams", () => {
       .get(`/teams/supervisor/${supervisorId}`)
       .set("Authorization", token);
 
-      console.log(body)
+    console.log(body);
     expect(body[0]).toHaveProperty("id");
     expect(body[0]).toHaveProperty("collaborator");
     expect(body[0]).toHaveProperty("supervisor");
@@ -503,8 +501,10 @@ describe("/teams", () => {
     const team = await request(app).get("/teams").set("Authorization", token);
     const supervisorId = team.body[0].supervisor.id;
 
-    const clientLogin = await request(app).post('/login').send(mockedClientLogin)
-    const clientToken = `Bearer ${clientLogin.body.token}`
+    const clientLogin = await request(app)
+      .post("/login")
+      .send(mockedClientLogin);
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const { body, status } = await request(app)
       .get(`/teams/supervisor/${supervisorId}`)
@@ -514,4 +514,20 @@ describe("/teams", () => {
     expect(status).toBe(403);
   });
 
+  test("DELETE /teams/:id - Must be able to delete a team", async () => {
+    const managerLogin = await request(app)
+      .post("/login")
+      .send(mockedManagerLogin);
+    const token = `Bearer ${managerLogin.body.token}`;
+
+    const team = await request(app).get("/teams").set("Authorization", token);
+    const teamId = team.body[0].id;
+
+    const { body, status } = await request(app)
+      .delete(`/teams/${teamId}`)
+      .set("Authorization", token);
+
+    expect(body).toHaveProperty("message");
+    expect(status).toBe(202);
+  });
 });
