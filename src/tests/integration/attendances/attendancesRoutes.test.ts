@@ -225,20 +225,28 @@ describe("/attendance", () => {
       .send(mockedManagerLogin);
     const token = `Bearer ${managerLogin.body.token}`;
 
+    mockedCollaborator.email = "collaborator789@mail.com";
+    mockedCollaborator.cpf = "73912061617717";
     const collaborator = await request(app)
-      .get("/collaborators")
+      .post("/collaborators")
+      .send(mockedCollaborator)
       .set("Authorization", token);
-    const collaboratorId = collaborator.body[0].id;
+    const collaboratorId = collaborator.body.id;
 
+    mockedClient.email = "client78541@mail.com";
+    mockedClient.cpf = "86891564620840";
     const client = await request(app)
-      .get("/clients")
+      .post("/clients")
+      .send(mockedClient)
       .set("Authorization", token);
-    const clientId = client.body[0].id;
+    const clientId = client.body.id;
 
+    mockedService.name = "aasws";
     const service = await request(app)
-      .get("/services")
+      .post("/services")
+      .send(mockedService)
       .set("Authorization", token);
-    const serviceId = service.body[0].id;
+    const serviceId = service.body.id;
 
     mockedAttendance.collaboratorId = collaboratorId;
     mockedAttendance.clientId = clientId;
@@ -250,22 +258,16 @@ describe("/attendance", () => {
       .set("Authorization", token);
     const attendanceId = attendance.body.id;
 
-console.log(attendance.body)
-
     const { body, status } = await request(app)
       .get(`/attendances/${attendanceId}`)
       .set("Authorization", token);
 
     expect(body).toHaveProperty("id");
-    expect(body).toHaveProperty("collaboratorId");
-    expect(body).toHaveProperty("clientId");
-    expect(body).toHaveProperty("serviceId");
+    expect(body).toHaveProperty("client");
+    expect(body).toHaveProperty("service");
+    expect(body).toHaveProperty("collaborator");
     expect(body).toHaveProperty("date");
     expect(body).toHaveProperty("is_active");
-    expect(body.collaboratorId).toBe(collaboratorId);
-    expect(body.clientId).toBe(clientId);
-    expect(body.serviceId).toBe(serviceId);
-    expect(body.is_active).toBe(true);
     expect(status).toBe(200);
   });
 
@@ -363,31 +365,15 @@ console.log(attendance.body)
       .set("Authorization", token);
     const collaboratorId = collaborator.body[0].id;
 
-    const client = await request(app)
-      .get("/clients")
-      .set("Authorization", token);
-    const clientId = client.body[0].id;
-
-    const service = await request(app)
-      .get("/services")
-      .set("Authorization", token);
-    const serviceId = service.body[0].id;
-
-    mockedAttendance.collaboratorId = collaboratorId;
-    mockedAttendance.clientId = clientId;
-    mockedAttendance.serviceId = serviceId;
-
     const attendance = await request(app)
-      .post("/attendances")
-      .send(mockedAttendance)
+      .get("/attendances")
       .set("Authorization", token);
-    const attendanceId = attendance.body.id;
 
     const { body, status } = await request(app)
       .get(`/attendances/collaborators/${collaboratorId}`)
       .set("Authorization", token);
 
-    expect(body).toHaveLength(5);
+    expect(body).toHaveLength(1);
     expect(status).toBe(200);
   });
 
