@@ -6,7 +6,7 @@ const deleteClientPlanController = async (req: Request, res: Response) => {
   const id = req.dataAddOrRemovePlanInClient;
 
   await deleteClientPlanService(id, clientId);
-  return res.status(202).json({
+  return res.status(204).json({
     message: "Client plan deleted",
   });
 };
