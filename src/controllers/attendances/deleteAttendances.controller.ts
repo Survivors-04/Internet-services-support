@@ -4,5 +4,5 @@ import { deleteAttendancesService } from "../../services/attendances/deleteAtten
 export const deleteAttendancesController = async (req:Request, res:Response) =>{
   const { id } = req.params;
   const deleted = await deleteAttendancesService(id);
-  return res.status(203).json(deleted);
+  return res.status(204).json(deleted);
 };
