@@ -14,5 +14,5 @@ export const removeCollaboratorInTeamController = async (
     dataCollaborator
   );
 
-  return res.status(202).json({ message: teamMessage });
+  return res.status(204).json({ message: teamMessage });
 };
