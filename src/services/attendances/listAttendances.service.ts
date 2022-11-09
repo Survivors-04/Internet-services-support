@@ -17,11 +17,7 @@ export const listAttendancesService = async ( id:string ) =>{
 
     if ( attendance ) return attendance;
 
-    // if( collaborator ){ 
-      // const { attendance } = collaborator;
-      // const atts:IAttendanceResponse[] = attendance.map( att => padronizeAttendanceResponse(att) );
-      // return atts;
-    // };
+    if ( collaborator ) return collaborator.attendance;
 
     throw new AppError("Attendance information not found!",404);
   };
