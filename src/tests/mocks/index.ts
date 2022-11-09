@@ -114,7 +114,10 @@ export const mockedTeams = {
   supervisorId: "",
   collaboratorId: "",
 };
-
+export const mockedTeamsCreate = {
+  supervisor: "",
+  collaborator: [""],
+};
 export const collaboratorTeam: ICollaborator = {
   name: "Collaborator",
   email: "collaborator9@mail.com",
