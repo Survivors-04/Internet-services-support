@@ -2420,3 +2420,356 @@ vazio
 | 404 Not found  | service not found.                                     |
 
 ---
+
+## 8. **Attendances**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+O objeto Service é definido como:
+
+| Campo        | Tipo    | Descrição                                                         |
+| ------------ | ------- | ----------------------------------------------------------------- |
+| id           | string  | Identificador único do atendimento.                               |
+| date         | Date    | A data que o atendimento foi iniciado.                            |
+| is_active    | boolean | Define se um atendimento está ativo ou não.                       |
+| service      | string  | Identificador único do serviço que está sendo prestado.           |
+| client       | string  | Identificador único do clinte que está solicitando o atendimento. |
+| collaborator | string  | Identificador único do colaborador que está prestando o serviço.  |
+
+### Endpoints
+
+| Método | Rota                           | Descrição                                                             |
+| ------ | ------------------------------ | --------------------------------------------------------------------- |
+| POST   | /attendances                   | Criação de um atendimento.                                            |
+| GET    | /attendances                   | Lista todos os atendimentos.                                          |
+| GET    | /attendances/:id               | Lista o atendimento usando seu ID como parâmetro.                     |
+| GET    | /attendances/collaborators/:id | Lista todos os atendimentosusando o ID do colaborador como parâmetro. |
+| DELETE | /attendances/:id               | Deleta um atendimento usando seu ID como parâmetro.                   |
+
+---
+
+### 8.1. **Criação do atendimento**
+
+[ Voltar para os Endpoints ](#5-endpoints)
+
+### `/attendances`
+
+### Exemplo de Request:
+
+```
+POST /attendances
+Host: https://internet-services-support.herokuapp.com/
+Authorization: None
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+{
+  "collaboratorId": "8d441bc3-e791-4eb0-a72d-7c2d27b36479",
+  "clientId": "fcc445e6-e2d5-4fea-9704-94f116e64cd3",
+  "serviceId": "b52c157e-0fce-4847-b85f-439b5b30b9eb"
+}
+```
+
+### Schema de Validação com Yup:
+
+```javascript
+  clientId: yup.string().required(),
+  collaboratorId: yup.string().required(),
+  serviceId: yup.string().required(),
+  date: yup
+    .date()
+    .transform(() => new Date())
+    .default(() => new Date())
+    .notRequired(),
+```
+
+OBS.: Chaves não presentes no schema serão removidas.
+
+### Exemplo de Response:
+
+```
+201 Created
+```
+
+```json
+{
+  "id": "9b338034-d627-4d96-8fe7-872bf363f48a",
+  "date": "2022-11-08T19:51:54.078Z",
+  "is_active": true
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                   |
+| -------------- | --------------------------- |
+| 404 Not found  | Client id is invalid.       |
+| 404 Not found  | Collaborator id is invalid. |
+| 404 Not found  | Service id is invalid.      |
+
+---
+
+### 8.2. **Listando atendimentos**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/attendances`
+
+### Exemplo de Request:
+
+```
+GET /attendances
+Host: https://internet-services-support.herokuapp.com/
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+  {
+    "id": "874ba040-3d2b-4bb5-bac6-a32f84a5a7b5",
+    "date": "2022-11-09T19:22:44.464Z",
+    "is_active": true,
+    "client": {
+      "id": "00f375ce-b1ec-4e26-a834-b622f18fea4f",
+      "name": "enrico",
+      "cpf": "56944459800",
+      "telephone": "11959267759",
+      "email": "enrico.silva@gmail.com",
+      "is_active": true,
+      "created_date": "2022-11-09T03:42:20.661Z",
+      "updated_date": "2022-11-09T03:42:20.661Z",
+      "client_plan": [
+        {
+          "id": "8b7bbe9b-7e91-4266-9cfa-5732dc5535b1",
+          "internet_plan": {
+            "id": "0894c242-d01e-4f89-b9d1-37f9fba44694",
+            "name": "300 Gigas",
+            "description": "Fibra óptica com velocidade de 300G",
+            "price": "90"
+          }
+        }
+      ]
+    }
+  }
+]
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                         |
+| -------------- | --------------------------------- |
+| 403 Forbidden  | Invalid token.                    |
+| 403 Forbidden  | Unauthorized.                     |
+| 404 Not found  | Attendance information not found! |
+
+---
+
+### 8.3. **Listando atendimento pelo ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/attendances/:id`
+
+### Exemplo de Request:
+
+```
+GET /attendances/:id
+Host: https://internet-services-support.herokuapp.com/
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                                       |
+| --------- | ------ | ----------------------------------------------- |
+| id        | string | Identificador único do atendimento (Attendance) |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+{
+  "id": "874ba040-3d2b-4bb5-bac6-a32f84a5a7b5",
+  "date": "2022-11-09T19:22:44.464Z",
+  "is_active": true,
+  "client": {
+    "id": "00f375ce-b1ec-4e26-a834-b622f18fea4f",
+    "name": "enrico",
+    "cpf": "56944459800",
+    "telephone": "11959267759",
+    "email": "enrico.silva@gmail.com",
+    "is_active": true,
+    "created_date": "2022-11-09T03:42:20.661Z",
+    "updated_date": "2022-11-09T03:42:20.661Z",
+    "client_plan": [
+      {
+        "id": "8b7bbe9b-7e91-4266-9cfa-5732dc5535b1",
+        "internet_plan": {
+          "id": "0894c242-d01e-4f89-b9d1-37f9fba44694",
+          "name": "300 Gigas",
+          "description": "Fibra óptica com velocidade de 300G",
+          "price": "90"
+        }
+      }
+    ]
+  }
+}
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                         |
+| -------------- | --------------------------------- |
+| 403 Forbidden  | Invalid token.                    |
+| 403 Forbidden  | Unauthorized.                     |
+| 404 Not found  | Attendance information not found! |
+
+---
+
+### 8.4. **Listando atendimentos feitos por colaborador pelo ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/attendances/collaborators/:id`
+
+### Exemplo de Request:
+
+```
+GET /attendances/collaborators/:id
+Host: https://internet-services-support.herokuapp.com/
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                                         |
+| --------- | ------ | ------------------------------------------------- |
+| id        | string | Identificador único do colaborador (Collaborator) |
+
+### Corpo da Requisição:
+
+```json
+Vazio
+```
+
+### Exemplo de Response:
+
+```
+200 OK
+```
+
+```json
+[
+  {
+    "id": "874ba040-3d2b-4bb5-bac6-a32f84a5a7b5",
+    "date": "2022-11-09T19:22:44.464Z",
+    "is_active": true,
+    "client": {
+      "id": "00f375ce-b1ec-4e26-a834-b622f18fea4f",
+      "name": "enrico",
+      "cpf": "56944459800",
+      "telephone": "11959267759",
+      "email": "enrico.silva@gmail.com",
+      "is_active": true,
+      "created_date": "2022-11-09T03:42:20.661Z",
+      "updated_date": "2022-11-09T03:42:20.661Z",
+      "client_plan": [
+        {
+          "id": "8b7bbe9b-7e91-4266-9cfa-5732dc5535b1",
+          "internet_plan": {
+            "id": "0894c242-d01e-4f89-b9d1-37f9fba44694",
+            "name": "300 Gigas",
+            "description": "Fibra óptica com velocidade de 300G",
+            "price": "90"
+          }
+        }
+      ]
+    }
+  }
+]
+```
+
+### Possíveis Erros:
+
+| Código do Erro | Descrição                                 |
+| -------------- | ----------------------------------------- |
+| 403 Forbidden  | Invalid token.                            |
+| 403 Forbidden  | access only for supervisors and managers. |
+| 404 Not found  | Attendance information not found!         |
+
+---
+
+### 8.5. **Deletando atendimento pelo ID**
+
+[ Voltar aos Endpoints ](#5-endpoints)
+
+### `/attendances/:id`
+
+### Exemplo de Request:
+
+```
+DELETE /attendances/:id
+Host: https://internet-services-support.herokuapp.com/
+Authorization: Bearer Token
+Content-type: application/json
+```
+
+### Parâmetros da Requisição:
+
+| Parâmetro | Tipo   | Descrição                                       |
+| --------- | ------ | ----------------------------------------------- |
+| id        | string | Identificador único do atendimento (Attendance) |
+
+### Corpo da Requisição:
+
+```json
+vazio
+```
+
+### Exemplo de Response:
+
+```
+204 No content
+```
+
+```json
+vazio
+```
+
+### Possíveis Erros:
+
+| Código do Erro  | Descrição                                              |
+| --------------- | ------------------------------------------------------ |
+| 403 Forbidden   | Invalid token.                                         |
+| 403 Forbidden   | Unauthorized.                                          |
+| 404 Not found   | Attendance information not found, maybe it not exists! |
+| 400 Bad request | Attendance already was deleted!                        |
+
+---
