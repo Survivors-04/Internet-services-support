@@ -494,8 +494,7 @@ describe("/teams", () => {
       .delete(`/teams/${teamId}`)
       .set("Authorization", token);
 
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(202);
+    expect(status).toBe(204);
   });
 
   test("DELETE /teams/:id - Should not be able to delete a team with invalid id", async () => {
@@ -524,7 +523,7 @@ describe("/teams", () => {
     const clientLogin = await request(app)
       .post("/login")
       .send(mockedClientLogin);
-    const clientToken = `Bearer ${clientLogin.body.token}`
+    const clientToken = `Bearer ${clientLogin.body.token}`;
 
     const team = await request(app).get("/teams").set("Authorization", token);
     const teamId = team.body[1].id;
@@ -552,7 +551,6 @@ describe("/teams", () => {
       .send({ collaboratorId })
       .set("Authorization", token);
 
-    expect(body).toHaveProperty("message");
-    expect(status).toBe(202);
+    expect(status).toBe(204);
   });
 });
