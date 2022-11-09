@@ -12,7 +12,6 @@ export const clientUpdateSchema: SchemaOf<IClientUpdate> = yup.object().shape({
     .transform((pws) => hashSync(pws, 10))
     .notRequired(),
   telephone: yup.string().notRequired(),
-  is_active: yup.boolean().notRequired(),
 });
 
 export const validateClientUpdate =

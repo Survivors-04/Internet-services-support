@@ -23,7 +23,6 @@ export interface IClientUpdate {
   telephone?: string;
   email?: string;
   password?: string;
-  is_active?: boolean;
 }
 
 export interface IClientLogin {
