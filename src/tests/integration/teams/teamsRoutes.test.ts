@@ -488,7 +488,6 @@ describe("/teams", () => {
 
     const team = await request(app).get("/teams").set("Authorization", token);
     const teamId = team.body[0].id;
-    console.log(team.body);
 
     const { body, status } = await request(app)
       .delete(`/teams/${teamId}`)

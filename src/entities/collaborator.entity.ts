@@ -31,7 +31,7 @@ export class Collaborator {
   @OneToMany((type) => Attendance, (attendance) => attendance.collaborator)
   attendance: Attendance[];
 
-  @ManyToOne((type) => Team, { nullable: true })
+  @ManyToOne((type) => Team, { nullable: true, onDelete:"CASCADE" })
   team: Team;
 
   constructor() {
