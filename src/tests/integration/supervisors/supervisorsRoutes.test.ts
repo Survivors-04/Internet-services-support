@@ -307,7 +307,6 @@ describe("/supervisors", () => {
       .set("Authorization", token);
 
     expect(body).toHaveProperty("message");
-    expect(status).toBe(200);
-
+    expect(status).toBe(202);
   });
 });

@@ -16,8 +16,8 @@ export const removeCollaboratorInTeamService = async (
     id: data.collaboratorId,
   });
 
-  if (!team) throw new AppError("team not found", 409);
-  if (!collaborator) throw new AppError("collaborator not found", 409);
+  if (!team) throw new AppError("team not found", 404);
+  if (!collaborator) throw new AppError("collaborator not found", 404);
 
   const indexCollaborator = team.collaborator.findIndex(
     (elem) => elem.id === data.collaboratorId

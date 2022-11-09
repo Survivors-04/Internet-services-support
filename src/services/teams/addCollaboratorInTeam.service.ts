@@ -32,7 +32,5 @@ export const addCollaboratorInTeamService = async (
   await teamRepository.save(team);
   await collaboratorRepository.save(collaborator);
 
-
-  
   return "collaborator successfully added";
 };
