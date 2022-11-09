@@ -6,6 +6,7 @@ import { IClientUpdate } from "../../interfaces/clients";
 import { hashSync } from "bcrypt";
 
 export const clientUpdateSchema: SchemaOf<IClientUpdate> = yup.object().shape({
+  name: yup.string().notRequired(),
   email: yup.string().notRequired(),
   password: yup
     .string()
