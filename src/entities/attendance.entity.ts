@@ -25,7 +25,7 @@ export class Attendance {
 
   @OneToOne(() => Services)
   @JoinColumn()
-  address: Services;
+  service: Services;
 
   @ManyToOne((type) => Client, (client) => client.attendance, { eager: true })
   client: Client;
