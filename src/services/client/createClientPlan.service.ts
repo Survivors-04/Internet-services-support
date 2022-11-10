@@ -33,7 +33,8 @@ export const createClientPlanService = async (
   
   const clientPlan = await clientPlanRepository.findOne({
     where: {
-      internet_plan: internetPlan
+      internet_plan: internetPlan,
+      id: clientId
     },
   });
 
