@@ -297,7 +297,7 @@ describe("/client", () => {
       .post("/login")
       .send(mockedClientLogin);
     const clientToken = `Bearer ${clientLogin.body.token}`;
- 
+
     const { body, status } = await request(app)
       .get(`/clients/${clientId}`)
       .set("Authorization", clientToken);
@@ -397,7 +397,7 @@ describe("/client", () => {
       .set("Authorization", token);
     const clientId = client.body[0].id;
 
-    const internet_plan_id = client.body[0].client_plan[0].id;
+    const internet_plan_id = client.body[0].client_plan[0].internet_plan.id;
 
     const { body, status } = await request(app)
       .delete(`/clients/${clientId}/plans`)
