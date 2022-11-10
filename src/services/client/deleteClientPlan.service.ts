@@ -15,6 +15,7 @@ export const deleteClientPlanService = async (
   const clientPlan = await clientPlanRepository.findOneBy({
     id: internet_plan_id,
   });
+  console.log(clientPlan)
 
   const client = await clientRepository.findOneBy({
     id: clientId,
