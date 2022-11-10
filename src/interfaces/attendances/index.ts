@@ -1,6 +1,12 @@
+
 export interface IAttendanceRequest {
-  collaborator_id: string;
-  client_id: string;
-  service_id: string;
+  collaboratorId: string;
+  clientId: string;
+  serviceId: string;
   date: Date;
-}
+};
+
+export interface IAttendanceResponse extends IAttendanceRequest{
+  id: string;
+  is_active: boolean;
+};

@@ -4,9 +4,10 @@ import { Internet_plan } from "../../entities/internet_plan.entity";
 import { Client_plan } from "../../entities/client_plan.entity";
 import { AppError } from "../../errors/appError";
 import { v4 as uuid } from "uuid";
+import { IAddingOrRemovingPlanToClient } from "../../interfaces/clients";
 
 export const createClientPlanService = async (
-  internet_plan_id: string,
+  { internet_plan_id }: IAddingOrRemovingPlanToClient,
   clientId: string
 ): Promise<void> => {
   const clientPlanRepository = AppDataSource.getRepository(Client_plan);
@@ -29,13 +30,17 @@ export const createClientPlanService = async (
     throw new AppError("Internet plan not found", 404);
   }
 
+  
   const clientPlan = await clientPlanRepository.findOne({
     where: {
       internet_plan: internetPlan,
+      id: clientId
     },
   });
 
-  if (clientPlan) {
+  const teste = client.client_plan.find(e => e.internet_plan.id === internet_plan_id )
+  
+  if (teste) {
     throw new AppError("The customer already has this plan", 400);
   }
 

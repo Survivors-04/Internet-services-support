@@ -9,20 +9,26 @@ export const createTeamService = async (
 ): Promise<Team> => {
   const teamRepository = AppDataSource.getRepository(Team);
   const supervisorsRepository = AppDataSource.getRepository(Supervisor);
-
+  
   const supervisor = await supervisorsRepository.findOneBy({
     id: data.supervisorId,
   });
 
-  if (!supervisor) throw new AppError("supervisor not found", 409);
+  if (!supervisor) throw new AppError("supervisor not found", 404);
 
-  const team = teamRepository.create({
-    id: data.id,
-    supervisor: supervisor,
-    collaborator: data.collaborator,
-  });
+  const teams = await teamRepository.find();
+ const supervisorAlreadyInTeam = teams.find((team)=>team.supervisor.id === supervisor.id) 
+ 
+  if (supervisorAlreadyInTeam)
+    throw new AppError("supervisor is already in a team");
+   
+const newTeams = new Team()
+newTeams.supervisor = supervisor
+newTeams.collaborator = []
 
-  await teamRepository.save(team);
+
+const team = teamRepository.create(newTeams);
+await teamRepository.save(newTeams);
 
   return team;
 };

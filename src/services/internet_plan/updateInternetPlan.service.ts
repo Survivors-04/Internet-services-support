@@ -11,7 +11,7 @@ export const updateInternetPlanService = async (
 
   const internetPlan = await internetPlanRepository.findOneBy({ id });
 
-  if (!internetPlan) throw new AppError("internet plan not found", 409);
+  if (!internetPlan) throw new AppError("internet plan not found", 404);
 
   await internetPlanRepository.update(id, {
     name: data.name ? data.name : internetPlan.name,

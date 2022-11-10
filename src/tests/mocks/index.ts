@@ -8,22 +8,31 @@ import {
   ISupervisorsLogin,
   ISupervisorsRequest,
 } from "../../interfaces/supervisors";
-import { IInternetPlanRequest } from "../../interfaces/internetPlan";
+import { IInternetPlan, IInternetPlanRequest } from "../../interfaces/internetPlan";
 import { IServiceRequest } from "../../interfaces/services";
 import { IClientLogin, IClientRequest } from "../../interfaces/clients";
 
 export const mockedSupervisor: ISupervisorsRequest = {
-  name: "Teste",
-  email: "teste@mail.com",
-  password: "Teste123",
+  name: "Supervisor",
+  email: "supervisor@mail.com",
+  password: "supervisor123",
   cpf: "12345678901",
   telephone: "13984512783",
   is_manager: false,
 };
 
 export const mockedSupervisorLogin: ISupervisorsLogin = {
-  email: "teste@mail.com",
-  password: "Teste123",
+  email: "supervisor@mail.com",
+  password: "supervisor123",
+};
+
+export const mockedSupervisorDeleted: ISupervisorsRequest = {
+  name: "Supervisor",
+  email: "supervisordeleted@mail.com",
+  password: "supervisor123",
+  cpf: "12345675911",
+  telephone: "13984517583",
+  is_manager: false,
 };
 
 export const mockedManager: ISupervisorsRequest = {
@@ -40,9 +49,16 @@ export const mockedManagerLogin: ISupervisorsLogin = {
   password: "Manager123",
 };
 
-export const mockedInternetPlans: IInternetPlanRequest = {
+export const mockedInternetPlans: IInternetPlan = {
+  id:"testteId",
   name: "Teste",
   description: "Teste123",
+  price: 400.0,
+};
+
+export const mockedInternetPlans2: IInternetPlanRequest = {
+  name: "Teste2",
+  description: "Teste1234",
   price: 400.0,
 };
 
@@ -50,7 +66,7 @@ export const mockedCollaborator: ICollaborator = {
   name: "Teste",
   cpf: "12345678901",
   telephone: "13984512783",
-  email: "teste@mail.com",
+  email: "collaborator@mail.com",
   password: "Teste123",
   is_active: true,
 };
@@ -61,9 +77,9 @@ export const mockedCollaboratorLogin: ICollaboratorLogin = {
 };
 
 export const mockedAttendance = {
-  collaborator_id: "",
-  client_id: "",
-  service_id: "",
+  collaboratorId: "",
+  clientId: "",
+  serviceId: "",
 };
 
 export const mockedService: IServiceRequest = {
@@ -80,12 +96,51 @@ export const mockedClient: IClientRequest = {
   is_active: true,
 };
 
+export const mockedClientDeleted: IClientRequest = {
+  name: "Client",
+  cpf: "12345632401",
+  telephone: "13984545983",
+  email: "clientdeleted@mail.com",
+  password: "Client123",
+  is_active: true,
+};
+
 export const mockedClientLogin: IClientLogin = {
   email: "client@mail.com",
   password: "Client123",
 };
 
-export const mockedTeams:ITeams = {
-  supervisor_id: "",
-  collaborator_id: "",
-}
+export const mockedTeams = {
+  supervisorId: "",
+  collaboratorId: "",
+};
+export const mockedTeamsCreate = {
+  supervisor: "",
+  collaborator: [""],
+};
+export const collaboratorTeam: ICollaborator = {
+  name: "Collaborator",
+  email: "collaborator9@mail.com",
+  password: "collaborator9",
+  cpf: "193799542119",
+  telephone: "999999999",
+  is_active: true,
+};
+
+export const collaboratorTeam2: ICollaborator = {
+  name: "Collaborator",
+  email: "collaborator9@mail.com",
+  password: "collaborator9",
+  cpf: "193799542119",
+  telephone: "999999999",
+  is_active: true,
+};
+
+export const supervisorTeam: ISupervisorsRequest = {
+  name: "Supervisor",
+  email: "supervisor6@mail.com",
+  password: "supervisor6",
+  cpf: "1997847230165",
+  telephone: "999999999",
+  is_manager: false,
+};

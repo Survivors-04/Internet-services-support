@@ -1,15 +1,13 @@
-import {deleteSupervisorService} from "../../services/supervisors/deleteSupervisor.service"
-import { Request, Response } from "express"
+import { deleteSupervisorService } from "../../services/supervisors/deleteSupervisor.service";
+import { Request, Response } from "express";
 
+export const deleteSupervisorControler = async (
+  req: Request,
+  res: Response
+) => {
+  const { id } = req.params;
 
-export const deleteSupervisorControler = async (req: Request, res: Response)=>{
+  const deleteSupervisor: string = await deleteSupervisorService(id);
 
-    const {id} = req.params
-
-    const deleteSupervisor = await deleteSupervisorService(id)
-
-    return res.status(201).json("Supervisor deleted")
-
-}
-
-
+  return res.status(204).json({ message: deleteSupervisor });
+};

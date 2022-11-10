@@ -20,13 +20,17 @@ export interface IClient {
 }
 
 export interface IClientUpdate {
+  name?: string;
   telephone?: string;
   email?: string;
   password?: string;
-  is_active?: boolean;
 }
 
 export interface IClientLogin {
   email: string;
   password: string;
+}
+
+export interface IAddingOrRemovingPlanToClient {
+  internet_plan_id: string;
 }

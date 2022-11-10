@@ -23,14 +23,14 @@ export class Attendance {
   @Column({ default: true })
   is_active: boolean;
 
-  @OneToOne(() => Services)
+  @OneToOne(() => Services, { eager: true })
   @JoinColumn()
-  address: Services;
+  service: Services;
 
   @ManyToOne((type) => Client, (client) => client.attendance, { eager: true })
   client: Client;
 
-  @ManyToOne((type) => Collaborator)
+  @ManyToOne((type) => Collaborator, { eager: true })
   collaborator: Collaborator;
 
   constructor() {

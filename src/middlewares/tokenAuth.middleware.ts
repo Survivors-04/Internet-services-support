@@ -2,35 +2,33 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
 
-const tokenAuthMiddleware = async (
+const tokenAuthMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  let token = req.headers.authorization;
+  let token = req.headers.authorization?.split(" ")[1];;
 
-  if (!token) {
-    return res.status(401).json({
-      message: "Invalid token",
-    });
-  }
+  jwt.verify(
+    token as string,
+    process.env.SECRET_KEY as string,
+    (err: any, decoded: any) => {
+      if (err) {
+        
+        return res.status(403).json({
+          message: "Invalid token",
+        });
+      }
 
-  token = token.split(" ")[1];
+      req.user = {
+        id: decoded.id,
+        role: decoded.role,
+        is_active: decoded.is_active,
+      };
 
-  jwt.verify(token, process.env.SECRET_KEY as string, (error, decoded: any) => {
-    if (error) {
-      return res.status(401).json({
-        message: "Invalid token",
-      });
+      return next();
     }
-
-    req.user = {
-      role: decoded.role,
-      is_active: decoded.is_active,
-    };
-
-    return next();
-  });
+  );
 };
 
 export default tokenAuthMiddleware;

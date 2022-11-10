@@ -25,7 +25,7 @@ export interface IUpdateSupervisorRequest {
   id: string;
   telephone: string;
   email: string;
-  is_Manager: boolean;
+  is_manager: boolean;
   password: string;
 }
 
@@ -38,6 +38,16 @@ export interface ISupervisor {
   telephone: string;
   is_manager: boolean;
   is_active: boolean;
+}
+
+export interface ISupervisorsUpdate {
+  id?: string;
+  name?: string;
+  email?: string;
+  password?: string;
+  telephone?: string;
+  is_manager?: boolean;
+  is_active?: boolean;
 }
 
 export interface IManager {}

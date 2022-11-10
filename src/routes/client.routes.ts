@@ -8,10 +8,20 @@ import listClientController from "../controllers/client/listClients.controller";
 import updateClientController from "../controllers/client/updateClient.controller";
 import tokenAuthMiddleware from "../middlewares/tokenAuth.middleware";
 import {
+  addOrRemovePlanInClientSchema,
+  validateAddOrRemovePlanInClient,
+} from "../middlewares/validationsInfosYup/validateInfoAddPlanInClient.middleware";
+import {
   clientCreateSchema,
   validateClientCreate,
 } from "../middlewares/validationsInfosYup/validateInfoClient.middleware";
-import verifyClientRoleMiddleware from "../middlewares/verifyClientRole.middleware";
+import {
+  clientUpdateSchema,
+  validateClientUpdate,
+} from "../middlewares/validationsInfosYup/validateInfoUpdateClient.middleware";
+import verifyCollaboratorRoleMiddleware from "../middlewares/verifyCollaboratorRole.middleware";
+import verifyClientRoleMiddleware from "../middlewares/verifyRoles/verifyClientRoles.middleware";
+import { verifyOnlyListOwnUserMiddleware } from "../middlewares/verifyRoles/verifyOnlyListOwnUser.middleware";
 
 const routes = Router();
 
@@ -26,10 +36,43 @@ routes.get(
   verifyClientRoleMiddleware,
   listClientController
 );
-routes.get("/:id", listClientByIdController);
-routes.patch("/:id", updateClientController);
-routes.delete("/:id", deleteClientController);
-routes.post("/:id/plans", createClientPlanController);
-routes.delete("/:id/plans", deleteClientPlanController);
+routes.get(
+  "/:id",
+  tokenAuthMiddleware,
+  // verifyClientRoleMiddleware,
+  // verifyCollaboratorRoleMiddleware,
+  verifyOnlyListOwnUserMiddleware,
+  listClientByIdController
+);
+routes.patch(
+  "/:id",
+  tokenAuthMiddleware,
+  verifyClientRoleMiddleware,
+  validateClientUpdate(clientUpdateSchema),
+  updateClientController
+);
+routes.delete(
+  "/:id",
+  tokenAuthMiddleware,
+  // verifyClientRoleMiddleware,
+  verifyCollaboratorRoleMiddleware,
+  deleteClientController
+);
+routes.post(
+  "/:id/plans",
+  tokenAuthMiddleware,
+  // verifyClientRoleMiddleware,
+  verifyCollaboratorRoleMiddleware,
+  validateAddOrRemovePlanInClient(addOrRemovePlanInClientSchema),
+  createClientPlanController
+);
+routes.delete(
+  "/:id/plans",
+  tokenAuthMiddleware,
+  verifyCollaboratorRoleMiddleware,
+  // verifyClientRoleMiddleware,
+  validateAddOrRemovePlanInClient(addOrRemovePlanInClientSchema),
+  deleteClientPlanController
+);
 
 export default routes;

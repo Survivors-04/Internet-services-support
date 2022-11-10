@@ -12,6 +12,10 @@
     "testServices": "yarn test src/tests/integration/services/servicesRoutes.test.ts",
     "testSupervisors": "yarn test src/tests/integration/supervisors/supervisorsRoutes.test.ts",
     "testCollaborators": "yarn test src/tests/integration/collaborators/collaboratorsRoutes.test.ts",
+    "testPlans": "yarn test src/tests/integration/plans/internetPlansRoutes.test.ts",
+    "testAttendances": "yarn test src/tests/integration/attendances/attendancesRoutes.test.ts",
+    "testTeams": "yarn test src/tests/integration/teams/teamsRoutes.test.ts",
+    "testClients": "yarn test src/tests/integration/clients/clientsRoutes.test.ts",
     "build": "tsc",
     "start": "node dist/src/server.js"
   },

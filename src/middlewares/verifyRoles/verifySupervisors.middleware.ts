@@ -1,17 +1,15 @@
 import { Request, Response, NextFunction } from "express";
 
-const verifyClientRoleMiddleware = async (
+export const verifySupervisorMiddleware = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  if (req.user.role === 1) {
+
+  if (req.user.role <= 2) {
     return res.status(403).json({
-      message: "The client is not allowed to access this route",
+      message: "access only for supervisors and managers",
     });
   }
-
   return next();
 };
-
-export default verifyClientRoleMiddleware;

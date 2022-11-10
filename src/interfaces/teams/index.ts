@@ -12,7 +12,6 @@ export interface ITeam {
 }
 
 export interface ITeamValidateYup {
-  id: string;
   supervisorId: string;
   collaborator?: ICollaboratorFullData[];
 }

@@ -8,7 +8,7 @@ export const createSupervisorsController = async (
   req: Request,
   res: Response
 ) => {
-  const { name, cpf, telephone, email, is_manager, password } = req.body;
+  const { name, cpf, telephone, email, is_manager, password } = req.dataSupervisors;
   
   const newSupervisor = await createSupervisorService({
     name,
@@ -19,5 +19,5 @@ export const createSupervisorsController = async (
     password,
   });
 
-  return res.status(200).json(instanceToPlain(newSupervisor));
+  return res.status(201).json(instanceToPlain(newSupervisor));
 };

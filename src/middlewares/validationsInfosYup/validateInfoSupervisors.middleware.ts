@@ -3,7 +3,7 @@ import * as yup from "yup";
 import { SchemaOf } from "yup";
 import { v4 as uuidv4 } from "uuid";
 import { hashSync } from "bcrypt";
-import { ISupervisor, ISupervisorsRequest } from "../../interfaces/supervisors";
+import { ISupervisor } from "../../interfaces/supervisors";
 import { AppError } from "../../errors/appError";
 
 export const supervisorsCreateSchema: SchemaOf<ISupervisor> = yup

@@ -3,10 +3,9 @@ import { Client } from "../../entities/client.entity";
 import { Collaborator } from "../../entities/collaborator.entity";
 import { Supervisor } from "../../entities/supervisor.entity";
 import { AppError } from "../../errors/appError";
-
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import "dotenv/config";
+import { compare } from "bcrypt";
 
 interface ILoginRequest {
   email: string;
@@ -32,6 +31,7 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
 
   let user;
   let role;
+ 
 
   if (searchUserOnClient) {
     user = searchUserOnClient;
@@ -53,17 +53,20 @@ export const loginService = async ({ email, password }: ILoginRequest) => {
     throw new AppError("User not Active", 403);
   }
 
-  if (!bcrypt.compareSync(password, user.password)) {
+  const passwordMatch = await compare(password, user.password)
+
+  if (!passwordMatch) {
     throw new AppError("Wrong email/password", 403);
   }
 
   const token = jwt.sign(
     {
+      id: user.id,
       role: role,
       is_active: user.is_active,
     },
     process.env.SECRET_KEY as string,
-    { expiresIn: "24h", subject: user.id }
+    { expiresIn: "24h"}
   );
 
   return token;

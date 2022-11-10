@@ -7,6 +7,7 @@ import { AppError } from "../../errors/appError";
 export const serviceUpdateSchema: SchemaOf<IUpdateService> = yup
   .object()
   .shape({
+    id: yup.string().notRequired(),
     name: yup.string().notRequired(),
     description: yup.string().notRequired(),
   });

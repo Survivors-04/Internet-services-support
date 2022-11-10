@@ -1,31 +1,23 @@
-import { AppDataSource } from "../../data-source"
-import { Supervisor } from "../../entities/supervisor.entity"
-import { AppError } from "../../errors/appError"
+import { AppDataSource } from "../../data-source";
+import { Supervisor } from "../../entities/supervisor.entity";
+import { AppError } from "../../errors/appError";
 
+export const deleteSupervisorService = async (id: string) => {
+  const supervisorsRepository = AppDataSource.getRepository(Supervisor);
 
+  const selectedSupervisor = await supervisorsRepository.findOneBy({ id });
 
-export const deleteSupervisorService = async (id:string)=>{
+  if (!selectedSupervisor) {
+    throw new AppError("Supervisor not found", 404);
+  }
+  if (selectedSupervisor.is_active === false) {
+    throw new AppError("Supervisor not found");
+  }
 
-    const supervisorsRepository = AppDataSource.getRepository(Supervisor)
+  await supervisorsRepository.save({
+    id: selectedSupervisor.id,
+    is_active: false,
+  });
 
-    const selectedSupervisor = await supervisorsRepository.findOne({
-        where: {
-            id: id
-        }
-    })
-
-    if(!selectedSupervisor){
-
-        throw new AppError("Supervisor não encontrado")
-        
-    }
-
-     selectedSupervisor.is_active = false
-
-     await AppDataSource.createQueryBuilder().delete().from(Supervisor).where("id = :id", { id: 1 }).execute()
-
-    return true
-    // const userDeleted = allSupervisors.filter(supervisor=>supervisor.id === id)
-
-
-}
+  return "Supervisor successfully deleted";
+};

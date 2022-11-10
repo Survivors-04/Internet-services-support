@@ -7,7 +7,7 @@ export const listingTeamByIdService = async (id: string): Promise<Team> => {
 
   const team = await teamRepository.findOneBy({ id });
 
-  if (!team) throw new AppError("team not found", 409);
+  if (!team) throw new AppError("team not found", 404);
 
   return team!;
 };

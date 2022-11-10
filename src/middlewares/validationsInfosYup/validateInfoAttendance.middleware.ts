@@ -7,9 +7,9 @@ import { IAttendanceRequest } from "../../interfaces/attendances";
 export const attendanceCreateSchema: SchemaOf<IAttendanceRequest> = yup
   .object()
   .shape({
-    client_id: yup.string().required(),
-    collaborator_id: yup.string().required(),
-    service_id: yup.string().required(),
+    clientId: yup.string().required(),
+    collaboratorId: yup.string().required(),
+    serviceId: yup.string().required(),
     date: yup
       .date()
       .transform(() => new Date())

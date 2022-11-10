@@ -13,8 +13,8 @@ export const deleteClientService = async (id: string): Promise<Client> => {
     throw new AppError("Client not found", 404);
   }
 
-  if (!client?.is_active) {
-    throw new AppError("This account are disabled", 400);
+  if (client?.is_active === false) {
+    throw new AppError("This account is disabled", 400);
   }
 
   client.is_active = false;
@@ -23,6 +23,7 @@ export const deleteClientService = async (id: string): Promise<Client> => {
   const returningClient = await clientRepository.findOneBy({
     id,
   });
+
 
   return returningClient!;
 };
