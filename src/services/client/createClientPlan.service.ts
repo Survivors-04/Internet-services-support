@@ -30,13 +30,16 @@ export const createClientPlanService = async (
     throw new AppError("Internet plan not found", 404);
   }
 
+  
   const clientPlan = await clientPlanRepository.findOne({
     where: {
-      internet_plan: internetPlan,
+      internet_plan: internetPlan
     },
   });
 
-  if (clientPlan) {
+  const teste = client.client_plan.find(e => e.internet_plan.id === internet_plan_id )
+  
+  if (teste) {
     throw new AppError("The customer already has this plan", 400);
   }
 

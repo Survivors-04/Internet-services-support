@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { deleteClientPlanService } from "../../services/client/deleteClientPlan.service";
 
 const deleteClientPlanController = async (req: Request, res: Response) => {
-  const clientId = req.params.clientId;
+  const clientId = req.params.id;
   const id = req.dataAddOrRemovePlanInClient;
 
   await deleteClientPlanService(id, clientId);
