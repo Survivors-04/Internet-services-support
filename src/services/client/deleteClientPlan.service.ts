@@ -21,9 +21,7 @@ export const deleteClientPlanService = async (
   if (!plan || !client) {
     throw new AppError("Client or internet plan not found", 404);
   }
-  console.log(plan);
-  console.log(client);
-  
+
   const clientPlan = client.client_plan.filter(
     (elem) => elem.internet_plan.id !== plan.id
   );
