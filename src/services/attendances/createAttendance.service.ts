@@ -20,14 +20,15 @@ export const createAttendanceService = async (
   const collaborator = await collaborRepo.findOneBy({ id: collaboratorId });
   const service =      await servicesRepo.findOneBy({ id: serviceId });
   
-  if(!client) throw new AppError("Client id is invalid",404);
+  if(!client)       throw new AppError("Client id is invalid",404);
   if(!collaborator) throw new AppError("Collaborator id is invalid",404);
-  if(!service) throw new AppError("Service id is invalid",404);
+  if(!service)      throw new AppError("Service id is invalid",404);
+
 
   const newAttendance = attendanceRepo.create({
-    client: client, 
-    collaborator: collaborator, 
-    service: service
+    client:       client,
+    service:      service,
+    collaborator: collaborator,
   });
 
   await attendanceRepo.save(newAttendance);

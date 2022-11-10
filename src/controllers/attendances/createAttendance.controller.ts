@@ -7,6 +7,7 @@ export const createAttendanceController = async (
   res: Response
 ) => {
   const data: IAttendanceRequest = req.dataAttendance;
+  
   const attendance = await createAttendanceService(data);
   return res.status(201).json(attendance);
 };

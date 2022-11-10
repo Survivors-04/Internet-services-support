@@ -11,13 +11,16 @@ export const listAttendancesService = async ( id:string ) =>{
 
   if( id ){
   
-    const attendance   = await attendancesRepo.findOneBy({ id });
-    const collaborator = await collaboratorsRepo.findOneBy({ id });
+    const attendance   = await attendancesRepo.findOneBy({ id:id });
+    const collaborator = await collaboratorsRepo.findOneBy({ id:id });
     
 
     if ( attendance ) return attendance;
 
-    if ( collaborator ) return collaborator.attendance;
+    if ( collaborator ) {
+      const atts = await attendancesRepo.findBy({collaborator: collaborator});
+      
+      return atts};
 
     throw new AppError("Attendance information not found!",404);
   };
